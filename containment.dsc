@@ -13,7 +13,7 @@
 // the same as the graphical area set aside by the simulation, then
 // the robots may wander off the screen. 
 
-bounds -5 5 -5 5
+bounds -10 10 -10 10
 
 
 //======
@@ -127,15 +127,15 @@ background xFFFFFF
 
 
 // Left
-robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim 
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
 	containment -2 -1 0 x000000 xFF0000 2
 
-robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim 
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
 	containment -2 1 0 x000000 xFF0000 2
 
 
 // Down
-robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim 
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
 	containment -1 -2 1.570796327 x000000 xFF0000 2
 
 robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim

@@ -1,2 +1,2 @@
-        export CLASSPATH=/home/maymonyu/Desktop/tb/src:.:/home/maymonyu/Desktop/tb/lib/collections.jar
+        export CLASSPATH=/home/maymonyu/IdeaProjects/tb/src:.:/home/maymonyu/IdeaProjects/tb/lib/collections.jar
 		echo $CLASSPATH
