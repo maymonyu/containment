@@ -126,13 +126,6 @@ background xFFFFFF
 // The visionclass indicates which color the robots see each other as.
 
 
-// Left
-robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
-	containment -2 -1 0 x000000 xFF0000 2
-
-robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
-	containment -2 1 0 x000000 xFF0000 2
-
 
 // Down
 robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
@@ -140,6 +133,14 @@ robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
 
 robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
     containment 1 -2 1.570796327 x000000 xFF0000 2
+
+
+// Left
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment -2 -1 0 x000000 xFF0000 2
+
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment -2 1 0 x000000 xFF0000 2
 
 
 // Right

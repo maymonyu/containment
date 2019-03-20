@@ -2,6 +2,9 @@ import java.util.Vector;
 import EDU.gatech.cc.is.util.Vec2;
 import java.io.*;
 import EDU.gatech.cc.is.abstractrobot.*;
+import EDU.gatech.cc.is.communication.*;
+import java.util.Enumeration;
+
 
 /**
  * A homogeneous robot soccer team.
@@ -58,8 +61,11 @@ public class containment extends ControlSystemMFN150 {
 	private double goalie_x;
 	private Vec2 offensive_pos1, offensive_pos2;
 
-	public void Configure() {
+	private Enumeration messages;
 
+
+	public void Configure() {
+		messages = abstract_robot.getReceiveChannel();
 	}
 
 	private boolean isBehind(double x1, double x2) {
@@ -72,29 +78,60 @@ public class containment extends ControlSystemMFN150 {
 
 	public int TakeStep() {
 		double	result;
-		double	dresult;
-		long	curr_time = abstract_robot.getTime();
-		Vec2	p;
+		Message msg = null;
+		int id = abstract_robot.getID();
 
-		if(abstract_robot.getID() == 0)
-		{
+		long curr_time = abstract_robot.getTime();
+
+		if(id == 0) {
 			if(curr_time == 0) {
 
 				// STEER
 				result = abstract_robot.getSteerHeading(curr_time);
 				abstract_robot.setSteerHeading(curr_time, 100);
 				abstract_robot.setSpeed(curr_time, 0.8);
-
-
-				// TURRET
-				result = abstract_robot.getTurretHeading(curr_time);
-				abstract_robot.setTurretHeading(curr_time, result);
 			}
 
-			if(curr_time > 10000) {
+			if(curr_time == 10000) {
+
+				// STOP
 				abstract_robot.setSpeed(curr_time, 0);
+
+				// Tell the next robot to move
+				try{
+					abstract_robot.unicast(1, new Message());
+				}
+				catch (CommunicationException ex){
+				}
+			}
+
+			if(curr_time == 11000){
+
+				// Tell the next robot to Stop
+				try{
+					abstract_robot.unicast(1, new TerminateMessage());
+				}
+				catch (CommunicationException ex){
+				}
 			}
 		}
+
+		if (messages.hasMoreElements()) {
+			System.out.println(id + ": Message");
+			msg = (Message) messages.nextElement();
+
+			if(msg instanceof TerminateMessage){
+				abstract_robot.setSpeed(curr_time, 0);
+			}
+			else{
+				abstract_robot.setSteerHeading(curr_time, 100);
+				abstract_robot.setSpeed(curr_time, 0.8);
+			}
+		}
+
+		// TURRET
+		result = abstract_robot.getTurretHeading(curr_time);
+		abstract_robot.setTurretHeading(curr_time, result);
 
 		return CSSTAT_OK;
 	}
