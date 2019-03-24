@@ -4,6 +4,10 @@ import java.io.*;
 import EDU.gatech.cc.is.abstractrobot.*;
 import EDU.gatech.cc.is.communication.*;
 import java.util.Enumeration;
+import EDU.cmu.cs.coral.simulation.*;
+import EDU.gatech.cc.is.simulation.*;
+import EDU.cmu.cs.coral.util.Circle2;
+
 
 
 /**
@@ -61,11 +65,16 @@ public class containment extends ControlSystemMFN150 {
 	private double goalie_x;
 	private Vec2 offensive_pos1, offensive_pos2;
 
+	int id;
+	private boolean isMoving;
+	int numberOfRobots;
 	private Enumeration messages;
 
-
 	public void Configure() {
+		isMoving = false;
 		messages = abstract_robot.getReceiveChannel();
+		id = abstract_robot.getID();
+		numberOfRobots = abstract_robot.GetNumberOfRobots();
 	}
 
 	private boolean isBehind(double x1, double x2) {
@@ -76,62 +85,135 @@ public class containment extends ControlSystemMFN150 {
 		}
 	}
 
-	public int TakeStep() {
-		double	result;
-		Message msg = null;
-		int id = abstract_robot.getID();
+	private int GetLeftNeighbourId(){
+		return (id - 1) % numberOfRobots;
+	}
 
+	private int GetRightNeighbourId(){
+		return (id + 1) % numberOfRobots;
+	}
+
+	private double CalculateSteerHeading(){
+//		int rightNeighbourId = GetRightNeighbourId();
+//
+//		SimulatedObject rightNeighbour = abstract_robot.GetRobot(rightNeighbourId);
+//
+//		Circle2 rightNeighbour = GetCircle(rightNeighbour);
+//
+//		Vec2 reachingPoint = GetReachingPoint(rightNeighbourCircle);
+//
+//		Vec2 position = abstract_robot.getPosition();
+//
+//		double incline = (position.y - reachingPoint.y) / (position.x - reachingPoint.x);
+//		double angle = Math.atan(incline);
+//
+//		return Units.DegToRad(angle);
+
+		return 0.0;
+	}
+
+	private void StartMoving(long time){
+		isMoving = true;
+
+		double steerHeading = CalculateSteerHeading();
+		abstract_robot.setSteerHeading(time, steerHeading);
+
+		abstract_robot.setSpeed(time, 1.0);
+	}
+
+	private void StopMoving(long time){
+		isMoving = false;
+		abstract_robot.setSpeed(time, 0);
+	}
+
+	private boolean ShouldStopMoving(){
+		return false;
+	}
+
+	private boolean IsFirstToRun(long time){
+		return time == 0 && id == 0;
+	}
+
+	private boolean ShouldStartMoving(){
+		if (messages.hasMoreElements()) {
+			Message message = (Message) messages.nextElement();
+			return true;
+		}
+
+		return false;
+	}
+
+	private void TellNextRobotToStartMoving(){
+
+	}
+
+
+	public int TakeStep() {
+		double result;
+		Message message;
 		long curr_time = abstract_robot.getTime();
 
-		if(id == 0) {
-			if(curr_time == 0) {
-
-				// STEER
-				result = abstract_robot.getSteerHeading(curr_time);
-				abstract_robot.setSteerHeading(curr_time, 100);
-				abstract_robot.setSpeed(curr_time, 0.8);
-			}
-
-			if(curr_time == 10000) {
-
-				// STOP
-				abstract_robot.setSpeed(curr_time, 0);
-
-				// Tell the next robot to move
-				try{
-					abstract_robot.unicast(1, new Message());
-				}
-				catch (CommunicationException ex){
-				}
-			}
-
-			if(curr_time == 11000){
-
-				// Tell the next robot to Stop
-				try{
-					abstract_robot.unicast(1, new TerminateMessage());
-				}
-				catch (CommunicationException ex){
-				}
-			}
+		if (IsFirstToRun(curr_time)) {
+			StartMoving(curr_time);
 		}
 
-		if (messages.hasMoreElements()) {
-			System.out.println(id + ": Message");
-			msg = (Message) messages.nextElement();
-
-			if(msg instanceof TerminateMessage){
-				abstract_robot.setSpeed(curr_time, 0);
-			}
-			else{
-				abstract_robot.setSteerHeading(curr_time, 100);
-				abstract_robot.setSpeed(curr_time, 0.8);
-			}
+		else if (ShouldStartMoving()) {
+			StartMoving(curr_time);
 		}
 
-		// TURRET
-		result = abstract_robot.getTurretHeading(curr_time);
-		abstract_robot.setTurretHeading(curr_time, result);
+		else if (isMoving && ShouldStopMoving()){
+			StopMoving(curr_time);
+			TellNextRobotToStartMoving();
+		}
+
+
+//		if(curr_time == 0 && id == 0) {
+//
+//			// STEER
+//			result = abstract_robot.getSteerHeading(curr_time);
+//			abstract_robot.setSteerHeading(curr_time, Math.PI);
+//			abstract_robot.setSpeed(curr_time, 0.8);
+//
+//			if(curr_time == 10000) {
+//
+//				// STOP
+//				abstract_robot.setSpeed(curr_time, 0);
+//
+//				// Tell the next robot to move
+//				try{
+//					abstract_robot.unicast(1, new Message());
+//				}
+//				catch (CommunicationException ex){
+//				}
+//			}
+//
+//			if(curr_time == 11000){
+//
+//				// Tell the next robot to Stop
+//				try{
+//					abstract_robot.unicast(1, new TerminateMessage());
+//				}
+//				catch (CommunicationException ex){
+//				}
+//			}
+//		}
+//
+//		if (messages.hasMoreElements()) {
+//			System.out.println(id + ": Message");
+//			message = (Message) messages.nextElement();
+//
+//			if(message instanceof TerminateMessage){
+//				abstract_robot.setSpeed(curr_time, 0);
+//			}
+//			else{
+//				abstract_robot.setSteerHeading(curr_time, 0);
+//				abstract_robot.setSpeed(curr_time, 0.8);
+//			}
+//		}
+//
+//		// TURRET
+//		result = abstract_robot.getTurretHeading(curr_time);
+//		abstract_robot.setTurretHeading(curr_time, result);
 
 		return CSSTAT_OK;
 	}

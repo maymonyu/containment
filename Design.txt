@@ -1,0 +1,19 @@
+Steps:
+
+On the first timestamp only the first robot should start moving.
+
+A robot can start moving only if it has message waiting in its buffer.
+
+
+Start moving:
+* Calculate the steer
+* Set speed to be 1 (to start the movement)
+
+On moving:
+* Check if the robot's FOV is touching one of its neighbours FOVs
+* If so, STOP MOVING
+* Otherwise keep going
+
+Stop moving:
+* Set speed to 0
+* Send "move" message to the next robot
