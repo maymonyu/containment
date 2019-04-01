@@ -1,6 +1,7 @@
 import java.util.Vector;
 import EDU.gatech.cc.is.util.Vec2;
 import java.io.*;
+import EDU.gatech.cc.is.util.*;
 import EDU.gatech.cc.is.abstractrobot.*;
 import EDU.gatech.cc.is.communication.*;
 import java.util.Enumeration;
@@ -66,15 +67,20 @@ public class containment extends ControlSystemMFN150 {
 	private Vec2 offensive_pos1, offensive_pos2;
 
 	int id;
-	private boolean isMoving;
+	boolean isMoving;
+	boolean waitingForSteerHeading;
 	int numberOfRobots;
+	double steerHeading;
 	private Enumeration messages;
+
 
 	public void Configure() {
 		isMoving = false;
+		waitingForSteerHeading = false;
 		messages = abstract_robot.getReceiveChannel();
 		id = abstract_robot.getID();
 		numberOfRobots = abstract_robot.GetNumberOfRobots();
+		steerHeading = 0;
 	}
 
 	private boolean isBehind(double x1, double x2) {
@@ -86,38 +92,46 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private int GetLeftNeighbourId(){
-		return (id - 1) % numberOfRobots;
+		int robotId = (id - 1) % numberOfRobots;
+
+		if (robotId == -1)
+			return numberOfRobots - 1;
+
+		return robotId;
 	}
 
 	private int GetRightNeighbourId(){
 		return (id + 1) % numberOfRobots;
 	}
 
-	private double CalculateSteerHeading(){
-//		int rightNeighbourId = GetRightNeighbourId();
-//
-//		SimulatedObject rightNeighbour = abstract_robot.GetRobot(rightNeighbourId);
-//
-//		Circle2 rightNeighbour = GetCircle(rightNeighbour);
-//
-//		Vec2 reachingPoint = GetReachingPoint(rightNeighbourCircle);
-//
-//		Vec2 position = abstract_robot.getPosition();
-//
-//		double incline = (position.y - reachingPoint.y) / (position.x - reachingPoint.x);
-//		double angle = Math.atan(incline);
-//
-//		return Units.DegToRad(angle);
+	private double CalculateSteerHeading(long time){
+		System.out.println("CalculateSteerHeading");
 
-		return 0.0;
+		int rightNeighbourId = GetRightNeighbourId();
+
+		Vec2 reachingPoint = abstract_robot.GetTopPoint(time, rightNeighbourId);
+
+		Vec2 position = abstract_robot.getPosition(time);
+//		System.out.println("position: " + position.x + " " + position.y);
+
+		double incline = (position.y - reachingPoint.y) / (position.x - reachingPoint.x);
+//		System.out.println("incline: " + incline);
+
+		double angle = Math.atan(incline);
+//		System.out.println("angle: " + angle);
+
+		return angle;
+	}
+
+	private void SetSteerHeading(long time){
+		steerHeading = CalculateSteerHeading(time);
+		abstract_robot.setSteerHeading(0L, steerHeading);
+
+		waitingForSteerHeading = true;
 	}
 
 	private void StartMoving(long time){
 		isMoving = true;
-
-		double steerHeading = CalculateSteerHeading();
-		abstract_robot.setSteerHeading(time, steerHeading);
-
 		abstract_robot.setSpeed(time, 1.0);
 	}
 
@@ -126,15 +140,49 @@ public class containment extends ControlSystemMFN150 {
 		abstract_robot.setSpeed(time, 0);
 	}
 
-	private boolean ShouldStopMoving(){
-		return false;
+	private boolean IsPointWithinCircle(Vec2 point, Circle2 circle){
+		double dx = point.x - circle.centre.x;
+		double dy = point.y - circle.centre.y;
+
+		double distance = Math.sqrt(dx * dx + dy * dy);
+
+		return distance < circle.radius;
+	}
+
+	private boolean ShouldStopMoving(long time){
+		System.out.println("ShouldStopMoving");
+		Vec2 leftFovPoint = abstract_robot.GetLeftPoint(time, id);
+		Vec2 rightFovPoint = abstract_robot.GetRightPoint(time, id);
+
+		int leftNeighbourId = GetLeftNeighbourId();
+		int rightNeighbourId = GetRightNeighbourId();
+
+		Circle2 leftNeighbourFOV = abstract_robot.GetFOV(leftNeighbourId);
+		Circle2 rightNeighbourFOV= abstract_robot.GetFOV(rightNeighbourId);
+
+		boolean isWithinLeftNeighbour = IsPointWithinCircle(leftFovPoint, leftNeighbourFOV);
+		boolean isWithinRightNeighbour = IsPointWithinCircle(rightFovPoint, rightNeighbourFOV);
+
+		boolean shouldStop = !isWithinLeftNeighbour || !isWithinRightNeighbour;
+
+		System.out.println("id: " + id);
+		System.out.println("isWithinLeftNeighbour: " + isWithinLeftNeighbour);
+		System.out.println("isWithinRightNeighbour: " + isWithinRightNeighbour);
+
+		return shouldStop;
+	}
+
+	private boolean IsSteerReady(long time){
+		double currentSteerHeading = abstract_robot.getSteerHeading(time);
+
+		return currentSteerHeading == steerHeading;
 	}
 
 	private boolean IsFirstToRun(long time){
 		return time == 0 && id == 0;
 	}
 
-	private boolean ShouldStartMoving(){
+	private boolean isMyTurnToMove(){
 		if (messages.hasMoreElements()) {
 			Message message = (Message) messages.nextElement();
 			return true;
@@ -144,7 +192,13 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private void TellNextRobotToStartMoving(){
+		int rightNeighbourId = GetRightNeighbourId();
 
+		try{
+			abstract_robot.unicast(rightNeighbourId, new Message());
+		}
+		catch (CommunicationException ex){
+		}
 	}
 
 
@@ -153,19 +207,44 @@ public class containment extends ControlSystemMFN150 {
 		Message message;
 		long curr_time = abstract_robot.getTime();
 
+		// STEER
+//		result = abstract_robot.getSteerHeading(curr_time);
+//		abstract_robot.setSteerHeading(curr_time, result);
+
+		// TURRET
+		result = abstract_robot.getTurretHeading(curr_time);
+		abstract_robot.setTurretHeading(curr_time, result);
+
+		if(waitingForSteerHeading){
+			if(IsSteerReady(curr_time)){
+				waitingForSteerHeading = false;
+				StartMoving(curr_time);
+			}
+
+			return CSSTAT_OK;
+		}
+
 		if (IsFirstToRun(curr_time)) {
-			StartMoving(curr_time);
+			SetSteerHeading(curr_time);
 		}
 
-		else if (ShouldStartMoving()) {
-			StartMoving(curr_time);
+		else if (isMyTurnToMove()) {
+			SetSteerHeading(curr_time);
 		}
 
-		else if (isMoving && ShouldStopMoving()){
+		else if (isMoving && ShouldStopMoving(curr_time)){
 			StopMoving(curr_time);
 			TellNextRobotToStartMoving();
 		}
 
+		else if (isMoving){
+
+		}
+
+//		if(curr_time > 4500)
+//		{
+//			abstract_robot.setSpeed(curr_time, 0);
+//		}
 
 //		if(curr_time == 0 && id == 0) {
 //
@@ -210,216 +289,7 @@ public class containment extends ControlSystemMFN150 {
 //				abstract_robot.setSpeed(curr_time, 0.8);
 //			}
 //		}
-//
-//		// TURRET
-//		result = abstract_robot.getTurretHeading(curr_time);
-//		abstract_robot.setTurretHeading(curr_time, result);
 
 		return CSSTAT_OK;
-	}
-
-	/**
-	 * An obstacle, modelled as a left and right angle.
-	 */
-	class Obstacle extends Object {
-		/**
-		 * The left angle.
-		 */
-		private double left;
-
-		/**
-		 * The right angle.
-		 */
-		private double right;
-
-
-
-		/**
-		 * Creates an obstacle with the given boundaries.
-		 *
-		 * @param left left angle given in radians.
-		 * @param right right anfle given in radians.
-		 */
-		protected Obstacle(double left, double right) {
-			this.left = left;
-			this.right = right;
-		}
-
-		protected Obstacle(Vec2 g, Vec2 p, double r, double ownR) {
-			double cp = cross(g, p);
-			double d = ownR + r;
-			double t = g.t;
-			if (cp >= 0.0) {
-				if (p.r <= d) {
-					t = p.t - 1.1 * Math.PI / 2.0;
-				} else {
-					t -= Math.PI / 2.0;
-				}
-			} else {
-				if (p.r <= d) {
-					t = p.t + 1.1 * Math.PI / 2.0;
-				} else {
-					t += Math.PI / 2.0;
-				}
-			}
-			Vec2 v1 = new Vec2(d * Math.cos(t), d * Math.sin(t));
-			if (p.r > d) {
-				v1.add(p);
-			}
-			if (p.r <= d) {
-				if (cp >= 0) {
-					t = p.t + 1.1 * Math.PI / 2.0;
-				} else {
-					t = p.t - 1.1 * Math.PI / 2.0;
-				}
-			} else {
-				t = g.t + Math.PI;
-			}
-			Vec2 v2 = new Vec2(d * Math.cos(t), d * Math.sin(t));
-			if (p.r > d) {
-				v2.add(p);
-			}
-			if (cp >= 0.0) {
-				left = v2.t;
-				right = v1.t;
-			} else {
-				left = v1.t;
-				right = v2.t;
-			}
-		}
-
-
-		/**
-		 * @return the left boundary, in radians, of this obstacle.
-		 */
-		public double getLeft() {
-			return left;
-		}
-
-		/**
-		 * @return the right boundary, in radians, of this obstacle.
-		 */
-		public double getRight() {
-			return right;
-		}
-
-		/**
-		 * @param alpha an angle to check given in radians.
-		 *
-		 * @return <CODE>true</CODE> if this obstacle obscures the
-		 * given angle; <CODE>false</CODE> otherwise.
-		 */
-		protected boolean obscures(double alpha) {
-			if (left * right < 0.0) {
-				if (left > 0.0) {
-					return left > alpha && alpha > right;
-				} else {
-					return left > alpha || alpha > right;
-				}
-			} else if (left > right) {
-
-				return left > alpha && alpha > right;
-			} else {
-				return left > alpha || alpha > right;
-			}
-		}
-
-		/**
-		 * @param o an obstacle to compare with.
-		 *
-		 * @return -1 if this obstacle is completely to the left of
-		 * <CODE>o</CODE>, 1 if it is completely to the right, and 0
-		 * otherwise.
-		 */
-		protected int compare(Obstacle o) {
-			if (obscures(o.left) || obscures(o.right)
-					|| o.obscures(left) || o.obscures(right)) {
-				return 0;
-			} else {
-				return (angle(left, o.right) < angle(right, o.left)) ? 1 : -1;
-			}
-		}
-
-		/**
-		 * Merges this obstacle with the given obstacle.
-		 *
-		 * @param o obstacle to merge with.
-		 */
-		protected void merge(Obstacle o) {
-			if (o.obscures(left)) {
-				left = o.left;
-			}
-			if (o.obscures(right)) {
-				right = o.right;
-			}
-		}
-
-		/**
-		 * @return a string representation of this object.
-		 */
-		public String toString() {
-			return ("[" + rad2deg(left) + "," + rad2deg(right) + "]");
-		}
-	}
-
-	class ObstacleList extends Object {
-		private Vector obstacles;
-
-		protected ObstacleList() {
-			obstacles = new Vector();
-
-		}
-
-		protected int size() {
-			return obstacles.size();
-		}
-
-		protected Obstacle get(int i) {
-			return (Obstacle) obstacles.elementAt(i);
-		}
-
-		protected Obstacle getBoundaries() {
-			return new Obstacle(get(0).getLeft(), get(size() - 1).getRight());
-		}
-
-		protected void add(Obstacle o) {
-			if (obstacles.isEmpty()) {
-				obstacles.addElement(o);
-			} else {
-				for (int i = obstacles.size() - 1; i >= 0; i--) {
-					Obstacle tmp = (Obstacle) obstacles.elementAt(i);
-
-					int c = o.compare(tmp);
-					if (c < 0) {
-						obstacles.insertElementAt(tmp, i + 1);
-						if (i == 0) {
-							obstacles.setElementAt(o, 0);
-						}
-					} else if (c > 0) {
-						obstacles.insertElementAt(o, i + 1);
-						break;
-					} else {
-						tmp.merge(o);
-						if (i > 0) {
-							obstacles.removeElement(tmp);
-							o = tmp;
-						}
-					}
-				}
-			}
-		}
-
-		public String toString() {
-			StringBuffer sb = new StringBuffer();
-			sb.append('{');
-			if (size() > 0) {
-				sb.append(get(0));
-				for (int i = 1; i < size(); i++) {
-					sb.append(' ').append(get(i));
-				}
-			}
-			sb.append('}');
-			return sb.toString();
-		}
 	}
 }
