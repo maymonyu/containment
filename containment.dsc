@@ -145,17 +145,15 @@ robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
 
 // Up
 robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
-    containment -1 2 4.712388981 x000000 xFF0000 2
+    containment 1 2 4.712388981 x000000 xFF0000 2
 
 robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
-    containment 1 2 4.712388981 x000000 xFF0000 2
+    containment -1 2 4.712388981 x000000 xFF0000 2
 
 
 // Left
 robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
-	containment -2 -1 0 x000000 xFF0000 2
-
-robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
 	containment -2 1 0 x000000 xFF0000 2
 
-
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment -2 -1 0 x000000 xFF0000 2

@@ -105,16 +105,34 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private double CalculateSteerHeading(long time){
-		System.out.println("CalculateSteerHeading");
+//		System.out.println("CalculateSteerHeading");
 
 		int rightNeighbourId = GetRightNeighbourId();
 
 		Vec2 reachingPoint = abstract_robot.GetTopPoint(time, rightNeighbourId);
+		System.out.println(id + " - reachingPoint = " + reachingPoint);
 
 		Vec2 position = abstract_robot.getPosition(time);
 //		System.out.println("position: " + position.x + " " + position.y);
 
-		double incline = (position.y - reachingPoint.y) / (position.x - reachingPoint.x);
+		double incline = 0;
+
+		if (position.x == reachingPoint.x){
+			if (position.y < reachingPoint.y){
+				return Math.PI / 2;
+			}
+			else{
+				return -Math.PI / 2;
+			}
+		}
+
+		incline = (reachingPoint.y - position.y) / (reachingPoint.x - position.x);
+		if(position.x > reachingPoint.x){
+			incline = -1 * incline;
+		}
+//		else {
+//			incline = (position.y - reachingPoint.y) / (position.x - reachingPoint.x);
+//		}
 //		System.out.println("incline: " + incline);
 
 		double angle = Math.atan(incline);
@@ -124,8 +142,12 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private void SetSteerHeading(long time){
+		System.out.println(id + ": SetSteerHeading");
+
 		steerHeading = CalculateSteerHeading(time);
 		abstract_robot.setSteerHeading(0L, steerHeading);
+
+		System.out.println(id + " - steerHeading = " + steerHeading);
 
 		waitingForSteerHeading = true;
 	}
@@ -150,9 +172,13 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private boolean ShouldStopMoving(long time){
-		System.out.println("ShouldStopMoving");
+//		System.out.println("ShouldStopMoving");
+
 		Vec2 leftFovPoint = abstract_robot.GetLeftPoint(time, id);
 		Vec2 rightFovPoint = abstract_robot.GetRightPoint(time, id);
+//
+//		System.out.println("left point: x = " + leftFovPoint.x + ", y = " + leftFovPoint.y);
+//		System.out.println("right point: x = " + rightFovPoint.x + ", y = " + rightFovPoint.y);
 
 		int leftNeighbourId = GetLeftNeighbourId();
 		int rightNeighbourId = GetRightNeighbourId();
@@ -165,9 +191,8 @@ public class containment extends ControlSystemMFN150 {
 
 		boolean shouldStop = !isWithinLeftNeighbour || !isWithinRightNeighbour;
 
-		System.out.println("id: " + id);
-		System.out.println("isWithinLeftNeighbour: " + isWithinLeftNeighbour);
-		System.out.println("isWithinRightNeighbour: " + isWithinRightNeighbour);
+//		System.out.println("isWithinLeftNeighbour: " + isWithinLeftNeighbour);
+//		System.out.println("isWithinRightNeighbour: " + isWithinRightNeighbour);
 
 		return shouldStop;
 	}
@@ -182,8 +207,10 @@ public class containment extends ControlSystemMFN150 {
 		return time == 0 && id == 0;
 	}
 
-	private boolean isMyTurnToMove(){
+	private boolean IsMyTurnToMove(){
 		if (messages.hasMoreElements()) {
+			System.out.println("Yes! " + id);
+
 			Message message = (Message) messages.nextElement();
 			return true;
 		}
@@ -216,6 +243,8 @@ public class containment extends ControlSystemMFN150 {
 		abstract_robot.setTurretHeading(curr_time, result);
 
 		if(waitingForSteerHeading){
+//			System.out.println(id + ": waitingForSteerHeading");
+
 			if(IsSteerReady(curr_time)){
 				waitingForSteerHeading = false;
 				StartMoving(curr_time);
@@ -228,7 +257,7 @@ public class containment extends ControlSystemMFN150 {
 			SetSteerHeading(curr_time);
 		}
 
-		else if (isMyTurnToMove()) {
+		else if (IsMyTurnToMove()) {
 			SetSteerHeading(curr_time);
 		}
 
@@ -237,9 +266,6 @@ public class containment extends ControlSystemMFN150 {
 			TellNextRobotToStartMoving();
 		}
 
-		else if (isMoving){
-
-		}
 
 //		if(curr_time > 4500)
 //		{
