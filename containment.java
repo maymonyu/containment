@@ -127,15 +127,14 @@ public class containment extends ControlSystemMFN150 {
 		}
 
 		incline = (reachingPoint.y - position.y) / (reachingPoint.x - position.x);
-		if(position.x > reachingPoint.x){
-			incline = -1 * incline;
-		}
-//		else {
-//			incline = (position.y - reachingPoint.y) / (position.x - reachingPoint.x);
-//		}
-//		System.out.println("incline: " + incline);
+		System.out.println("incline: " + incline);
 
 		double angle = Math.atan(incline);
+
+		if(position.x > reachingPoint.x){
+			angle = angle + Math.PI;
+		}
+
 //		System.out.println("angle: " + angle);
 
 		return angle;
@@ -199,8 +198,19 @@ public class containment extends ControlSystemMFN150 {
 
 	private boolean IsSteerReady(long time){
 		double currentSteerHeading = abstract_robot.getSteerHeading(time);
+		System.out.println(id + ": " + currentSteerHeading + " -> " + steerHeading);
+		System.out.println(id + ": " + currentSteerHeading % Math.PI + " -> " + steerHeading % Math.PI);
 
-		return currentSteerHeading == steerHeading;
+		double adjustedSteerHeading = steerHeading;
+		if(steerHeading < 0){
+			adjustedSteerHeading = Math.PI + steerHeading;
+		}
+
+		double diff = currentSteerHeading % Math.PI - adjustedSteerHeading % Math.PI;
+
+		double epsilon = 0.00000001;
+
+		return Math.abs(diff) < epsilon;
 	}
 
 	private boolean IsFirstToRun(long time){
@@ -243,7 +253,7 @@ public class containment extends ControlSystemMFN150 {
 		abstract_robot.setTurretHeading(curr_time, result);
 
 		if(waitingForSteerHeading){
-//			System.out.println(id + ": waitingForSteerHeading");
+			System.out.println(id + ": waitingForSteerHeading");
 
 			if(IsSteerReady(curr_time)){
 				waitingForSteerHeading = false;
