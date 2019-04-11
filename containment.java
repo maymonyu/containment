@@ -244,10 +244,6 @@ public class containment extends ControlSystemMFN150 {
 		Message message;
 		long curr_time = abstract_robot.getTime();
 
-		// STEER
-//		result = abstract_robot.getSteerHeading(curr_time);
-//		abstract_robot.setSteerHeading(curr_time, result);
-
 		// TURRET
 		result = abstract_robot.getTurretHeading(curr_time);
 		abstract_robot.setTurretHeading(curr_time, result);
@@ -275,56 +271,6 @@ public class containment extends ControlSystemMFN150 {
 			StopMoving(curr_time);
 			TellNextRobotToStartMoving();
 		}
-
-
-//		if(curr_time > 4500)
-//		{
-//			abstract_robot.setSpeed(curr_time, 0);
-//		}
-
-//		if(curr_time == 0 && id == 0) {
-//
-//			// STEER
-//			result = abstract_robot.getSteerHeading(curr_time);
-//			abstract_robot.setSteerHeading(curr_time, Math.PI);
-//			abstract_robot.setSpeed(curr_time, 0.8);
-//
-//			if(curr_time == 10000) {
-//
-//				// STOP
-//				abstract_robot.setSpeed(curr_time, 0);
-//
-//				// Tell the next robot to move
-//				try{
-//					abstract_robot.unicast(1, new Message());
-//				}
-//				catch (CommunicationException ex){
-//				}
-//			}
-//
-//			if(curr_time == 11000){
-//
-//				// Tell the next robot to Stop
-//				try{
-//					abstract_robot.unicast(1, new TerminateMessage());
-//				}
-//				catch (CommunicationException ex){
-//				}
-//			}
-//		}
-//
-//		if (messages.hasMoreElements()) {
-//			System.out.println(id + ": Message");
-//			message = (Message) messages.nextElement();
-//
-//			if(message instanceof TerminateMessage){
-//				abstract_robot.setSpeed(curr_time, 0);
-//			}
-//			else{
-//				abstract_robot.setSteerHeading(curr_time, 0);
-//				abstract_robot.setSpeed(curr_time, 0.8);
-//			}
-//		}
 
 		return CSSTAT_OK;
 	}
