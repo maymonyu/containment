@@ -29,8 +29,6 @@ import java.io.Writer;
 public class AutoDscGenerator
 {
     private static void copyFileUsingChannel(File src, File dest) throws IOException {
-        System.out.println("mmmmmm :)");
-
         FileChannel sourceChannel = null;
         FileChannel destinationChannel = null;
         try {
@@ -47,6 +45,31 @@ public class AutoDscGenerator
         }
     }
 
+    private static double calculateDistance(int[] point1, int[] point2){
+        double dx = point1[0] - point2[0];
+        double dy = point1[1] - point2[1];
+
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    private static double[][] generateRobots(int [][] polygonVertices){
+        double FOV_DISTANCE = 1;
+        int numOfVertices = polygonVertices.length;
+
+        for(int i=0; i<numOfVertices; i++){
+            int [] currVertex = polygonVertices[i];
+            int [] nextVertex = polygonVertices[(i+1) % numOfVertices];
+
+            double distance = calculateDistance(currVertex, nextVertex);
+            int numOfRobotsToCoverEdge = (int) Math.ceil(distance / (2 * FOV_DISTANCE));
+
+            for(int j=0; j<numOfRobotsToCoverEdge; j++){
+
+            }
+        }
+
+        return new double[1][1];
+    }
 
     public static void main(String[] args)
     {
@@ -56,9 +79,17 @@ public class AutoDscGenerator
         try {
             copyFileUsingChannel(new File("descPrefix.txt"), new File(filename));
 
-            Writer output = new BufferedWriter(new FileWriter(filename, true));
-            output.append("New Line!");
-            output.close();
+            Writer outputFile = new BufferedWriter(new FileWriter(filename, true));
+
+            Polygen gen = new Polygen();
+            gen.render();
+            int[][][] coordinates = gen.getCoordinates();
+
+            double [][] robots = generateRobots(coordinates[0]);
+
+            outputFile.append("New Line!");
+
+            outputFile.close();
         }
         catch (Exception ex) {
         }
