@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.util.*;
 
 
 public class AutoDscGenerator
@@ -52,9 +53,61 @@ public class AutoDscGenerator
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    private static double[][] generateRobots(int [][] polygonVertices){
+//    private Vec2 GetRightPoint(long time, int robotId){
+//        SimpleN150Sim robot = GetRobot(robotId);
+//
+//        double radius = MultiForageN150.VISION_RANGE;
+//
+//        double radAngle = robot.getTurretHeading(time);
+//        radAngle -= Math.PI / 2;
+//
+////		System.out.println("radAngle: " + radAngle);
+//
+//        return GetPointByDistanceAndRadians(radius, radAngle, robot.getPosition());
+//    }
+
+    private static Vec2 GetPointByDistanceAndRadians(double distance, double radians, Vec2 position){
+        double x = distance * Math.cos(radians) + position.x;
+        double y = distance * Math.sin(radians) + position.y;
+
+//		System.out.println("x = " + x + ", y = " + y);
+
+        return new Vec2(x, y);
+    }
+
+    private static double calculateRadianIncline(double [] first, double [] second){
+        double incline = 0;
+
+        Vec2 position = new Vec2(first[0], first[1]);
+        Vec2 reachingPoint = new Vec2(second[0], second[1]);
+
+        if (position.x == reachingPoint.x){
+            if (position.y < reachingPoint.y){
+                return Math.PI / 2;
+            }
+            else{
+                return -Math.PI / 2;
+            }
+        }
+
+        incline = (reachingPoint.y - position.y) / (reachingPoint.x - position.x);
+        System.out.println("incline: " + incline);
+
+        double angle = Math.atan(incline);
+
+        if(position.x > reachingPoint.x){
+            angle = angle + Math.PI;
+        }
+
+//		System.out.println("angle: " + angle);
+
+        return angle;
+    }
+
+    private static List<Vec2> generateRobots(int [][] polygonVertices){
         double FOV_DISTANCE = 1;
         int numOfVertices = polygonVertices.length;
+        List<Vec2> robotsLocations = new ArrayList<Vec2>();
 
         for(int i=0; i<numOfVertices; i++){
             int [] currVertex = polygonVertices[i];
@@ -63,12 +116,26 @@ public class AutoDscGenerator
             double distance = calculateDistance(currVertex, nextVertex);
             int numOfRobotsToCoverEdge = (int) Math.ceil(distance / (2 * FOV_DISTANCE));
 
-            for(int j=0; j<numOfRobotsToCoverEdge; j++){
+            double [] currLocation = new double[]{ currVertex[0], currVertex[1]};
+            double [] nextLocation = new double[]{ nextVertex[0], nextVertex[1]};
 
+            Vec2 currLocationAsVec = new Vec2(currLocation[0], currLocation[1]);
+
+            double radianIncline = calculateRadianIncline(currLocation, nextLocation);
+
+            for(int j=0; j<numOfRobotsToCoverEdge; j++){
+                double distanceBetweenRobots = 2 * FOV_DISTANCE;
+                if(j == 0) distanceBetweenRobots = FOV_DISTANCE;
+
+                Vec2 robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocationAsVec);
+
+                robotsLocations.add(robotLocation);
+
+                currLocationAsVec = robotLocation;
             }
         }
 
-        return new double[1][1];
+        return robotsLocations;
     }
 
     public static void main(String[] args)
@@ -85,7 +152,7 @@ public class AutoDscGenerator
             gen.render();
             int[][][] coordinates = gen.getCoordinates();
 
-            double [][] robots = generateRobots(coordinates[0]);
+            List<Vec2> robots = generateRobots(coordinates[0]);
 
             outputFile.append("New Line!");
 
