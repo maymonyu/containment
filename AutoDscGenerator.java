@@ -46,9 +46,9 @@ public class AutoDscGenerator
         }
     }
 
-    private static double calculateDistance(int[] point1, int[] point2){
-        double dx = point1[0] - point2[0];
-        double dy = point1[1] - point2[1];
+    private static double calculateDistance(Vec2 point1, Vec2 point2){
+        double dx = point1.x- point2.x;
+        double dy = point1.y - point2.y;
 
         return Math.sqrt(dx * dx + dy * dy);
     }
@@ -75,11 +75,8 @@ public class AutoDscGenerator
         return new Vec2(x, y);
     }
 
-    private static double calculateRadianIncline(double [] first, double [] second){
+    private static double calculateRadianIncline(Vec2 position, Vec2 reachingPoint){
         double incline = 0;
-
-        Vec2 position = new Vec2(first[0], first[1]);
-        Vec2 reachingPoint = new Vec2(second[0], second[1]);
 
         if (position.x == reachingPoint.x){
             if (position.y < reachingPoint.y){
@@ -104,38 +101,60 @@ public class AutoDscGenerator
         return angle;
     }
 
-    private static List<Vec2> generateRobots(int [][] polygonVertices){
-        double FOV_DISTANCE = 1;
+    private static List<Vec2> generateRobots(Vec2 [] polygonVertices){
+        final double FOV_DISTANCE = 1;
         int numOfVertices = polygonVertices.length;
         List<Vec2> robotsLocations = new ArrayList<Vec2>();
 
         for(int i=0; i<numOfVertices; i++){
-            int [] currVertex = polygonVertices[i];
-            int [] nextVertex = polygonVertices[(i+1) % numOfVertices];
+            Vec2 currVertex = polygonVertices[i];
+            Vec2 nextVertex = polygonVertices[(i+1) % numOfVertices];
 
             double distance = calculateDistance(currVertex, nextVertex);
             int numOfRobotsToCoverEdge = (int) Math.ceil(distance / (2 * FOV_DISTANCE));
 
-            double [] currLocation = new double[]{ currVertex[0], currVertex[1]};
-            double [] nextLocation = new double[]{ nextVertex[0], nextVertex[1]};
+            Vec2 currLocation = currVertex;
 
-            Vec2 currLocationAsVec = new Vec2(currLocation[0], currLocation[1]);
+            double radianIncline = calculateRadianIncline(currVertex, nextVertex);
 
-            double radianIncline = calculateRadianIncline(currLocation, nextLocation);
-
-            for(int j=0; j<numOfRobotsToCoverEdge; j++){
+            for(int j = 0; j < numOfRobotsToCoverEdge; j++){
                 double distanceBetweenRobots = 2 * FOV_DISTANCE;
                 if(j == 0) distanceBetweenRobots = FOV_DISTANCE;
 
-                Vec2 robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocationAsVec);
+                Vec2 robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
 
                 robotsLocations.add(robotLocation);
 
-                currLocationAsVec = robotLocation;
+                currLocation = robotLocation;
             }
         }
 
         return robotsLocations;
+    }
+
+    private static Vec2[] generatePolygonVertices(int [][] coordinates){
+        Vec2 [] verticesArray = new Vec2[coordinates.length];
+
+        for(int i=0; i < coordinates.length; i++){
+            int [] currCoordinate = coordinates[i];
+            verticesArray[i] = new Vec2(currCoordinate[0], currCoordinate[1]);
+        }
+
+        return verticesArray;
+    }
+
+    private static String [] getRobotDefinitions(List<Vec2> robotsLocations){
+        String [] robotsDefinitions = new String[robotsLocations.size()];
+
+        for (int i=0; i<robotsLocations.size(); i++){
+            Vec2 currRobotLocation = robotsLocations.get(i);
+            robotsDefinitions[i] = String.format(
+                    "robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim\n" +
+                    "\tcontainment %s %s %s x000000 xFF0000 2",
+                    currRobotLocation.x, currRobotLocation.y, currRobotLocation.t);
+        }
+
+        return robotsDefinitions;
     }
 
     public static void main(String[] args)
@@ -152,7 +171,11 @@ public class AutoDscGenerator
             gen.render();
             int[][][] coordinates = gen.getCoordinates();
 
-            List<Vec2> robots = generateRobots(coordinates[0]);
+            Vec2 [] polygonVertices = generatePolygonVertices(coordinates[0]);
+
+            List<Vec2> robots = generateRobots(polygonVertices);
+
+            String [] robotsDefinitions = getRobotDefinitions(robots);
 
             outputFile.append("New Line!");
 
