@@ -122,6 +122,7 @@ public class AutoDscGenerator
                 if(j == 0) distanceBetweenRobots = FOV_DISTANCE;
 
                 Vec2 robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
+                robotLocation.t = radianIncline + Math.PI / 2;
 
                 robotsLocations.add(robotLocation);
 
@@ -157,17 +158,65 @@ public class AutoDscGenerator
         return robotsDefinitions;
     }
 
+    private static String [] getBounds(List<Vec2> robots){
+        double minX = Double.POSITIVE_INFINITY;
+        double minY = Double.POSITIVE_INFINITY;
+        double maxX = Double.POSITIVE_INFINITY * -1;
+        double maxY = Double.POSITIVE_INFINITY * -1;
+
+        for(int i=0; i<robots.size(); i++){
+            Vec2 robot = robots.get(i);
+            if(robot.x < minX) minX = robot.x;
+            if(robot.y < minY) minY = robot.y;
+
+            if(robot.x > maxX) maxX = robot.x;
+            if(robot.y > maxY) maxY = robot.y;
+        }
+        minX -= 10;
+        minY -= 10;
+        maxX += 10;
+        maxY += 10;
+
+        return new String[]{Double.toString(minX), Double.toString(maxX), Double.toString(minY), Double.toString(maxY)};
+    }
+
+    private static void writeLinesToFile(Writer file, String[] lines){
+        try {
+            file.append("\n");
+
+            for (int i = 0; i < lines.length; i++) {
+                file.append(lines[i]);
+                file.append("\n");
+            }
+        } catch (Exception ex){
+
+        }
+    }
+
+    private static void writeBounds(Writer file, String[] bounds){
+        try {
+            file.append("\n");
+            file.append("bounds ");
+
+            for (int i = 0; i < bounds.length; i++) {
+                file.append(bounds[i]);
+                file.append(" ");
+            }
+        } catch (Exception ex){
+
+        }
+    }
+
     public static void main(String[] args)
     {
         String filename = "containment2.dsc";
-        System.out.println("Auto !");
 
         try {
             copyFileUsingChannel(new File("descPrefix.txt"), new File(filename));
 
             Writer outputFile = new BufferedWriter(new FileWriter(filename, true));
 
-            Polygen gen = new Polygen();
+            Polygen gen = new Polygen(100);
             gen.render();
             int[][][] coordinates = gen.getCoordinates();
 
@@ -177,7 +226,11 @@ public class AutoDscGenerator
 
             String [] robotsDefinitions = getRobotDefinitions(robots);
 
-            outputFile.append("New Line!");
+            writeLinesToFile(outputFile, robotsDefinitions);
+
+            String [] bounds = getBounds(robots);
+
+            writeBounds(outputFile, bounds);
 
             outputFile.close();
         }

@@ -1,21 +1,3 @@
-// This is an example description file for specifying the environment
-// when using TBSim.
-
-
-//======
-// SIMULATION BOUNDARY
-//======
-//
-// bounds left right bottom top
-//
-// bounds statements set the bounds of the visible "playing field" in
-// meters for a simulation.   If the aspect ratio of the bounds are not
-// the same as the graphical area set aside by the simulation, then
-// the robots may wander off the screen.
-
-bounds -10 10 -10 10
-
-
 //======
 // SEED
 //======
