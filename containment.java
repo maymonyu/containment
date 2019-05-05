@@ -110,7 +110,7 @@ public class containment extends ControlSystemMFN150 {
 		int rightNeighbourId = GetRightNeighbourId();
 
 		Vec2 reachingPoint = abstract_robot.GetTopPoint(time, rightNeighbourId);
-		System.out.println(id + " - reachingPoint = " + reachingPoint);
+//		System.out.println(id + " - reachingPoint = " + reachingPoint);
 
 		Vec2 position = abstract_robot.getPosition(time);
 //		System.out.println("position: " + position.x + " " + position.y);
@@ -127,7 +127,7 @@ public class containment extends ControlSystemMFN150 {
 		}
 
 		incline = (reachingPoint.y - position.y) / (reachingPoint.x - position.x);
-		System.out.println("incline: " + incline);
+//		System.out.println("incline: " + incline);
 
 		double angle = Math.atan(incline);
 
@@ -141,12 +141,12 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private void SetSteerHeading(long time){
-		System.out.println(id + ": SetSteerHeading");
+//		System.out.println(id + ": SetSteerHeading");
 
 		steerHeading = CalculateSteerHeading(time);
 		abstract_robot.setSteerHeading(0L, steerHeading);
 
-		System.out.println(id + " - steerHeading = " + steerHeading);
+//		System.out.println(id + " - steerHeading = " + steerHeading);
 
 		waitingForSteerHeading = true;
 	}
@@ -198,8 +198,8 @@ public class containment extends ControlSystemMFN150 {
 
 	private boolean IsSteerReady(long time){
 		double currentSteerHeading = abstract_robot.getSteerHeading(time);
-		System.out.println(id + ": " + currentSteerHeading + " -> " + steerHeading);
-		System.out.println(id + ": " + currentSteerHeading % Math.PI + " -> " + steerHeading % Math.PI);
+//		System.out.println(id + ": " + currentSteerHeading + " -> " + steerHeading);
+//		System.out.println(id + ": " + currentSteerHeading % Math.PI + " -> " + steerHeading % Math.PI);
 
 		double adjustedSteerHeading = steerHeading;
 		if(steerHeading < 0){
@@ -219,7 +219,7 @@ public class containment extends ControlSystemMFN150 {
 
 	private boolean IsMyTurnToMove(){
 		if (messages.hasMoreElements()) {
-			System.out.println("Yes! " + id);
+//			System.out.println("Yes! " + id);
 
 			Message message = (Message) messages.nextElement();
 			return true;
@@ -249,8 +249,6 @@ public class containment extends ControlSystemMFN150 {
 		abstract_robot.setTurretHeading(curr_time, result);
 
 		if(waitingForSteerHeading){
-			System.out.println(id + ": waitingForSteerHeading");
-
 			if(IsSteerReady(curr_time)){
 				waitingForSteerHeading = false;
 				StartMoving(curr_time);

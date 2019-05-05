@@ -101,22 +101,61 @@ public class AutoDscGenerator
         return angle;
     }
 
+    private static List<Vec2> getCircleLineIntersectionPoint(Vec2 pointA,
+                                                             Vec2 pointB, Vec2 center, double radius) {
+        double baX = pointB.x - pointA.x;
+        double baY = pointB.y - pointA.y;
+        double caX = center.x - pointA.x;
+        double caY = center.y - pointA.y;
+
+        double a = baX * baX + baY * baY;
+        double bBy2 = baX * caX + baY * caY;
+        double c = caX * caX + caY * caY - radius * radius;
+
+        double pBy2 = bBy2 / a;
+        double q = c / a;
+
+        double disc = pBy2 * pBy2 - q;
+        if (disc < 0) {
+            return Collections.emptyList();
+        }
+        // if disc == 0 ... dealt with later
+        double tmpSqrt = Math.sqrt(disc);
+        double abScalingFactor1 = -pBy2 + tmpSqrt;
+        double abScalingFactor2 = -pBy2 - tmpSqrt;
+
+        Vec2 p1 = new Vec2(pointA.x - baX * abScalingFactor1, pointA.y
+                - baY * abScalingFactor1);
+        if (disc == 0) { // abScalingFactor1 == abScalingFactor2
+            return Collections.singletonList(p1);
+        }
+        Vec2 p2 = new Vec2(pointA.x - baX * abScalingFactor2, pointA.y
+                - baY * abScalingFactor2);
+        return Arrays.asList(p1, p2);
+    }
+
     private static List<Vec2> generateRobots(Vec2 [] polygonVertices){
-        final double FOV_DISTANCE = 1;
+        final double FOV_DISTANCE = 3;
         int numOfVertices = polygonVertices.length;
         List<Vec2> robotsLocations = new ArrayList<Vec2>();
+        Vec2 lastRobotLocationOnSegment = null;
 
         for(int i=0; i<numOfVertices; i++){
             Vec2 currVertex = polygonVertices[i];
             Vec2 nextVertex = polygonVertices[(i+1) % numOfVertices];
 
+            double radianIncline = calculateRadianIncline(currVertex, nextVertex);
+            double robotHeading = radianIncline + Math.PI / 2;
+
+            if(lastRobotLocationOnSegment != null){
+                currVertex = getCircleLineIntersectionPoint(currVertex,
+                        nextVertex, lastRobotLocationOnSegment, FOV_DISTANCE).get(1);
+            }
+
             double distance = calculateDistance(currVertex, nextVertex);
             int numOfRobotsToCoverEdge = (int) Math.ceil(distance / (2 * FOV_DISTANCE));
 
             Vec2 currLocation = currVertex;
-
-            double radianIncline = calculateRadianIncline(currVertex, nextVertex);
-            double robotHeading = radianIncline + Math.PI / 2;
 
             for(int j = 0; j < numOfRobotsToCoverEdge; j++){
                 double distanceBetweenRobots = 2 * FOV_DISTANCE;
@@ -135,6 +174,8 @@ public class AutoDscGenerator
 
                 currLocation = robotLocation;
             }
+
+            lastRobotLocationOnSegment = robotsLocations.get(robotsLocations.size() - 1);
         }
 
         return robotsLocations;
@@ -179,10 +220,10 @@ public class AutoDscGenerator
             if(robot.x > maxX) maxX = robot.x;
             if(robot.y > maxY) maxY = robot.y;
         }
-        minX -= 10;
-        minY -= 10;
-        maxX += 10;
-        maxY += 10;
+        minX -= 15;
+        minY -= 15;
+        maxX += 15;
+        maxY += 15;
 
         return new String[]{Double.toString(minX), Double.toString(maxX), Double.toString(minY), Double.toString(maxY)};
     }
