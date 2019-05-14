@@ -104,21 +104,11 @@ public class containment extends ControlSystemMFN150 {
 		return (id + 1) % numberOfRobots;
 	}
 
-	private double CalculateSteerHeading(long time){
-		System.out.println("CalculateSteerHeading");
-
-		int rightNeighbourId = GetRightNeighbourId();
-
-		Vec2 reachingPoint = abstract_robot.GetTopPoint(time, rightNeighbourId);
-		System.out.println(id + " - reachingPoint = " + reachingPoint);
-
-		Vec2 position = abstract_robot.getPosition(time);
-		System.out.println("position: " + position.x + " " + position.y);
-
+	private double getDirectionAngleOf2Points(Vec2 from, Vec2 to){
 		double incline = 0;
 
-		if (position.x == reachingPoint.x){
-			if (position.y < reachingPoint.y){
+		if (from.x == to.x){
+			if (from.y < to.y){
 				return Math.PI / 2;
 			}
 			else{
@@ -126,18 +116,32 @@ public class containment extends ControlSystemMFN150 {
 			}
 		}
 
-		incline = (reachingPoint.y - position.y) / (reachingPoint.x - position.x);
+		incline = (to.y - from.y) / (to.x - from.x);
 //		System.out.println("incline: " + incline);
 
 		double angle = Math.atan(incline);
 
-		if(position.x > reachingPoint.x){
+		if(from.x > to.x){
 			angle = angle + Math.PI;
 		}
 
-		System.out.println("angle: " + angle);
+//		System.out.println("angle: " + angle);
 
 		return angle;
+	}
+
+	private double CalculateSteerHeading(long time){
+//		System.out.println("CalculateSteerHeading");
+
+		int rightNeighbourId = GetRightNeighbourId();
+
+		Vec2 reachingPoint = abstract_robot.GetTopPoint(time, rightNeighbourId);
+//		System.out.println(id + " - reachingPoint = " + reachingPoint);
+
+		Vec2 position = abstract_robot.getPosition(time);
+//		System.out.println("position: " + position.x + " " + position.y);
+
+		return getDirectionAngleOf2Points(position, reachingPoint);
 	}
 
 	private void SetSteerHeading(long time){
@@ -182,8 +186,20 @@ public class containment extends ControlSystemMFN150 {
 		return distanceSquared <= Math.pow(first.radius + second.radius, 2);
 	}
 
+	// find incline, and check if its between steer+-pi/2
+	private boolean isPointWithinFOV(Vec2 intersectionPoint, FOV fov){
+		 double directionFromFovToIntersectionPoint = getDirectionAngleOf2Points(fov.circle.centre, intersectionPoint);
+		 directionFromFovToIntersectionPoint = normalizeRadian(directionFromFovToIntersectionPoint);
+
+		 double fovSteerHeading = normalizeRadian(fov.steerHeading);
+
+		 return directionFromFovToIntersectionPoint <= fovSteerHeading + (Math.PI / 2)
+				 && directionFromFovToIntersectionPoint >= fovSteerHeading - (Math.PI / 2);
+	}
+
 	private boolean isPointWithinFOVs(Vec2 intersectionPoint, FOV first, FOV second){
-		return true;
+		return isPointWithinFOV(intersectionPoint, first)
+				&& isPointWithinFOV(intersectionPoint, second);
 	}
 
 	private boolean areSemiCirclesCollide(FOV first, FOV second){
@@ -209,8 +225,8 @@ public class containment extends ControlSystemMFN150 {
 	private boolean ShouldStopMoving(long time){
 //		System.out.println("ShouldStopMoving");
 
-		Vec2 leftFovPoint = abstract_robot.GetLeftPoint(time, id);
-		Vec2 rightFovPoint = abstract_robot.GetRightPoint(time, id);
+//		Vec2 leftFovPoint = abstract_robot.GetLeftPoint(time, id);
+//		Vec2 rightFovPoint = abstract_robot.GetRightPoint(time, id);
 
 //		System.out.println("left point: x = " + leftFovPoint.x + ", y = " + leftFovPoint.y);
 //		System.out.println("right point: x = " + rightFovPoint.x + ", y = " + rightFovPoint.y);
@@ -243,6 +259,16 @@ public class containment extends ControlSystemMFN150 {
 //		System.out.println("isWithinRightNeighbour: " + isWithinRightNeighbour);
 
 		return shouldStop;
+	}
+
+	private double normalizeRadian(double radian){
+		double t = radian;
+		double PI2	= 2.0 * Math.PI;
+
+		while (t > PI2) t = t - PI2;
+		while (t < 0)   t = t + PI2;
+
+		return t;
 	}
 
 	private boolean IsSteerReady(long time){

@@ -161,11 +161,11 @@ public class AutoDscGenerator
                 double distanceBetweenRobots = 2 * FOV_DISTANCE;
                 if(j == 0) distanceBetweenRobots = FOV_DISTANCE;
 
-                if(j == numOfRobotsToCoverEdge - 1){
-                    distanceBetweenRobots = FOV_DISTANCE;
-                    radianIncline = radianIncline - Math.PI;
-                    currLocation = nextVertex;
-                }
+//                if(j == numOfRobotsToCoverEdge - 1){
+//                    distanceBetweenRobots = FOV_DISTANCE;
+//                    radianIncline = radianIncline - Math.PI;
+//                    currLocation = nextVertex;
+//                }
 
                 Vec2 robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
                 robotLocation.t = robotHeading;
