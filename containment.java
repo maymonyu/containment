@@ -105,15 +105,15 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private double CalculateSteerHeading(long time){
-//		System.out.println("CalculateSteerHeading");
+		System.out.println("CalculateSteerHeading");
 
 		int rightNeighbourId = GetRightNeighbourId();
 
 		Vec2 reachingPoint = abstract_robot.GetTopPoint(time, rightNeighbourId);
-//		System.out.println(id + " - reachingPoint = " + reachingPoint);
+		System.out.println(id + " - reachingPoint = " + reachingPoint);
 
 		Vec2 position = abstract_robot.getPosition(time);
-//		System.out.println("position: " + position.x + " " + position.y);
+		System.out.println("position: " + position.x + " " + position.y);
 
 		double incline = 0;
 
@@ -135,7 +135,7 @@ public class containment extends ControlSystemMFN150 {
 			angle = angle + Math.PI;
 		}
 
-//		System.out.println("angle: " + angle);
+		System.out.println("angle: " + angle);
 
 		return angle;
 	}
@@ -170,25 +170,74 @@ public class containment extends ControlSystemMFN150 {
 		return distance < circle.radius;
 	}
 
+	private boolean areCirclesCollide(Circle2 first, Circle2 second){
+		Vec2 firstCentre = first.centre;
+		Vec2 secondCentre = second.centre;
+
+		double xDif = firstCentre.x - secondCentre.x;
+		double yDif = firstCentre.y - secondCentre.y;
+
+		double distanceSquared = xDif * xDif + yDif * yDif;
+
+		return distanceSquared <= Math.pow(first.radius + second.radius, 2);
+	}
+
+	private boolean isPointWithinFOVs(Vec2 intersectionPoint, FOV first, FOV second){
+		return true;
+	}
+
+	private boolean areSemiCirclesCollide(FOV first, FOV second){
+		Circle firstCircle = new Circle(first.circle);
+		Circle secondCircle = new Circle(second.circle);
+
+		CircleCircleIntersection circleCircleIntersection = new CircleCircleIntersection(firstCircle, secondCircle);
+		Vector2 [] intersectionPoints = circleCircleIntersection.getIntersectionPoints();
+
+		for (int i=0; i<intersectionPoints.length; i++){
+			Vector2 intersectionPoint = intersectionPoints[i];
+			Vec2 intersectionPointVec2 = new Vec2(intersectionPoint.x, intersectionPoint.y);
+
+			if (isPointWithinFOVs(intersectionPointVec2, first, second)){
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
 	private boolean ShouldStopMoving(long time){
 //		System.out.println("ShouldStopMoving");
 
 		Vec2 leftFovPoint = abstract_robot.GetLeftPoint(time, id);
 		Vec2 rightFovPoint = abstract_robot.GetRightPoint(time, id);
-//
+
 //		System.out.println("left point: x = " + leftFovPoint.x + ", y = " + leftFovPoint.y);
 //		System.out.println("right point: x = " + rightFovPoint.x + ", y = " + rightFovPoint.y);
 
 		int leftNeighbourId = GetLeftNeighbourId();
 		int rightNeighbourId = GetRightNeighbourId();
 
-		Circle2 leftNeighbourFOV = abstract_robot.GetFOV(leftNeighbourId);
-		Circle2 rightNeighbourFOV= abstract_robot.GetFOV(rightNeighbourId);
+		Circle2 robotFOVCircle = abstract_robot.GetFOV(id);
+		FOV robotFOV = new FOV(robotFOVCircle, steerHeading);
 
-		boolean isWithinLeftNeighbour = IsPointWithinCircle(leftFovPoint, leftNeighbourFOV);
-		boolean isWithinRightNeighbour = IsPointWithinCircle(rightFovPoint, rightNeighbourFOV);
+		Circle2 leftNeighbourFOVCircle = abstract_robot.GetFOV(leftNeighbourId);
+		double leftNeighbourSteer = abstract_robot.GetRobotSteer(leftNeighbourId);
+		FOV leftNeighbourFOV = new FOV(leftNeighbourFOVCircle, leftNeighbourSteer);
 
-		boolean shouldStop = !isWithinLeftNeighbour || !isWithinRightNeighbour;
+		Circle2 rightNeighbourFOVCircle = abstract_robot.GetFOV(rightNeighbourId);
+		double rightNeighbourSteer = abstract_robot.GetRobotSteer(rightNeighbourId);
+		FOV rightNeighbourFOV = new FOV(rightNeighbourFOVCircle, rightNeighbourSteer);
+
+//		boolean isWithinLeftNeighbour = IsPointWithinCircle(leftFovPoint, leftNeighbourFOV);
+//		boolean isWithinRightNeighbour = IsPointWithinCircle(rightFovPoint, rightNeighbourFOV);
+
+		boolean isFovCollideWithLeftNeighbour = areSemiCirclesCollide(robotFOV, leftNeighbourFOV);
+		boolean isFovCollideWithRightNeighbour = areSemiCirclesCollide(robotFOV, rightNeighbourFOV);
+
+		boolean shouldStop = !isFovCollideWithLeftNeighbour || !isFovCollideWithRightNeighbour;
+
+//		boolean shouldStop = !isWithinLeftNeighbour || !isWithinRightNeighbour;
 
 //		System.out.println("isWithinLeftNeighbour: " + isWithinLeftNeighbour);
 //		System.out.println("isWithinRightNeighbour: " + isWithinRightNeighbour);
@@ -240,6 +289,8 @@ public class containment extends ControlSystemMFN150 {
 
 
 	public int TakeStep() {
+//		System.out.println("Yes! " + id);
+
 		double result;
 		Message message;
 		long curr_time = abstract_robot.getTime();
