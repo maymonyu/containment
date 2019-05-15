@@ -191,7 +191,11 @@ public class containment extends ControlSystemMFN150 {
 		 double directionFromFovToIntersectionPoint = getDirectionAngleOf2Points(fov.circle.centre, intersectionPoint);
 		 directionFromFovToIntersectionPoint = normalizeRadian(directionFromFovToIntersectionPoint);
 
-		 double fovSteerHeading = normalizeRadian(fov.steerHeading);
+		 double fovSteerHeading = normalizeRadian(fov.turretHeading);
+
+		 if(id == 0){
+			System.out.println("FOV SteerHeading: " + fovSteerHeading);
+		 }
 
 		 return directionFromFovToIntersectionPoint <= fovSteerHeading + (Math.PI / 2)
 				 && directionFromFovToIntersectionPoint >= fovSteerHeading - (Math.PI / 2);
@@ -235,15 +239,16 @@ public class containment extends ControlSystemMFN150 {
 		int rightNeighbourId = GetRightNeighbourId();
 
 		Circle2 robotFOVCircle = abstract_robot.GetFOV(id);
-		FOV robotFOV = new FOV(robotFOVCircle, steerHeading);
+		double turretHeading = abstract_robot.getTurretHeadingOfRobot(id);
+		FOV robotFOV = new FOV(robotFOVCircle, turretHeading);
 
 		Circle2 leftNeighbourFOVCircle = abstract_robot.GetFOV(leftNeighbourId);
-		double leftNeighbourSteer = abstract_robot.GetRobotSteer(leftNeighbourId);
-		FOV leftNeighbourFOV = new FOV(leftNeighbourFOVCircle, leftNeighbourSteer);
+		double leftNeighbourTurret = abstract_robot.getTurretHeadingOfRobot(leftNeighbourId);
+		FOV leftNeighbourFOV = new FOV(leftNeighbourFOVCircle, leftNeighbourTurret);
 
 		Circle2 rightNeighbourFOVCircle = abstract_robot.GetFOV(rightNeighbourId);
-		double rightNeighbourSteer = abstract_robot.GetRobotSteer(rightNeighbourId);
-		FOV rightNeighbourFOV = new FOV(rightNeighbourFOVCircle, rightNeighbourSteer);
+		double rightNeighbourTurret = abstract_robot.getTurretHeadingOfRobot(rightNeighbourId);
+		FOV rightNeighbourFOV = new FOV(rightNeighbourFOVCircle, rightNeighbourTurret);
 
 //		boolean isWithinLeftNeighbour = IsPointWithinCircle(leftFovPoint, leftNeighbourFOV);
 //		boolean isWithinRightNeighbour = IsPointWithinCircle(rightFovPoint, rightNeighbourFOV);
@@ -255,8 +260,10 @@ public class containment extends ControlSystemMFN150 {
 
 //		boolean shouldStop = !isWithinLeftNeighbour || !isWithinRightNeighbour;
 
-//		System.out.println("isWithinLeftNeighbour: " + isWithinLeftNeighbour);
-//		System.out.println("isWithinRightNeighbour: " + isWithinRightNeighbour);
+		if(id == 0) {
+			System.out.println("isFovCollideWithLeftNeighbour: " + isFovCollideWithLeftNeighbour);
+			System.out.println("isFovCollideWithRightNeighbour: " + isFovCollideWithRightNeighbour);
+		}
 
 		return shouldStop;
 	}

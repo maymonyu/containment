@@ -12,11 +12,11 @@ import EDU.cmu.cs.coral.util.Circle2;
 public final class FOV {
 
     public final Circle2 circle;
-    public final double steerHeading;
+    public final double turretHeading;
 
-    public FOV(Circle2 c, double steer) {
+    public FOV(Circle2 c, double turret) {
         this.circle = c;
-        this.steerHeading = steer;
+        this.turretHeading = turret;
     }
 
 }
