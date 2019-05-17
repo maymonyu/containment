@@ -186,19 +186,19 @@ public class containment extends ControlSystemMFN150 {
 		return distanceSquared <= Math.pow(first.radius + second.radius, 2);
 	}
 
-	// find incline, and check if its between steer+-pi/2
 	private boolean isPointWithinFOV(Vec2 intersectionPoint, FOV fov){
 		 double directionFromFovToIntersectionPoint = getDirectionAngleOf2Points(fov.circle.centre, intersectionPoint);
 		 directionFromFovToIntersectionPoint = normalizeRadian(directionFromFovToIntersectionPoint);
 
-		 double fovSteerHeading = normalizeRadian(fov.turretHeading);
+		 double fovTurrerHeading = normalizeRadian(fov.turretHeading);
 
 		 if(id == 0){
-			System.out.println("FOV SteerHeading: " + fovSteerHeading);
+			 System.out.println("FOV TurretHeading: " + fovTurrerHeading);
+			 System.out.println("FOV directionFromFovToIntersectionPoint: " + directionFromFovToIntersectionPoint);
 		 }
 
-		 return directionFromFovToIntersectionPoint <= fovSteerHeading + (Math.PI / 2)
-				 && directionFromFovToIntersectionPoint >= fovSteerHeading - (Math.PI / 2);
+		 return directionFromFovToIntersectionPoint <= fovTurrerHeading + (Math.PI / 2)
+				 && directionFromFovToIntersectionPoint >= fovTurrerHeading - (Math.PI / 2);
 	}
 
 	private boolean isPointWithinFOVs(Vec2 intersectionPoint, FOV first, FOV second){
