@@ -188,17 +188,21 @@ public class containment extends ControlSystemMFN150 {
 
 	private boolean isPointWithinFOV(Vec2 intersectionPoint, FOV fov){
 		 double directionFromFovToIntersectionPoint = getDirectionAngleOf2Points(fov.circle.centre, intersectionPoint);
-		 directionFromFovToIntersectionPoint = normalizeRadian(directionFromFovToIntersectionPoint);
+//		 directionFromFovToIntersectionPoint = normalizeRadian(directionFromFovToIntersectionPoint);
 
-		 double fovTurrerHeading = normalizeRadian(fov.turretHeading);
+		 double fovTurrerHeading = fov.turretHeading;
 
-		 if(id == 0){
-			 System.out.println("FOV TurretHeading: " + fovTurrerHeading);
-			 System.out.println("FOV directionFromFovToIntersectionPoint: " + directionFromFovToIntersectionPoint);
+		double leftTurretAngle = fovTurrerHeading + (Math.PI / 2);
+		double rightTurretAngle = fovTurrerHeading - (Math.PI / 2);
+
+		if(id == 0){
+			System.out.println("Left TurretHeading: " + leftTurretAngle);
+			System.out.println("Right TurretHeading: " + rightTurretAngle);
+			System.out.println("FOV directionFromFovToIntersectionPoint: " + directionFromFovToIntersectionPoint);
 		 }
 
-		 return directionFromFovToIntersectionPoint <= fovTurrerHeading + (Math.PI / 2)
-				 && directionFromFovToIntersectionPoint >= fovTurrerHeading - (Math.PI / 2);
+		 return directionFromFovToIntersectionPoint <= leftTurretAngle
+				 && directionFromFovToIntersectionPoint >= rightTurretAngle;
 	}
 
 	private boolean isPointWithinFOVs(Vec2 intersectionPoint, FOV first, FOV second){
@@ -254,7 +258,7 @@ public class containment extends ControlSystemMFN150 {
 //		boolean isWithinRightNeighbour = IsPointWithinCircle(rightFovPoint, rightNeighbourFOV);
 
 		boolean isFovCollideWithLeftNeighbour = areSemiCirclesCollide(robotFOV, leftNeighbourFOV);
-		boolean isFovCollideWithRightNeighbour = areSemiCirclesCollide(robotFOV, rightNeighbourFOV);
+		boolean isFovCollideWithRightNeighbour = areSemiCirclesCollide(rightNeighbourFOV, robotFOV);
 
 		boolean shouldStop = !isFovCollideWithLeftNeighbour || !isFovCollideWithRightNeighbour;
 
