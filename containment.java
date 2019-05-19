@@ -187,19 +187,25 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private boolean isPointWithinFOV(Vec2 intersectionPoint, FOV fov){
-		 double directionFromFovToIntersectionPoint = getDirectionAngleOf2Points(fov.circle.centre, intersectionPoint);
-//		 directionFromFovToIntersectionPoint = normalizeRadian(directionFromFovToIntersectionPoint);
+		double directionFromFovToIntersectionPoint = getDirectionAngleOf2Points(fov.circle.centre, intersectionPoint);
+		directionFromFovToIntersectionPoint = normalizeRadian(directionFromFovToIntersectionPoint);
 
-		 double fovTurrerHeading = fov.turretHeading;
+		double fovTurrerHeading = normalizeRadian(fov.turretHeading);
+		double halfPI = Math.PI / 2;
 
-		double leftTurretAngle = fovTurrerHeading + (Math.PI / 2);
-		double rightTurretAngle = fovTurrerHeading - (Math.PI / 2);
+		double leftTurretAngle = normalizeRadian(fovTurrerHeading + halfPI);
+		double rightTurretAngle = normalizeRadian(fovTurrerHeading - halfPI);
 
-		if(id == 0){
-			System.out.println("Left TurretHeading: " + leftTurretAngle);
-			System.out.println("Right TurretHeading: " + rightTurretAngle);
-			System.out.println("FOV directionFromFovToIntersectionPoint: " + directionFromFovToIntersectionPoint);
-		 }
+//		if(id == 0){
+//			System.out.println("Left TurretHeading: " + leftTurretAngle);
+//			System.out.println("Right TurretHeading: " + rightTurretAngle);
+//			System.out.println("FOV directionFromFovToIntersectionPoint: " + directionFromFovToIntersectionPoint);
+//		 }
+
+		if (fovTurrerHeading <= halfPI || fovTurrerHeading >= 3 * halfPI){
+			return (directionFromFovToIntersectionPoint >= 0 && directionFromFovToIntersectionPoint <= leftTurretAngle)
+					|| directionFromFovToIntersectionPoint >= rightTurretAngle;
+		}
 
 		 return directionFromFovToIntersectionPoint <= leftTurretAngle
 				 && directionFromFovToIntersectionPoint >= rightTurretAngle;
@@ -264,10 +270,10 @@ public class containment extends ControlSystemMFN150 {
 
 //		boolean shouldStop = !isWithinLeftNeighbour || !isWithinRightNeighbour;
 
-		if(id == 0) {
-			System.out.println("isFovCollideWithLeftNeighbour: " + isFovCollideWithLeftNeighbour);
-			System.out.println("isFovCollideWithRightNeighbour: " + isFovCollideWithRightNeighbour);
-		}
+//		if(id == 0) {
+//			System.out.println("isFovCollideWithLeftNeighbour: " + isFovCollideWithLeftNeighbour);
+//			System.out.println("isFovCollideWithRightNeighbour: " + isFovCollideWithRightNeighbour);
+//		}
 
 		return shouldStop;
 	}
