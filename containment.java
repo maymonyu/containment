@@ -145,14 +145,14 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private void SetSteerHeading(long time){
-//		System.out.println(id + ": SetSteerHeading");
-
-		steerHeading = CalculateSteerHeading(time);
-		abstract_robot.setSteerHeading(0L, steerHeading);
-
-//		System.out.println(id + " - steerHeading = " + steerHeading);
-
-		waitingForSteerHeading = true;
+////		System.out.println(id + ": SetSteerHeading");
+//
+//		steerHeading = CalculateSteerHeading(time);
+//		abstract_robot.setSteerHeading(0L, steerHeading);
+//
+////		System.out.println(id + " - steerHeading = " + steerHeading);
+//
+//		waitingForSteerHeading = true;
 	}
 
 	private void StartMoving(long time){

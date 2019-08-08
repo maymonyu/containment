@@ -140,6 +140,8 @@ public class AutoDscGenerator
         List<Vec2> robotsLocations = new ArrayList<Vec2>();
         Vec2 lastRobotLocationOnSegment = null;
 
+        int visionclass = 0;
+
         for(int i=0; i<numOfVertices; i++){
             Vec2 currVertex = polygonVertices[i];
             Vec2 nextVertex = polygonVertices[(i+1) % numOfVertices];
@@ -157,6 +159,7 @@ public class AutoDscGenerator
 
             Vec2 currLocation = currVertex;
 
+            visionclass++;
             for(int j = 0; j < numOfRobotsToCoverEdge; j++){
                 double distanceBetweenRobots = 2 * FOV_DISTANCE;
                 if(j == 0) distanceBetweenRobots = FOV_DISTANCE;
@@ -169,6 +172,14 @@ public class AutoDscGenerator
 
                 Vec2 robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
                 robotLocation.t = robotHeading;
+
+                if(j == 0) {
+                    robotLocation.r = visionclass;
+                    visionclass++;
+                }
+                else {
+                    robotLocation.r = visionclass;
+                }
 
                 robotsLocations.add(robotLocation);
 
@@ -199,7 +210,7 @@ public class AutoDscGenerator
             Vec2 currRobotLocation = robotsLocations.get(i);
             robotsDefinitions[i] = String.format(
                     "robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim\n" +
-                    "\tcontainment %s %s %s x000000 xFF0000 2",
+                    "\tcontainment %s %s %s x000000 xFF0000 2 3.14",
                     currRobotLocation.x, currRobotLocation.y, currRobotLocation.t);
         }
 
@@ -220,10 +231,11 @@ public class AutoDscGenerator
             if(robot.x > maxX) maxX = robot.x;
             if(robot.y > maxY) maxY = robot.y;
         }
-        minX -= 15;
-        minY -= 15;
-        maxX += 15;
-        maxY += 15;
+
+        minX -= 25;
+        minY -= 25;
+        maxX += 25;
+        maxY += 25;
 
         return new String[]{Double.toString(minX), Double.toString(maxX), Double.toString(minY), Double.toString(maxY)};
     }
