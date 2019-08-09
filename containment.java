@@ -342,21 +342,23 @@ public class containment extends ControlSystemMFN150 {
 		result = abstract_robot.getTurretHeading(curr_time);
 		abstract_robot.setTurretHeading(curr_time, result);
 
-		if(waitingForSteerHeading){
-			if(IsSteerReady(curr_time)){
-				waitingForSteerHeading = false;
-				StartMoving(curr_time);
-			}
-
-			return CSSTAT_OK;
-		}
+//		if(waitingForSteerHeading){
+//			if(IsSteerReady(curr_time)){
+//				waitingForSteerHeading = false;
+//				StartMoving(curr_time);
+//			}
+//
+//			return CSSTAT_OK;
+//		}
 
 		if (IsFirstToRun(curr_time)) {
-			SetSteerHeading(curr_time);
+			StartMoving(curr_time);
+//			SetSteerHeading(curr_time);
 		}
 
 		else if (IsMyTurnToMove()) {
-			SetSteerHeading(curr_time);
+//			SetSteerHeading(curr_time);
+			StartMoving(curr_time);
 		}
 
 		else if (isMoving && ShouldStopMoving(curr_time)){

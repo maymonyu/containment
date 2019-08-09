@@ -134,6 +134,10 @@ public class AutoDscGenerator
     }
 
     private static double GetSteerByHeadings(double firstHeading, double secondHeading){
+        if (secondHeading > Math.PI){
+            secondHeading = Math.PI * 2 - secondHeading;
+        }
+
         return (firstHeading + secondHeading) / 2;
     }
 
