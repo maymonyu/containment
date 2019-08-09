@@ -10,7 +10,6 @@ import EDU.gatech.cc.is.simulation.*;
 import EDU.cmu.cs.coral.util.Circle2;
 import java.util.List;
 import java.util.Arrays;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.File;
 import java.nio.*;
@@ -134,20 +133,31 @@ public class AutoDscGenerator
         return Arrays.asList(p1, p2);
     }
 
+    private static double GetSteerByHeadings(double firstHeading, double secondHeading){
+        return (firstHeading + secondHeading) / 2;
+    }
+
     private static List<Vec2> generateRobots(Vec2 [] polygonVertices){
         final double FOV_DISTANCE = 3;
         int numOfVertices = polygonVertices.length;
         List<Vec2> robotsLocations = new ArrayList<Vec2>();
         Vec2 lastRobotLocationOnSegment = null;
 
-        int visionclass = 0;
-
         for(int i=0; i<numOfVertices; i++){
+            int previousVertexIndex;
+            if(i == 0) previousVertexIndex = numOfVertices-1;
+            else previousVertexIndex = (i-1) % numOfVertices;
+
+            Vec2 previousVertex = polygonVertices[previousVertexIndex];
             Vec2 currVertex = polygonVertices[i];
             Vec2 nextVertex = polygonVertices[(i+1) % numOfVertices];
 
             double radianIncline = calculateRadianIncline(currVertex, nextVertex);
             double robotHeading = radianIncline + Math.PI / 2;
+
+            double previousRadianIncline = calculateRadianIncline(previousVertex, currVertex);
+            double previousEdgeHeading = previousRadianIncline + Math.PI / 2;
+            double robotSteer = GetSteerByHeadings(previousEdgeHeading, robotHeading);
 
             if(lastRobotLocationOnSegment != null){
                 currVertex = getCircleLineIntersectionPoint(currVertex,
@@ -159,27 +169,19 @@ public class AutoDscGenerator
 
             Vec2 currLocation = currVertex;
 
-            visionclass++;
             for(int j = 0; j < numOfRobotsToCoverEdge; j++){
                 double distanceBetweenRobots = 2 * FOV_DISTANCE;
                 if(j == 0) distanceBetweenRobots = FOV_DISTANCE;
 
-//                if(j == numOfRobotsToCoverEdge - 1){
-//                    distanceBetweenRobots = FOV_DISTANCE;
-//                    radianIncline = radianIncline - Math.PI;
-//                    currLocation = nextVertex;
-//                }
+                if(j == numOfRobotsToCoverEdge - 1){
+                    distanceBetweenRobots = FOV_DISTANCE;
+                    radianIncline = radianIncline - Math.PI;
+                    currLocation = nextVertex;
+                }
 
                 Vec2 robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
                 robotLocation.t = robotHeading;
-
-                if(j == 0) {
-                    robotLocation.r = visionclass;
-                    visionclass++;
-                }
-                else {
-                    robotLocation.r = visionclass;
-                }
+                robotLocation.r = robotSteer;
 
                 robotsLocations.add(robotLocation);
 
@@ -210,8 +212,8 @@ public class AutoDscGenerator
             Vec2 currRobotLocation = robotsLocations.get(i);
             robotsDefinitions[i] = String.format(
                     "robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim\n" +
-                    "\tcontainment %s %s %s x000000 xFF0000 2 3.14",
-                    currRobotLocation.x, currRobotLocation.y, currRobotLocation.t);
+                    "\tcontainment %s %s %s x000000 xFF0000 2 %s",
+                    currRobotLocation.x, currRobotLocation.y, currRobotLocation.t, currRobotLocation.r);
         }
 
         return robotsDefinitions;
@@ -295,6 +297,7 @@ public class AutoDscGenerator
             outputFile.close();
         }
         catch (Exception ex) {
+            System.out.println(ex);
         }
 
     }
