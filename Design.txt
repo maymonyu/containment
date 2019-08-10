@@ -1,4 +1,0 @@
-
-Next Tasks:
-* When a robot should stop moving (means it has no collision with its neighbours),
-    take one step back to keep fully containment
