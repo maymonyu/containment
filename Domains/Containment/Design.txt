@@ -12,3 +12,7 @@ Tasks:
     otherwise calculate direction.
 
 2. Find the robots in which you have collision with, and go till you reach the end of the collision.
+
+
+Return to containment area:
+The situation is: a robot passed his neighbours and needs to come back to the containment area.

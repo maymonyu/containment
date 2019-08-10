@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b22b1fa8-4e4a-4092-b3f2-023d077ad013" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Domains/Containment/Design.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Domains/Containment/Design.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domains/Containment/FOV.class" beforeDir="false" afterPath="$PROJECT_DIR$/Domains/Containment/FOV.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domains/Containment/containment2.dsc" beforeDir="false" afterPath="$PROJECT_DIR$/Domains/Containment/containment2.dsc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domains/Containment/containment.class" beforeDir="false" afterPath="$PROJECT_DIR$/Domains/Containment/containment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domains/Containment/containment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Domains/Containment/containment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="354" column="35" lean-forward="true" selection-start-line="354" selection-start-column="35" selection-end-line="354" selection-end-column="35" />
+            <state relative-caret-position="276">
+              <caret line="365" lean-forward="true" selection-start-line="365" selection-end-line="365" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2151#2152#0" expanded="true" />
@@ -31,11 +35,20 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Domains/Containment/Design.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="71" column="12" lean-forward="true" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="12" />
+            <state relative-caret-position="104">
+              <caret line="142" column="59" lean-forward="true" selection-start-line="142" selection-start-column="59" selection-end-line="142" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#25442#25443#0" expanded="true" />
@@ -100,13 +113,13 @@
       <find>simulatedo</find>
       <find>sets</find>
       <find>SimulatedObject</find>
-      <find>desired_heading</find>
       <find>steer</find>
       <find>head</find>
       <find>previousRobot</find>
-      <find>sys</find>
       <find>vc</find>
       <find>gettu</find>
+      <find>desired_heading</find>
+      <find>sys</find>
     </findStrings>
     <replaceStrings>
       <replace>ContRobSim.class</replace>
@@ -118,7 +131,7 @@
     </replaceStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Domains/Containment" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -149,7 +162,6 @@
         <option value="$PROJECT_DIR$/Domains/Containment/Circle.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/FOV.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java" />
-        <option value="$PROJECT_DIR$/Domains/Containment/Design.txt" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/simulation/SimulatedObject.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/CaptureSim.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/ContRobSim.java" />
@@ -157,10 +169,11 @@
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/RescueVanSim.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SocSmallSim.java" />
         <option value="$PROJECT_DIR$/src/TBSim/SimulationCanvas.java" />
-        <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" />
-        <option value="$PROJECT_DIR$/Domains/Containment/containment.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/containment2.dsc" />
         <option value="$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java" />
+        <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" />
+        <option value="$PROJECT_DIR$/Domains/Containment/containment.java" />
+        <option value="$PROJECT_DIR$/Domains/Containment/Design.txt" />
       </list>
     </option>
   </component>
@@ -258,7 +271,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1565432078442" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1565438597078" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/tb" />
   </component>
   <component name="ReadonlyStatusHandler">
@@ -312,7 +325,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.43736503" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.36069113" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32937366" />
@@ -595,13 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/Design.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="34" lean-forward="true" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/CaptureSim.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="338">
@@ -719,8 +725,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="71" column="12" lean-forward="true" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="12" />
+        <state relative-caret-position="104">
+          <caret line="142" column="59" lean-forward="true" selection-start-line="142" selection-start-column="59" selection-end-line="142" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#25442#25443#0" expanded="true" />
@@ -731,8 +737,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="354" column="35" lean-forward="true" selection-start-line="354" selection-start-column="35" selection-end-line="354" selection-end-column="35" />
+        <state relative-caret-position="276">
+          <caret line="365" lean-forward="true" selection-start-line="365" selection-end-line="365" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2151#2152#0" expanded="true" />
@@ -740,6 +746,13 @@
             <element signature="e#8989#8990#0" expanded="true" />
             <element signature="e#9023#9024#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/Design.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>

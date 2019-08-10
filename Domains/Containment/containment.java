@@ -275,6 +275,7 @@ public class containment extends ControlSystemMFN150 {
 //			System.out.println("isFovCollideWithRightNeighbour: " + isFovCollideWithRightNeighbour);
 //		}
 
+		System.out.println("shoudStopMoving: " + shouldStop);
 		return shouldStop;
 	}
 
@@ -362,10 +363,13 @@ public class containment extends ControlSystemMFN150 {
 		}
 
 		else if (isMoving && ShouldStopMoving(curr_time)){
+
+		}
+
+		else if(!){
 			StopMoving(curr_time);
 			TellNextRobotToStartMoving();
 		}
-
 		return CSSTAT_OK;
 	}
 }

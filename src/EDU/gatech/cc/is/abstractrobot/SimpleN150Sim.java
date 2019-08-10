@@ -123,9 +123,10 @@ public class SimpleN150Sim extends Simple
 				sturn = -MAX_STEER*time_incd;
 			else sturn = MAX_STEER*time_incd;
 			}
-		steer.sett(steer.t + sturn);
+//		steer.sett(steer.t + sturn);
+		steer.sett(desired_heading); // Set the steer to be exactly the desired_heading, instead of making a "turn"
 
-		/*--- update the turret ---*/
+			/*--- update the turret ---*/
 		double tturn = Units.BestTurnRad(turret, 
 			desired_turret_heading);
 		if (Math.abs(tturn) > (MAX_TURRET*time_incd))
