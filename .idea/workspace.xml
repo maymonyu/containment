@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b22b1fa8-4e4a-4092-b3f2-023d077ad013" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domains/Containment/Design.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Domains/Containment/Design.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domains/Containment/containment.class" beforeDir="false" afterPath="$PROJECT_DIR$/Domains/Containment/containment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domains/Containment/containment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Domains/Containment/containment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" afterDir="false" />
     </list>
@@ -19,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="365" lean-forward="true" selection-start-line="365" selection-end-line="365" />
+            <state relative-caret-position="314">
+              <caret line="367" selection-start-line="367" selection-end-line="367" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2151#2152#0" expanded="true" />
@@ -35,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/Design.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="433">
+              <caret line="20" column="56" selection-start-line="20" selection-start-column="56" selection-end-line="20" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -47,8 +44,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="142" column="59" lean-forward="true" selection-start-line="142" selection-start-column="59" selection-end-line="142" selection-end-column="59" />
+            <state relative-caret-position="170">
+              <caret line="255" column="38" selection-start-line="255" selection-start-column="38" selection-end-line="255" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#25442#25443#0" expanded="true" />
@@ -90,10 +87,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>while</find>
-      <find>syst</find>
-      <find>getst</find>
-      <find>shoulds</find>
       <find>turret</find>
       <find>getfov</find>
       <find>getro</find>
@@ -119,7 +112,11 @@
       <find>vc</find>
       <find>gettu</find>
       <find>desired_heading</find>
+      <find>rever</find>
+      <find>togg</find>
       <find>sys</find>
+      <find>abst</find>
+      <find>setstee</find>
     </findStrings>
     <replaceStrings>
       <replace>ContRobSim.class</replace>
@@ -161,7 +158,6 @@
         <option value="$PROJECT_DIR$/Domains/Containment/Vector2.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/Circle.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/FOV.java" />
-        <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/simulation/SimulatedObject.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/CaptureSim.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/ContRobSim.java" />
@@ -171,9 +167,10 @@
         <option value="$PROJECT_DIR$/src/TBSim/SimulationCanvas.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/containment2.dsc" />
         <option value="$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java" />
+        <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java" />
+        <option value="$PROJECT_DIR$/Domains/Containment/Design.txt" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/containment.java" />
-        <option value="$PROJECT_DIR$/Domains/Containment/Design.txt" />
       </list>
     </option>
   </component>
@@ -271,7 +268,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1565438597078" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1565635894543" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/tb" />
   </component>
   <component name="ReadonlyStatusHandler">
@@ -622,16 +619,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="92" column="32" selection-start-line="92" selection-start-column="32" selection-end-line="92" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Hard.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
@@ -692,16 +679,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="292" column="57" selection-start-line="292" selection-start-column="57" selection-end-line="292" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/TBSim/SimulationCanvas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="78">
@@ -723,10 +700,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="90" column="26" lean-forward="true" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/Design.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="433">
+          <caret line="20" column="56" selection-start-line="20" selection-start-column="56" selection-end-line="20" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="292" column="57" selection-start-line="292" selection-start-column="57" selection-end-line="292" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="142" column="59" lean-forward="true" selection-start-line="142" selection-start-column="59" selection-end-line="142" selection-end-column="59" />
+        <state relative-caret-position="170">
+          <caret line="255" column="38" selection-start-line="255" selection-start-column="38" selection-end-line="255" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#25442#25443#0" expanded="true" />
@@ -737,8 +741,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="365" lean-forward="true" selection-start-line="365" selection-end-line="365" />
+        <state relative-caret-position="314">
+          <caret line="367" selection-start-line="367" selection-end-line="367" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2151#2152#0" expanded="true" />
@@ -746,13 +750,6 @@
             <element signature="e#8989#8990#0" expanded="true" />
             <element signature="e#9023#9024#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/Design.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>

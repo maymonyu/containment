@@ -68,6 +68,8 @@ public class containment extends ControlSystemMFN150 {
 
 	int id;
 	boolean isMoving;
+	boolean isReversing;
+	boolean isDoneReversing;
 	boolean waitingForSteerHeading;
 	int numberOfRobots;
 	double steerHeading;
@@ -76,6 +78,8 @@ public class containment extends ControlSystemMFN150 {
 
 	public void Configure() {
 		isMoving = false;
+		isReversing = false;
+		isDoneReversing = true;
 		waitingForSteerHeading = false;
 		messages = abstract_robot.getReceiveChannel();
 		id = abstract_robot.getID();
@@ -352,24 +356,33 @@ public class containment extends ControlSystemMFN150 {
 //			return CSSTAT_OK;
 //		}
 
-		if (IsFirstToRun(curr_time)) {
+		if (isReversing){
+			isReversing = false;
+			isDoneReversing = false;
+		}
+
+		else if(!isDoneReversing){
+			isDoneReversing = true;
+
+			abstract_robot.ToggleReverse();
+
+			StopMoving(curr_time);
+			TellNextRobotToStartMoving();
+		}
+
+		else if (IsFirstToRun(curr_time)) {
 			StartMoving(curr_time);
-//			SetSteerHeading(curr_time);
 		}
 
 		else if (IsMyTurnToMove()) {
-//			SetSteerHeading(curr_time);
 			StartMoving(curr_time);
 		}
 
 		else if (isMoving && ShouldStopMoving(curr_time)){
-
+			isReversing = true;
+			abstract_robot.ToggleReverse();
 		}
 
-		else if(!){
-			StopMoving(curr_time);
-			TellNextRobotToStartMoving();
-		}
 		return CSSTAT_OK;
 	}
 }

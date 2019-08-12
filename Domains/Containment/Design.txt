@@ -16,3 +16,6 @@ Tasks:
 
 Return to containment area:
 The situation is: a robot passed his neighbours and needs to come back to the containment area.
+
+
+Should stop moving => set reversing for the next step =>

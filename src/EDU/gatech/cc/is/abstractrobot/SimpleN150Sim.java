@@ -37,6 +37,7 @@ public class SimpleN150Sim extends Simple
 	private TransceiverSim	transceiver;	// comm to other robots
 	protected Vec2	position;
 	protected Vec2	steer;
+	protected double steerAngle;
 	private	double	turret;
 	private	double	speed;
 	protected Color	foreground, background;
@@ -60,6 +61,7 @@ public class SimpleN150Sim extends Simple
 		position = new Vec2(0,0);
 		steer = new Vec2(1,0);
 		turret = 0;
+		steerAngle = 0;
 		foreground = Color.black;
 		background = Color.black;
 		if (DEBUG) System.out.println("SimpleN150Sim: instantiated.");
@@ -86,6 +88,7 @@ public class SimpleN150Sim extends Simple
 
 		steer = new Vec2(1,0);
 		steer.sett(tp);
+		this.steerAngle = steerAngle;
 		setSteerHeading(0L, steerAngle);
 
 		turret = tp;
@@ -245,6 +248,12 @@ public class SimpleN150Sim extends Simple
 		}
 
 		return null;
+	}
+
+	public void ToggleReverse(){
+//		in_reverse = !in_reverse;
+		steerAngle = steerAngle + Math.PI;
+		setSteerHeading(0l, steerAngle);
 	}
 
 	public Vec2 GetTopPoint(long time, int robotId){
