@@ -1,0 +1,8 @@
+
+Target:
+Give an algorithm which keeps a close area & reduce the area to 0-size.
+
+The algorithm:
+Each edge goes in the way of the center of the angle (of the edge and the previous edge),
+until the robot reaches the end of others polygon's FOV.
+
