@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b22b1fa8-4e4a-4092-b3f2-023d077ad013" name="Default Changelist" comment="" />
+    <list default="true" id="b22b1fa8-4e4a-4092-b3f2-023d077ad013" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/ChangeTurnMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/SetLeftNeighbourMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/SetRightNeighbourMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domains/Containment/Design.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Domains/Containment/Design.txt" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,13 +17,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="89" column="21" lean-forward="true" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="21" />
+            <state relative-caret-position="214">
+              <caret line="97" column="56" selection-start-line="97" selection-start-column="56" selection-end-line="97" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2181#2182#0" expanded="true" />
+                <element signature="e#2220#2221#0" expanded="true" />
+                <element signature="e#2282#2283#0" expanded="true" />
+                <element signature="e#2327#2328#0" expanded="true" />
                 <element signature="e#2151#2152#0" expanded="true" />
                 <element signature="e#2190#2191#0" expanded="true" />
                 <element signature="e#8989#8990#0" expanded="true" />
@@ -27,11 +37,60 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/SetRightNeighbourMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="36" lean-forward="true" selection-start-column="36" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#278#279#0" expanded="true" />
+                <element signature="e#301#302#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/SetLeftNeighbourMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="39" lean-forward="true" selection-start-column="39" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#264#265#0" expanded="true" />
+                <element signature="e#288#289#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Domains/Containment/CircleCircleIntersection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="82" column="43" lean-forward="true" selection-start-line="82" selection-start-column="43" selection-end-line="82" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/Design.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+            <state relative-caret-position="440">
+              <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="389">
+              <caret line="90" column="29" selection-start-line="90" selection-start-column="23" selection-end-line="90" selection-end-column="29" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -39,8 +98,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="255" column="38" selection-start-line="255" selection-start-column="38" selection-end-line="255" selection-end-column="38" />
+            <state relative-caret-position="392">
+              <caret line="308" column="23" selection-start-line="308" selection-start-column="23" selection-end-line="308" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#25442#25443#0" expanded="true" />
@@ -59,18 +118,6 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="292" column="57" selection-start-line="292" selection-start-column="57" selection-end-line="292" selection-end-column="57" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -82,18 +129,9 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getfov</find>
-      <find>getro</find>
-      <find>getturr</find>
-      <find>getDirectionAngleOf2Points</find>
-      <find>fov turr</find>
-      <find>CSSTAT_OK</find>
-      <find>setste</find>
-      <find>setst</find>
       <find>curre</find>
       <find>steerHeading</find>
       <find>messa</find>
-      <find>PositionMessage</find>
       <find>Vec2</find>
       <find>class</find>
       <find>visioncl</find>
@@ -108,10 +146,19 @@
       <find>desired_heading</find>
       <find>rever</find>
       <find>togg</find>
-      <find>sys</find>
       <find>abst</find>
       <find>setstee</find>
       <find>left</find>
+      <find>CircleCircleIntersection</find>
+      <find>stop</find>
+      <find>sys</find>
+      <find>fov</find>
+      <find>shou</find>
+      <find>PositionMessage</find>
+      <find>ismy</find>
+      <find>tell</find>
+      <find>getf</find>
+      <find>numberOfRobots</find>
     </findStrings>
     <replaceStrings>
       <replace>ContRobSim.class</replace>
@@ -164,8 +211,12 @@
         <option value="$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" />
-        <option value="$PROJECT_DIR$/Domains/Containment/containment.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/Design.txt" />
+        <option value="$PROJECT_DIR$/Domains/Containment/SetLeftNeighbourMessage" />
+        <option value="$PROJECT_DIR$/Domains/Containment/SetLeftNeighbourMessage.java" />
+        <option value="$PROJECT_DIR$/Domains/Containment/SetRightNeighbourMessage.java" />
+        <option value="$PROJECT_DIR$/Domains/Containment/ChangeTurnMessage.java" />
+        <option value="$PROJECT_DIR$/Domains/Containment/containment.java" />
       </list>
     </option>
   </component>
@@ -175,7 +226,9 @@
     <option name="width" value="799" />
     <option name="height" value="575" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -263,7 +316,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1565869290821" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1565956974799" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/tb" />
   </component>
   <component name="ReadonlyStatusHandler">
@@ -271,6 +324,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/EDU/gatech/cc/is/communication" />
       <recent name="$PROJECT_DIR$/Domains/Containment" />
       <recent name="$PROJECT_DIR$/Domains/Containment/Running Examples" />
     </key>
@@ -302,9 +356,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16712783" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2241284" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -336,48 +389,6 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/EDU/cmu/cs/coral/abstractrobot/SimpleCyeSim.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="1380" column="17" selection-start-line="1380" selection-start-column="17" selection-end-line="1380" selection-end-column="17" />
-          <folding>
-            <element signature="e#40970#40971#0" expanded="true" />
-            <element signature="e#41028#41029#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-880">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/Transceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="68" column="46" selection-start-line="68" selection-start-column="46" selection-end-line="68" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="221" column="23" selection-start-line="221" selection-start-column="23" selection-end-line="221" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/RoboComm/ClientReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="62" column="43" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#1952#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/RescueVan.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -477,23 +488,6 @@
     <entry file="file://$PROJECT_DIR$/src/EDU/cmu/cs/coral/util/Circle2.class">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/CircleCircleIntersection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="163" column="36" lean-forward="true" selection-start-line="163" selection-start-column="36" selection-end-line="163" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/Circle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/Vector2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -536,13 +530,6 @@
         <state relative-caret-position="-2848" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EDU/cmu/cs/coral/util/Circle2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="23" column="55" selection-start-line="23" selection-start-column="55" selection-end-line="23" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/FOV.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -567,13 +554,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22">
           <caret line="61" column="28" selection-start-line="61" selection-start-column="28" selection-end-line="61" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/PositionMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="14" column="23" lean-forward="true" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -696,20 +676,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java">
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/Design.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="90" column="26" lean-forward="true" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
+        <state relative-caret-position="440">
+          <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="292" column="57" selection-start-line="292" selection-start-column="57" selection-end-line="292" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
+    <entry file="file://$PROJECT_DIR$/src/EDU/cmu/cs/coral/util/Circle2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="292" column="57" selection-start-line="292" selection-start-column="57" selection-end-line="292" selection-end-column="57" />
+        <state relative-caret-position="299">
+          <caret line="34" column="11" selection-start-line="34" selection-start-column="11" selection-end-line="34" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/Circle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -718,8 +712,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="255" column="38" selection-start-line="255" selection-start-column="38" selection-end-line="255" selection-end-column="38" />
+        <state relative-caret-position="392">
+          <caret line="308" column="23" selection-start-line="308" selection-start-column="23" selection-end-line="308" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#25442#25443#0" expanded="true" />
@@ -728,24 +722,97 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
+    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/AckMessage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="89" column="21" lean-forward="true" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="21" />
+        <state relative-caret-position="170">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/PositionMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="28" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#647#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/CommN150Hard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="607">
+          <caret line="96" column="38" lean-forward="true" selection-start-line="96" selection-start-column="38" selection-end-line="96" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/SetLeftNeighbourMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="39" lean-forward="true" selection-start-column="39" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#264#265#0" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/SetRightNeighbourMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="36" lean-forward="true" selection-start-column="36" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#278#279#0" expanded="true" />
+            <element signature="e#301#302#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="90" column="29" selection-start-line="90" selection-start-column="23" selection-end-line="90" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/communication/ChangeTurnMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/CircleCircleIntersection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="82" column="43" lean-forward="true" selection-start-line="82" selection-start-column="43" selection-end-line="82" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="97" column="56" selection-start-line="97" selection-start-column="56" selection-end-line="97" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2181#2182#0" expanded="true" />
+            <element signature="e#2220#2221#0" expanded="true" />
+            <element signature="e#2282#2283#0" expanded="true" />
+            <element signature="e#2327#2328#0" expanded="true" />
             <element signature="e#2151#2152#0" expanded="true" />
             <element signature="e#2190#2191#0" expanded="true" />
             <element signature="e#8989#8990#0" expanded="true" />
             <element signature="e#9023#9024#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/Design.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>

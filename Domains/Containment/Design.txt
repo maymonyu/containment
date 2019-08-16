@@ -6,3 +6,16 @@ The algorithm:
 Each edge goes in the way of the center of the angle (of the edge and the previous edge),
 until the robot reaches the end of others polygon's FOV.
 
+Rudundant:
+
+Define redundant:
+A redundant robot is a robot which isn't contributing to the closure of the area.
+
+Recognize redundant:
+When the neighbours of a robot collide, the robot become redundant.
+
+Check Redundancy:
+Check if the neighbours collide, if so:
+    - Tell them that they collide
+    - Define itself as redundant
+    - If redundant already - stay still

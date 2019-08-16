@@ -70,6 +70,8 @@ public class containment extends ControlSystemMFN150 {
 	int leftNeighbourId;
 	int rightNeighbourId;
 
+	boolean isRedundant;
+	boolean isMyTurn;
 	boolean isMoving;
 	boolean isReversing;
 	boolean isDoneReversing;
@@ -80,18 +82,28 @@ public class containment extends ControlSystemMFN150 {
 
 
 	public void Configure() {
+		isRedundant = false;
+		isMyTurn = false;
 		isMoving = false;
 		isReversing = false;
 		isDoneReversing = true;
 		waitingForSteerHeading = false;
 
-		id = abstract_robot.getID();
-		leftNeighbourId = GetLeftNeighbourId();
-		rightNeighbourId = GetRightNeighbourId();
-
 		messages = abstract_robot.getReceiveChannel();
 		numberOfRobots = abstract_robot.GetNumberOfRobots();
 		steerHeading = 0;
+
+		id = abstract_robot.getID();
+		leftNeighbourId = GetInitialLeftNeighbourId();
+		rightNeighbourId = GetInitialRightNeighbourId();
+	}
+
+	private void SetLeftNeighbourId(int leftNeighbourId){
+		this.leftNeighbourId = leftNeighbourId;
+	}
+
+	private void SetRightNeighbourId(int rightNeighbourId){
+		this.rightNeighbourId = rightNeighbourId;
 	}
 
 	private boolean isBehind(double x1, double x2) {
@@ -102,7 +114,7 @@ public class containment extends ControlSystemMFN150 {
 		}
 	}
 
-	private int GetLeftNeighbourId(){
+	private int GetInitialLeftNeighbourId(){
 		int robotId = (id - 1) % numberOfRobots;
 
 		if (robotId == -1)
@@ -111,7 +123,7 @@ public class containment extends ControlSystemMFN150 {
 		return robotId;
 	}
 
-	private int GetRightNeighbourId(){
+	private int GetInitialRightNeighbourId(){
 		return (id + 1) % numberOfRobots;
 	}
 
@@ -144,7 +156,7 @@ public class containment extends ControlSystemMFN150 {
 	private double CalculateSteerHeading(long time){
 //		System.out.println("CalculateSteerHeading");
 
-		int rightNeighbourId = GetRightNeighbourId();
+		int rightNeighbourId = GetInitialRightNeighbourId();
 
 		Vec2 reachingPoint = abstract_robot.GetTopPoint(time, rightNeighbourId);
 //		System.out.println(id + " - reachingPoint = " + reachingPoint);
@@ -256,8 +268,8 @@ public class containment extends ControlSystemMFN150 {
 //		System.out.println("left point: x = " + leftFovPoint.x + ", y = " + leftFovPoint.y);
 //		System.out.println("right point: x = " + rightFovPoint.x + ", y = " + rightFovPoint.y);
 
-		int leftNeighbourId = GetLeftNeighbourId();
-		int rightNeighbourId = GetRightNeighbourId();
+		int leftNeighbourId = GetInitialLeftNeighbourId();
+		int rightNeighbourId = GetInitialRightNeighbourId();
 
 		Circle2 robotFOVCircle = abstract_robot.GetFOV(id);
 		double turretHeading = abstract_robot.getTurretHeadingOfRobot(id);
@@ -333,15 +345,60 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private void TellNextRobotToStartMoving(){
-		int rightNeighbourId = GetRightNeighbourId();
+		isMyTurn = false;
+
+		int nextRobotToRun = GetInitialRightNeighbourId();
 
 		try{
-			abstract_robot.unicast(rightNeighbourId, new Message());
+			abstract_robot.unicast(nextRobotToRun, new ChangeTurnMessage());
 		}
 		catch (CommunicationException ex){
 		}
 	}
 
+	private void SendNewNeighboursMessages(){
+		try{
+			abstract_robot.unicast(leftNeighbourId, new SetRightNeighbourMessage(rightNeighbourId));
+			abstract_robot.unicast(rightNeighbourId, new SetLeftNeighbourMessage(leftNeighbourId));
+		}
+		catch (CommunicationException ex){
+		}
+	}
+
+	private Circle GetRobotCircle(int robotId){
+		Circle2 robotFov = abstract_robot.GetFOV(robotId);
+		return new Circle(robotFov);
+	}
+
+	private boolean AreNeighboursCollide(){
+		Circle leftNeighbourCircle = GetRobotCircle(leftNeighbourId);
+		Circle rightNeighbourCircle = GetRobotCircle(rightNeighbourId);
+
+		CircleCircleIntersection circleCircleIntersection = new CircleCircleIntersection(leftNeighbourCircle, rightNeighbourCircle);
+		int intersectionPointsCount = circleCircleIntersection.type.getIntersectionPointCount();
+
+		return intersectionPointsCount > 0;
+	}
+
+	private void CheckMessages(){
+		while (messages.hasMoreElements()) {
+			Message message = (Message) messages.nextElement();
+
+			if (message instanceof ChangeTurnMessage) {
+				isMyTurn = true;
+			}
+
+			if (message instanceof SetLeftNeighbourMessage) {
+				int newNeighbourId = ((SetLeftNeighbourMessage) message).val;
+				SetLeftNeighbourId(newNeighbourId);
+			}
+
+			if (message instanceof SetRightNeighbourMessage) {
+				int newNeighbourId = ((SetRightNeighbourMessage) message).val;
+				SetRightNeighbourId(newNeighbourId);
+			}
+		}
+	}
 
 	public int TakeStep() {
 //		System.out.println("Yes! " + id);
@@ -354,6 +411,8 @@ public class containment extends ControlSystemMFN150 {
 		result = abstract_robot.getTurretHeading(curr_time);
 		abstract_robot.setTurretHeading(curr_time, result);
 
+		CheckMessages();
+
 //		if(waitingForSteerHeading){
 //			if(IsSteerReady(curr_time)){
 //				waitingForSteerHeading = false;
@@ -362,6 +421,17 @@ public class containment extends ControlSystemMFN150 {
 //
 //			return CSSTAT_OK;
 //		}
+
+		if(isRedundant){
+			TellNextRobotToStartMoving();
+			return CSSTAT_OK;
+		}
+
+		if(AreNeighboursCollide()){
+			isRedundant = true;
+			SendNewNeighboursMessages();
+			return CSSTAT_OK;
+		}
 
 		if (isReversing){
 			isReversing = false;
@@ -378,10 +448,12 @@ public class containment extends ControlSystemMFN150 {
 		}
 
 		else if (IsFirstToRun(curr_time)) {
+			isMyTurn = true;
+
 			StartMoving(curr_time);
 		}
 
-		else if (IsMyTurnToMove()) {
+		else if (isMyTurn) {
 			StartMoving(curr_time);
 		}
 
