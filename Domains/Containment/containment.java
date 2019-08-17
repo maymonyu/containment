@@ -86,7 +86,7 @@ public class containment extends ControlSystemMFN150 {
 		isMyTurn = false;
 		isMoving = false;
 		isReversing = false;
-		isDoneReversing = true;
+		isDoneReversing = false;
 		waitingForSteerHeading = false;
 
 		messages = abstract_robot.getReceiveChannel();
@@ -259,8 +259,8 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 
-	private boolean ShouldStopMoving(long time){
-//		System.out.println("ShouldStopMoving");
+	private boolean IsOpenArea(long time){
+//		System.out.println("IsOpenArea");
 
 //		Vec2 leftFovPoint = abstract_robot.GetLeftPoint(time, id);
 //		Vec2 rightFovPoint = abstract_robot.GetRightPoint(time, id);
@@ -268,8 +268,8 @@ public class containment extends ControlSystemMFN150 {
 //		System.out.println("left point: x = " + leftFovPoint.x + ", y = " + leftFovPoint.y);
 //		System.out.println("right point: x = " + rightFovPoint.x + ", y = " + rightFovPoint.y);
 
-		int leftNeighbourId = GetInitialLeftNeighbourId();
-		int rightNeighbourId = GetInitialRightNeighbourId();
+//		int leftNeighbourId = GetInitialLeftNeighbourId();
+//		int rightNeighbourId = GetInitialRightNeighbourId();
 
 		Circle2 robotFOVCircle = abstract_robot.GetFOV(id);
 		double turretHeading = abstract_robot.getTurretHeadingOfRobot(id);
@@ -298,7 +298,7 @@ public class containment extends ControlSystemMFN150 {
 //			System.out.println("isFovCollideWithRightNeighbour: " + isFovCollideWithRightNeighbour);
 //		}
 
-		System.out.println("shoudStopMoving: " + shouldStop);
+//		if (id == 4) System.out.println("shoudStopMoving: " + shouldStop);
 		return shouldStop;
 	}
 
@@ -422,30 +422,41 @@ public class containment extends ControlSystemMFN150 {
 //			return CSSTAT_OK;
 //		}
 
-		if(isRedundant){
+		if(isMyTurn && isRedundant){
 			TellNextRobotToStartMoving();
 			return CSSTAT_OK;
 		}
 
-		if(AreNeighboursCollide()){
+		if(isMyTurn && AreNeighboursCollide()){
 			isRedundant = true;
 			SendNewNeighboursMessages();
 			return CSSTAT_OK;
 		}
 
 		if (isReversing){
-			isReversing = false;
-			isDoneReversing = false;
+			if (!IsOpenArea(curr_time)){
+				abstract_robot.ToggleReverse();
+
+				StopMoving(curr_time);
+				TellNextRobotToStartMoving();
+
+				isReversing = false;
+			}
+
+//			isReversing = false;
+//			isDoneReversing = true;
+//
+//			return CSSTAT_OK;
 		}
 
-		else if(!isDoneReversing){
-			isDoneReversing = true;
-
-			abstract_robot.ToggleReverse();
-
-			StopMoving(curr_time);
-			TellNextRobotToStartMoving();
-		}
+//		else if(isDoneReversing){
+//			isDoneReversing = false;
+//
+//			abstract_robot.ToggleReverse();
+//
+//			StopMoving(curr_time);
+//			TellNextRobotToStartMoving();
+//		}
 
 		else if (IsFirstToRun(curr_time)) {
 			isMyTurn = true;
@@ -453,13 +464,13 @@ public class containment extends ControlSystemMFN150 {
 			StartMoving(curr_time);
 		}
 
-		else if (isMyTurn) {
-			StartMoving(curr_time);
-		}
-
-		else if (isMoving && ShouldStopMoving(curr_time)){
+		else if (isMoving && IsOpenArea(curr_time)){
 			isReversing = true;
 			abstract_robot.ToggleReverse();
+		}
+
+		else if (isMyTurn) {
+			StartMoving(curr_time);
 		}
 
 		return CSSTAT_OK;
