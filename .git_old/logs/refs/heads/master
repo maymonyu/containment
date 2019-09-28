@@ -1,0 +1,20 @@
+0000000000000000000000000000000000000000 6fc776c3a144a485a1f43c8d027483853cf271bd maymonyu <yuvalmaymon30@gmail.com> 1552139810 -0800	commit (initial): first commit
+6fc776c3a144a485a1f43c8d027483853cf271bd 8d14f6231165b00a322b67622d7085348bf1e588 maymonyu <yuvalmaymon30@gmail.com> 1552760457 -0700	commit: basic works
+8d14f6231165b00a322b67622d7085348bf1e588 1fac54d5ab14e9af5c4d4ddba287e24656647656 maymonyu <yuvalmaymon30@gmail.com> 1553108183 -0700	commit: testing of coomunication and moving
+1fac54d5ab14e9af5c4d4ddba287e24656647656 537053fe588ad87d8fd9f46c34d686c1b9fcca64 maymonyu <yuvalmaymon30@gmail.com> 1553457326 -0700	commit: save work
+537053fe588ad87d8fd9f46c34d686c1b9fcca64 e3a0cf10acd2fc3eee907e7aa54c2718ac51df35 maymonyu <yuvalmaymon30@gmail.com> 1554144207 -0700	commit: fucking save for christ sake
+e3a0cf10acd2fc3eee907e7aa54c2718ac51df35 4fbf3acd978950676288b96b21f7017da63a68a2 maymonyu <yuvalmaymon30@gmail.com> 1554148594 -0700	commit: half fix of incline
+4fbf3acd978950676288b96b21f7017da63a68a2 222f615f12040bbca2c8e7b7db274975796b8e23 maymonyu <yuvalmaymon30@gmail.com> 1554224889 -0700	commit: working - change in IsSteerReady
+222f615f12040bbca2c8e7b7db274975796b8e23 00db151cf7e01d3f26133529c91265a82f7a8ff1 maymonyu <yuvalmaymon30@gmail.com> 1554998252 -0700	commit: auto generator
+00db151cf7e01d3f26133529c91265a82f7a8ff1 67e9ef22d28d1ef69554037cb5de0141d070492e maymonyu <yuvalmaymon30@gmail.com> 1555081306 -0700	commit: robot position calculation
+67e9ef22d28d1ef69554037cb5de0141d070492e c84a7f97d2386fb39a8c2d0d114549e5a7e78bcf maymonyu <yuvalmaymon30@gmail.com> 1555181176 -0700	commit: save work
+c84a7f97d2386fb39a8c2d0d114549e5a7e78bcf bfba04880827aba4f476701a0c6ca7db1704afa3 maymonyu <yuvalmaymon30@gmail.com> 1555268946 -0700	commit: save work
+bfba04880827aba4f476701a0c6ca7db1704afa3 a471abcd4c6edae7f0b8b5f8cab896c63e3f0319 maymonyu <yuvalmaymon30@gmail.com> 1555428679 -0700	commit: auto generator works
+a471abcd4c6edae7f0b8b5f8cab896c63e3f0319 eccf1a5479a97b1ff71e9a89ed76ded507b992c0 maymonyu <yuvalmaymon30@gmail.com> 1556352820 -0700	commit: A valid convex polygon
+eccf1a5479a97b1ff71e9a89ed76ded507b992c0 f33615819be591ed059bea4edb0724401cd629dc maymonyu <yuvalmaymon30@gmail.com> 1557080432 -0700	commit: bla
+f33615819be591ed059bea4edb0724401cd629dc 979e870caa7d6d77bc54e05c6098c4f2f97b0e4a maymonyu <yuvalmaymon30@gmail.com> 1557851857 -0700	commit: save work - doesnt work yet
+979e870caa7d6d77bc54e05c6098c4f2f97b0e4a 58058a6dc9ed71ef4d173bbf01ff7d4bb94fb094 maymonyu <yuvalmaymon30@gmail.com> 1557861684 -0700	commit: semi-circle works, still need to fix not-full movement
+58058a6dc9ed71ef4d173bbf01ff7d4bb94fb094 8f52961d3b1fcca18c1419ec8564c732667423db maymonyu <yuvalmaymon30@gmail.com> 1557925368 -0700	commit: movement is working better
+8f52961d3b1fcca18c1419ec8564c732667423db 4607cfbab50597451f039f62ace89d700d71b388 maymonyu <yuvalmaymon30@gmail.com> 1558106061 -0700	commit: save work
+4607cfbab50597451f039f62ace89d700d71b388 329e69d527ab1fdf3bd4b48f53a37641fe5bb8fd maymonyu <yuvalmaymon30@gmail.com> 1558175052 -0700	commit: fixed isPointWithinFOV
+329e69d527ab1fdf3bd4b48f53a37641fe5bb8fd 6f1849857894df5e60c077492928a1a9a410ebfa maymonyu <yuvalmaymon30@gmail.com> 1558285345 -0700	commit: collision check is looking good

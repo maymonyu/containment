@@ -91,4 +91,5 @@ public interface MultiForageN150 extends SimpleN150,
         public Circle2 GetFOV(int robotId);
         public double GetRobotSteer(int robotId);
         public double getTurretHeadingOfRobot(int robotId);
+        public void ToggleReverse();
     }

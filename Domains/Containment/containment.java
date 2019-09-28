@@ -67,7 +67,14 @@ public class containment extends ControlSystemMFN150 {
 	private Vec2 offensive_pos1, offensive_pos2;
 
 	int id;
+	int leftNeighbourId;
+	int rightNeighbourId;
+
+	boolean isRedundant;
+	boolean isMyTurn;
 	boolean isMoving;
+	boolean isReversing;
+	boolean isDoneReversing;
 	boolean waitingForSteerHeading;
 	int numberOfRobots;
 	double steerHeading;
@@ -75,12 +82,28 @@ public class containment extends ControlSystemMFN150 {
 
 
 	public void Configure() {
+		isRedundant = false;
+		isMyTurn = false;
 		isMoving = false;
+		isReversing = false;
+		isDoneReversing = false;
 		waitingForSteerHeading = false;
+
 		messages = abstract_robot.getReceiveChannel();
-		id = abstract_robot.getID();
 		numberOfRobots = abstract_robot.GetNumberOfRobots();
 		steerHeading = 0;
+
+		id = abstract_robot.getID();
+		leftNeighbourId = GetInitialLeftNeighbourId();
+		rightNeighbourId = GetInitialRightNeighbourId();
+	}
+
+	private void SetLeftNeighbourId(int leftNeighbourId){
+		this.leftNeighbourId = leftNeighbourId;
+	}
+
+	private void SetRightNeighbourId(int rightNeighbourId){
+		this.rightNeighbourId = rightNeighbourId;
 	}
 
 	private boolean isBehind(double x1, double x2) {
@@ -91,7 +114,7 @@ public class containment extends ControlSystemMFN150 {
 		}
 	}
 
-	private int GetLeftNeighbourId(){
+	private int GetInitialLeftNeighbourId(){
 		int robotId = (id - 1) % numberOfRobots;
 
 		if (robotId == -1)
@@ -100,7 +123,7 @@ public class containment extends ControlSystemMFN150 {
 		return robotId;
 	}
 
-	private int GetRightNeighbourId(){
+	private int GetInitialRightNeighbourId(){
 		return (id + 1) % numberOfRobots;
 	}
 
@@ -133,7 +156,7 @@ public class containment extends ControlSystemMFN150 {
 	private double CalculateSteerHeading(long time){
 //		System.out.println("CalculateSteerHeading");
 
-		int rightNeighbourId = GetRightNeighbourId();
+		int rightNeighbourId = GetInitialRightNeighbourId();
 
 		Vec2 reachingPoint = abstract_robot.GetTopPoint(time, rightNeighbourId);
 //		System.out.println(id + " - reachingPoint = " + reachingPoint);
@@ -236,8 +259,8 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 
-	private boolean ShouldStopMoving(long time){
-//		System.out.println("ShouldStopMoving");
+	private boolean IsOpenArea(long time){
+//		System.out.println("IsOpenArea");
 
 //		Vec2 leftFovPoint = abstract_robot.GetLeftPoint(time, id);
 //		Vec2 rightFovPoint = abstract_robot.GetRightPoint(time, id);
@@ -245,8 +268,8 @@ public class containment extends ControlSystemMFN150 {
 //		System.out.println("left point: x = " + leftFovPoint.x + ", y = " + leftFovPoint.y);
 //		System.out.println("right point: x = " + rightFovPoint.x + ", y = " + rightFovPoint.y);
 
-		int leftNeighbourId = GetLeftNeighbourId();
-		int rightNeighbourId = GetRightNeighbourId();
+//		int leftNeighbourId = GetInitialLeftNeighbourId();
+//		int rightNeighbourId = GetInitialRightNeighbourId();
 
 		Circle2 robotFOVCircle = abstract_robot.GetFOV(id);
 		double turretHeading = abstract_robot.getTurretHeadingOfRobot(id);
@@ -275,6 +298,7 @@ public class containment extends ControlSystemMFN150 {
 //			System.out.println("isFovCollideWithRightNeighbour: " + isFovCollideWithRightNeighbour);
 //		}
 
+//		if (id == 4) System.out.println("shoudStopMoving: " + shouldStop);
 		return shouldStop;
 	}
 
@@ -321,15 +345,60 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private void TellNextRobotToStartMoving(){
-		int rightNeighbourId = GetRightNeighbourId();
+		isMyTurn = false;
+
+		int nextRobotToRun = GetInitialRightNeighbourId();
 
 		try{
-			abstract_robot.unicast(rightNeighbourId, new Message());
+			abstract_robot.unicast(nextRobotToRun, new ChangeTurnMessage());
 		}
 		catch (CommunicationException ex){
 		}
 	}
 
+	private void SendNewNeighboursMessages(){
+		try{
+			abstract_robot.unicast(leftNeighbourId, new SetRightNeighbourMessage(rightNeighbourId));
+			abstract_robot.unicast(rightNeighbourId, new SetLeftNeighbourMessage(leftNeighbourId));
+		}
+		catch (CommunicationException ex){
+		}
+	}
+
+	private Circle GetRobotCircle(int robotId){
+		Circle2 robotFov = abstract_robot.GetFOV(robotId);
+		return new Circle(robotFov);
+	}
+
+	private boolean AreNeighboursCollide(){
+		Circle leftNeighbourCircle = GetRobotCircle(leftNeighbourId);
+		Circle rightNeighbourCircle = GetRobotCircle(rightNeighbourId);
+
+		CircleCircleIntersection circleCircleIntersection = new CircleCircleIntersection(leftNeighbourCircle, rightNeighbourCircle);
+		int intersectionPointsCount = circleCircleIntersection.type.getIntersectionPointCount();
+
+		return intersectionPointsCount > 0;
+	}
+
+	private void CheckMessages(){
+		while (messages.hasMoreElements()) {
+			Message message = (Message) messages.nextElement();
+
+			if (message instanceof ChangeTurnMessage) {
+				isMyTurn = true;
+			}
+
+			if (message instanceof SetLeftNeighbourMessage) {
+				int newNeighbourId = ((SetLeftNeighbourMessage) message).val;
+				SetLeftNeighbourId(newNeighbourId);
+			}
+
+			if (message instanceof SetRightNeighbourMessage) {
+				int newNeighbourId = ((SetRightNeighbourMessage) message).val;
+				SetRightNeighbourId(newNeighbourId);
+			}
+		}
+	}
 
 	public int TakeStep() {
 //		System.out.println("Yes! " + id);
@@ -342,6 +411,8 @@ public class containment extends ControlSystemMFN150 {
 		result = abstract_robot.getTurretHeading(curr_time);
 		abstract_robot.setTurretHeading(curr_time, result);
 
+		CheckMessages();
+
 //		if(waitingForSteerHeading){
 //			if(IsSteerReady(curr_time)){
 //				waitingForSteerHeading = false;
@@ -351,19 +422,55 @@ public class containment extends ControlSystemMFN150 {
 //			return CSSTAT_OK;
 //		}
 
-		if (IsFirstToRun(curr_time)) {
-			StartMoving(curr_time);
-//			SetSteerHeading(curr_time);
-		}
-
-		else if (IsMyTurnToMove()) {
-//			SetSteerHeading(curr_time);
-			StartMoving(curr_time);
-		}
-
-		else if (isMoving && ShouldStopMoving(curr_time)){
-			StopMoving(curr_time);
+		if(isMyTurn && isRedundant){
 			TellNextRobotToStartMoving();
+			return CSSTAT_OK;
+		}
+
+		if(isMyTurn && AreNeighboursCollide()){
+			isRedundant = true;
+			SendNewNeighboursMessages();
+			return CSSTAT_OK;
+		}
+
+		if (isReversing){
+			if (!IsOpenArea(curr_time)){
+				abstract_robot.ToggleReverse();
+
+				StopMoving(curr_time);
+				TellNextRobotToStartMoving();
+
+				isReversing = false;
+			}
+
+//			isReversing = false;
+//			isDoneReversing = true;
+//
+//			return CSSTAT_OK;
+		}
+
+//		else if(isDoneReversing){
+//			isDoneReversing = false;
+//
+//			abstract_robot.ToggleReverse();
+//
+//			StopMoving(curr_time);
+//			TellNextRobotToStartMoving();
+//		}
+
+		else if (IsFirstToRun(curr_time)) {
+			isMyTurn = true;
+
+			StartMoving(curr_time);
+		}
+
+		else if (isMoving && IsOpenArea(curr_time)){
+			isReversing = true;
+			abstract_robot.ToggleReverse();
+		}
+
+		else if (isMyTurn) {
+			StartMoving(curr_time);
 		}
 
 		return CSSTAT_OK;

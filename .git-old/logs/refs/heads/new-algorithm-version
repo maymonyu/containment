@@ -1,0 +1,7 @@
+0000000000000000000000000000000000000000 6f1849857894df5e60c077492928a1a9a410ebfa maymonyu <yuvalmaymon30@gmail.com> 1565266431 -0700	branch: Created from HEAD
+6f1849857894df5e60c077492928a1a9a410ebfa 8abecfc477d060998a3d731b8a7cfe0023e1ca73 maymonyu <yuvalmaymon30@gmail.com> 1565287295 -0700	commit: declare temp steer in autogenerator
+8abecfc477d060998a3d731b8a7cfe0023e1ca73 7ff93b1d2f441ca5c653c3ac1aa431920cd91ee0 maymonyu <yuvalmaymon30@gmail.com> 1565354872 -0700	commit: steer in dsc
+7ff93b1d2f441ca5c653c3ac1aa431920cd91ee0 58512ffa7d381c6cd4293c795ef6410abf87b2b2 maymonyu <yuvalmaymon30@gmail.com> 1565357098 -0700	commit: first time running
+58512ffa7d381c6cd4293c795ef6410abf87b2b2 2538999b3b3fbf3334e61df4a7b8130ed2cffea7 maymonyu <yuvalmaymon30@gmail.com> 1565432686 -0700	commit: add all the parent directories
+2538999b3b3fbf3334e61df4a7b8130ed2cffea7 9114acc9a24e1ba023540399aa0d64f8a37cb3e0 maymonyu <yuvalmaymon30@gmail.com> 1565438933 -0700	commit: delete sturn - go right to direction
+9114acc9a24e1ba023540399aa0d64f8a37cb3e0 d478a0c4be04c9d6371819191664d4b53c8fc1aa maymonyu <yuvalmaymon30@gmail.com> 1565638748 -0700	commit: keep area closed

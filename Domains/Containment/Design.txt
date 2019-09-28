@@ -6,9 +6,16 @@ The algorithm:
 Each edge goes in the way of the center of the angle (of the edge and the previous edge),
 until the robot reaches the end of others polygon's FOV.
 
-Tasks:
-1. Set the direction of each robot at 0-time.
-    If the robot is on the same line of his neighbour, take the direction if the neighbour,
-    otherwise calculate direction.
+Rudundant:
 
-2. Find the robots in which you have collision with, and go till you reach the end of the collision.
+Define redundant:
+A redundant robot is a robot which isn't contributing to the closure of the area.
+
+Recognize redundant:
+When the neighbours of a robot collide, the robot become redundant.
+
+Check Redundancy:
+Check if the neighbours collide, if so:
+    - Tell them that they collide
+    - Define itself as redundant
+    - If redundant already - stay still
