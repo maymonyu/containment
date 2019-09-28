@@ -1,21 +1,12 @@
 
 Target:
-Give an algorithm which keeps a close area & reduce the area to 0-size.
+Implement the even-odd algorithm.
 
-The algorithm:
-Each edge goes in the way of the center of the angle (of the edge and the previous edge),
-until the robot reaches the end of others polygon's FOV.
+# Change the initial locations of the robots
+    - Define x (for now, define it to be half the radius)
+    - Define r(x)
+    - Set edge index for each robot
 
-Rudundant:
 
-Define redundant:
-A redundant robot is a robot which isn't contributing to the closure of the area.
-
-Recognize redundant:
-When the neighbours of a robot collide, the robot become redundant.
-
-Check Redundancy:
-Check if the neighbours collide, if so:
-    - Tell them that they collide
-    - Define itself as redundant
-    - If redundant already - stay still
+# Define the algorithm
+    - Divide the algorithm by the edge index
