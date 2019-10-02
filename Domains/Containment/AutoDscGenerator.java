@@ -87,7 +87,7 @@ public class AutoDscGenerator
         }
 
         incline = (reachingPoint.y - position.y) / (reachingPoint.x - position.x);
-        System.out.println("incline: " + incline);
+//        System.out.println("incline: " + incline);
 
         double angle = Math.atan(incline);
 

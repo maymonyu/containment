@@ -100,7 +100,7 @@ public class Polygen {
                 populateVertices(p);
             } while (isStrongContained(shapes, p));
             shapes.add(p);
-        } while (density(shapes) < targetDensity);
+        } while (shapes.size() < 1 && density(shapes) < targetDensity);
 
         System.out.println("Shapes generated: " + shapes.size());
 
