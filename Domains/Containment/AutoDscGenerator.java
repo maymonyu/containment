@@ -143,6 +143,8 @@ public class AutoDscGenerator
 
     private static List<Vec2> generateRobots(Vec2 [] polygonVertices){
         final double FOV_DISTANCE = 3;
+        final double X = FOV_DISTANCE / 2;
+
         int numOfVertices = polygonVertices.length;
         List<Vec2> robotsLocations = new ArrayList<Vec2>();
         Vec2 lastRobotLocationOnSegment = null;
@@ -174,7 +176,7 @@ public class AutoDscGenerator
             Vec2 currLocation = currVertex;
 
             for(int j = 0; j < numOfRobotsToCoverEdge; j++){
-                double distanceBetweenRobots = 2 * FOV_DISTANCE;
+                double distanceBetweenRobots = 2 * FOV_DISTANCE - X;
                 if(j == 0) distanceBetweenRobots = FOV_DISTANCE;
 
                 if(j == numOfRobotsToCoverEdge - 1){
