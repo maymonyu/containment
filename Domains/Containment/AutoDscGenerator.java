@@ -141,6 +141,104 @@ public class AutoDscGenerator
         return (firstHeading + secondHeading) / 2;
     }
 
+    private static double calculateIncline(Vec2 lineStart, Vec2 lineEnd){
+        return (lineStart.y - lineEnd.y) / (lineStart.x - lineEnd.x);
+    }
+
+    private static double calculateDistanceFromPointToLine(Vec2 point, Vec2 lineStart, Vec2 lineEnd){
+        double incline = calculateIncline(lineStart, lineEnd);
+
+        //A = m, B = -1, C = y1 - mx1
+        double A = incline;
+        double B = -1;
+        double C = lineStart.y - incline * lineStart.x;
+
+        // |Ax+By+C| / sqrt(A^2 + B^2)
+        return (Math.abs(A*point.x + B*point.y + C) / Math.sqrt(Math.pow(A, 2) + Math.pow(B, 2)));
+    }
+
+    private static Vec2 QuadraticEquation(double a, double b, double c){
+        System.out.println("a: " + a);
+        System.out.println("b: " + b);
+        System.out.println("c: " + c);
+
+        System.out.println("b^2: " + b*b);
+        System.out.println("4ac: " + 4*a*c);
+
+        double determinant = b * b - 4 * a * c;
+        System.out.println("determinant: " + determinant);
+
+        double root1 = (-b + Math.sqrt(determinant)) / (2 * a);
+        double root2 = (-b - Math.sqrt(determinant)) / (2 * a);
+        System.out.format("root1 = %.2f and root2 = %.2f", root1 , root2);
+        System.out.println();
+
+        Vec2 result = new Vec2();
+        result.x = root1;
+        result.y = root2;
+
+        return result;
+    }
+
+    private static boolean isPointCBetweenPointsAAndB(Vec2 A, Vec2 B, Vec2 C){
+        return calculateDistance(A, C) + calculateDistance(B, C) == calculateDistance(A, B);
+    }
+
+    private static Vec2 GetPointOnLineWithDistanceFromOtherPoint(Vec2 lineStart, Vec2 lineEnd,
+                                                                 double distance, Vec2 point){
+        double m = calculateIncline(lineStart, lineEnd);
+        System.out.println("lineStart: " + lineStart);
+        System.out.println("lineEnd: " + lineEnd);
+        System.out.println("m: " + m);
+        System.out.println("distance: " + distance);
+        System.out.println("point: " + point);
+
+        System.out.println("distance from last point to vertex: " + calculateDistance(point, lineStart));
+
+
+        double x1 = lineStart.x;
+        double y1 = lineStart.y;
+
+        double x2 = point.x;
+        double y2 = point.y;
+
+        double m_x1 = m * x1;
+        double y1_minus_y2_minus_mx1 = y1 - y2 -m_x1;
+
+        double quad_m = m * m;
+        double quad_x2 = x2 * x2;
+        double quad_distance = distance * distance;
+        double quad_y1_minus_y2_minus_mx1 = y1_minus_y2_minus_mx1 * y1_minus_y2_minus_mx1;
+
+        double minus2 = 2 * (-1);
+
+        double a = quad_m + 1;
+//        double b = minus2 * (x2 + m * (y1 - y2 - m*x1));
+        double b = minus2 * (x2 - m * y1_minus_y2_minus_mx1);
+        double c = quad_x2 + quad_y1_minus_y2_minus_mx1 - quad_distance;
+
+        Vec2 roots = QuadraticEquation(a, b, c);
+
+        double firstY = m * (roots.x - lineStart.x) + lineStart.y;
+        double secondY = m * (roots.y - lineStart.x) + lineStart.y;
+
+        Vec2 firstPoint = new Vec2(roots.x, firstY);
+        Vec2 secondPoint = new Vec2(roots.y, secondY);
+
+        if (isPointCBetweenPointsAAndB(lineStart, lineEnd, firstPoint)){
+            return firstPoint;
+        }
+
+        else{
+            return secondPoint;
+        }
+
+//        double distanceFromPointToLine = calculateDistanceFromPointToLine(point, lineStart, lineEnd);
+//        double distanceFromLineStartToDestinationPoint = Math.sqrt(Math.pow(distance, 2.0) - Math.pow(distanceFromPointToLine, 2.0));
+//
+//        return GetPointByDistanceAndRadians(distanceFromLineStartToDestinationPoint, radians, lineStart);
+    }
+
     private static List<Vec2> generateRobots(Vec2 [] polygonVertices){
         final double FOV_DISTANCE = 3;
         final double X = FOV_DISTANCE / 2;
@@ -148,6 +246,7 @@ public class AutoDscGenerator
         int numOfVertices = polygonVertices.length;
         List<Vec2> robotsLocations = new ArrayList<Vec2>();
         Vec2 lastRobotLocationOnSegment = null;
+        Vec2 robotLocation = null;
 
         for(int i=0; i<numOfVertices; i++){
             int previousVertexIndex;
@@ -165,10 +264,10 @@ public class AutoDscGenerator
             double previousEdgeHeading = previousRadianIncline + Math.PI / 2;
             double robotSteer = GetSteerByHeadings(previousEdgeHeading, robotHeading);
 
-            if(lastRobotLocationOnSegment != null){
-                currVertex = getCircleLineIntersectionPoint(currVertex,
-                        nextVertex, lastRobotLocationOnSegment, FOV_DISTANCE).get(1);
-            }
+//            if(lastRobotLocationOnSegment != null){
+//                currVertex = getCircleLineIntersectionPoint(currVertex,
+//                        nextVertex, lastRobotLocationOnSegment, FOV_DISTANCE).get(1);
+//            }
 
             double distance = calculateDistance(currVertex, nextVertex);
             int numOfRobotsToCoverEdge = (int) Math.ceil(distance / (2 * FOV_DISTANCE));
@@ -176,12 +275,16 @@ public class AutoDscGenerator
             Vec2 currLocation = currVertex;
             int j = 0;
 
+            System.out.println("Next edgeeeee");
+
 //            for(int j = 0; j < numOfRobotsToCoverEdge; j++){
             while (currLocation == currVertex || calculateDistance(currLocation, nextVertex) > FOV_DISTANCE){
-                System.out.println(calculateDistance(currLocation, nextVertex));
+                System.out.println("lastRobotLocationOnSegment: " + lastRobotLocationOnSegment);
+//                System.out.println("currVertex: " + currVertex);
+//                System.out.println("nextVertex: " + nextVertex);
 
                 double distanceBetweenRobots = 2 * FOV_DISTANCE - X;
-                if(j == 0) distanceBetweenRobots = FOV_DISTANCE;
+                if(i == 0 && j == 0) distanceBetweenRobots = FOV_DISTANCE;
 
 //                if(j == numOfRobotsToCoverEdge - 1){
 //                    distanceBetweenRobots = FOV_DISTANCE;
@@ -189,7 +292,15 @@ public class AutoDscGenerator
 //                    currLocation = nextVertex;
 //                }
 
-                Vec2 robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
+                if(i != 0 && j == 0){
+                    System.out.println("First");
+                    robotLocation = GetPointOnLineWithDistanceFromOtherPoint(currVertex, nextVertex, distanceBetweenRobots, lastRobotLocationOnSegment);
+                }
+                else {
+                    System.out.println("Not First");
+                    robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
+                }
+
                 robotLocation.t = robotHeading;
                 robotLocation.r = robotSteer;
 
