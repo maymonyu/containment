@@ -174,16 +174,20 @@ public class AutoDscGenerator
             int numOfRobotsToCoverEdge = (int) Math.ceil(distance / (2 * FOV_DISTANCE));
 
             Vec2 currLocation = currVertex;
+            int j = 0;
 
-            for(int j = 0; j < numOfRobotsToCoverEdge; j++){
+//            for(int j = 0; j < numOfRobotsToCoverEdge; j++){
+            while (currLocation == currVertex || calculateDistance(currLocation, nextVertex) > FOV_DISTANCE){
+                System.out.println(calculateDistance(currLocation, nextVertex));
+
                 double distanceBetweenRobots = 2 * FOV_DISTANCE - X;
                 if(j == 0) distanceBetweenRobots = FOV_DISTANCE;
 
-                if(j == numOfRobotsToCoverEdge - 1){
-                    distanceBetweenRobots = FOV_DISTANCE;
-                    radianIncline = radianIncline - Math.PI;
-                    currLocation = nextVertex;
-                }
+//                if(j == numOfRobotsToCoverEdge - 1){
+//                    distanceBetweenRobots = FOV_DISTANCE;
+//                    radianIncline = radianIncline - Math.PI;
+//                    currLocation = nextVertex;
+//                }
 
                 Vec2 robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
                 robotLocation.t = robotHeading;
@@ -192,6 +196,7 @@ public class AutoDscGenerator
                 robotsLocations.add(robotLocation);
 
                 currLocation = robotLocation;
+                j++;
             }
 
             lastRobotLocationOnSegment = robotsLocations.get(robotsLocations.size() - 1);
