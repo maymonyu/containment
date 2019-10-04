@@ -239,12 +239,12 @@ public class AutoDscGenerator
 //        return GetPointByDistanceAndRadians(distanceFromLineStartToDestinationPoint, radians, lineStart);
     }
 
-    private static List<Vec2> generateRobots(Vec2 [] polygonVertices){
+    private static List<RobotMetadata> generateRobots(Vec2 [] polygonVertices){
         final double FOV_DISTANCE = 3;
         final double X = FOV_DISTANCE / 2;
 
         int numOfVertices = polygonVertices.length;
-        List<Vec2> robotsLocations = new ArrayList<Vec2>();
+        List<RobotMetadata> robotsMetadatas = new ArrayList<RobotMetadata>();
         Vec2 lastRobotLocationOnSegment = null;
         Vec2 robotLocation = null;
 
@@ -304,16 +304,18 @@ public class AutoDscGenerator
                 robotLocation.t = robotHeading;
                 robotLocation.r = robotSteer;
 
-                robotsLocations.add(robotLocation);
+                RobotMetadata robotMetadata = new RobotMetadata(robotLocation, robotHeading, robotSteer);
+
+                robotsMetadatas.add(robotMetadata);
 
                 currLocation = robotLocation;
                 j++;
             }
 
-            lastRobotLocationOnSegment = robotsLocations.get(robotsLocations.size() - 1);
+            lastRobotLocationOnSegment = robotsMetadatas.get(robotsMetadatas.size() - 1).location;
         }
 
-        return robotsLocations;
+        return robotsMetadatas;
     }
 
     private static Vec2[] generatePolygonVertices(int [][] coordinates){
@@ -327,33 +329,36 @@ public class AutoDscGenerator
         return verticesArray;
     }
 
-    private static String [] getRobotDefinitions(List<Vec2> robotsLocations){
-        String [] robotsDefinitions = new String[robotsLocations.size()];
+    private static String [] getRobotDefinitions(List<RobotMetadata> robotsMetadatas){
+        String [] robotsDefinitions = new String[robotsMetadatas.size()];
 
-        for (int i=0; i<robotsLocations.size(); i++){
-            Vec2 currRobotLocation = robotsLocations.get(i);
+        for (int i=0; i<robotsMetadatas.size(); i++){
+            RobotMetadata currRobotMetadata = robotsMetadatas.get(i);
             robotsDefinitions[i] = String.format(
                     "robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim\n" +
                     "\tcontainment %s %s %s x000000 xFF0000 2 %s",
-                    currRobotLocation.x, currRobotLocation.y, currRobotLocation.t, currRobotLocation.r);
+                    currRobotMetadata.location.x, currRobotMetadata.location.y, currRobotMetadata.heading, currRobotMetadata.steering);
         }
 
         return robotsDefinitions;
     }
 
-    private static String [] getBounds(List<Vec2> robots){
+    private static String [] getBounds(List<RobotMetadata> robots){
         double minX = Double.POSITIVE_INFINITY;
         double minY = Double.POSITIVE_INFINITY;
         double maxX = Double.POSITIVE_INFINITY * -1;
         double maxY = Double.POSITIVE_INFINITY * -1;
 
         for(int i=0; i<robots.size(); i++){
-            Vec2 robot = robots.get(i);
-            if(robot.x < minX) minX = robot.x;
-            if(robot.y < minY) minY = robot.y;
+            RobotMetadata robot = robots.get(i);
+            double x = robot.location.x;
+            double y = robot.location.y;
 
-            if(robot.x > maxX) maxX = robot.x;
-            if(robot.y > maxY) maxY = robot.y;
+            if(x < minX) minX = x;
+            if(y < minY) minY = y;
+
+            if(x > maxX) maxX = x;
+            if(y > maxY) maxY = y;
         }
 
         minX -= 25;
@@ -406,7 +411,7 @@ public class AutoDscGenerator
 
             Vec2 [] polygonVertices = generatePolygonVertices(coordinates[0]);
 
-            List<Vec2> robots = generateRobots(polygonVertices);
+            List<RobotMetadata> robots = generateRobots(polygonVertices);
 
             String [] robotsDefinitions = getRobotDefinitions(robots);
 

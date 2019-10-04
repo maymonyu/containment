@@ -9,4 +9,5 @@ Implement the even-odd algorithm.
 
 
 # Define the algorithm
+    - Set steer be vertical to the line
     - Divide the algorithm by the edge index
