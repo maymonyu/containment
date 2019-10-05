@@ -76,10 +76,18 @@ public class containment extends ControlSystemMFN150 {
 	boolean isReversing;
 	boolean isDoneReversing;
 	boolean waitingForSteerHeading;
+	boolean isEven;
+	boolean isOdd;
+	boolean isFirstOnEdge;
+	boolean isLastOnEdge;
+
 	int numberOfRobots;
+	int indexOnEdge;
 	double steerHeading;
 	private Enumeration messages;
 
+	Vec2 lastPosition;
+	double r_x;
 
 	public void Configure() {
 		isRedundant = false;
@@ -91,11 +99,20 @@ public class containment extends ControlSystemMFN150 {
 
 		messages = abstract_robot.getReceiveChannel();
 		numberOfRobots = abstract_robot.GetNumberOfRobots();
+		indexOnEdge = abstract_robot.GetIndexOnEdge();
 		steerHeading = 0;
+
+		isFirstOnEdge = indexOnEdge == 1;
+		isEven = indexOnEdge % 2 == 0;
+		isOdd = !isEven;
+		isLastOnEdge = abstract_robot.GetIsLastOnEdge();
 
 		id = abstract_robot.getID();
 		leftNeighbourId = GetInitialLeftNeighbourId();
 		rightNeighbourId = GetInitialRightNeighbourId();
+
+		lastPosition = abstract_robot.getPosition();
+		r_x = abstract_robot.Calculate_r_x();
 	}
 
 	private void SetLeftNeighbourId(int leftNeighbourId){
@@ -400,6 +417,13 @@ public class containment extends ControlSystemMFN150 {
 		}
 	}
 
+	private double calculateDistance(Vec2 point1, Vec2 point2){
+		double dx = point1.x- point2.x;
+		double dy = point1.y - point2.y;
+
+		return Math.sqrt(dx * dx + dy * dy);
+	}
+
 	public int TakeStep() {
 //		System.out.println("Yes! " + id);
 
@@ -413,6 +437,23 @@ public class containment extends ControlSystemMFN150 {
 
 		CheckMessages();
 
+		if(isEven && curr_time == 0){
+			isMyTurn = true;
+			StartMoving(curr_time);
+		}
+
+		else if(isMoving){
+			Vec2 currPosition = abstract_robot.getPosition();
+			if(calculateDistance(currPosition, lastPosition) >= r_x){
+				StopMoving(curr_time);
+//				System.out.println("innnn");
+			}
+		}
+
+//		else if(isEven){
+//			StartMoving(curr_time);
+//		}
+
 //		if(waitingForSteerHeading){
 //			if(IsSteerReady(curr_time)){
 //				waitingForSteerHeading = false;
@@ -422,56 +463,42 @@ public class containment extends ControlSystemMFN150 {
 //			return CSSTAT_OK;
 //		}
 
-		if(isMyTurn && isRedundant){
-			TellNextRobotToStartMoving();
-			return CSSTAT_OK;
-		}
-
-		if(isMyTurn && AreNeighboursCollide()){
-			isRedundant = true;
-			SendNewNeighboursMessages();
-			return CSSTAT_OK;
-		}
-
-		if (isReversing){
-			if (!IsOpenArea(curr_time)){
-				abstract_robot.ToggleReverse();
-
-				StopMoving(curr_time);
-				TellNextRobotToStartMoving();
-
-				isReversing = false;
-			}
-
-//			isReversing = false;
-//			isDoneReversing = true;
-//
-//			return CSSTAT_OK;
-		}
-
-//		else if(isDoneReversing){
-//			isDoneReversing = false;
-//
-//			abstract_robot.ToggleReverse();
-//
-//			StopMoving(curr_time);
+//		if(isMyTurn && isRedundant){
 //			TellNextRobotToStartMoving();
+//			return CSSTAT_OK;
+//		}
+//
+//		if(isMyTurn && AreNeighboursCollide()){
+//			isRedundant = true;
+//			SendNewNeighboursMessages();
+//			return CSSTAT_OK;
+//		}
+//
+//		if (isReversing){
+//			if (!IsOpenArea(curr_time)){
+//				abstract_robot.ToggleReverse();
+//
+//				StopMoving(curr_time);
+//				TellNextRobotToStartMoving();
+//
+//				isReversing = false;
+//			}
 //		}
 
-		else if (IsFirstToRun(curr_time)) {
-			isMyTurn = true;
-
-			StartMoving(curr_time);
-		}
-
-		else if (isMoving && IsOpenArea(curr_time)){
-			isReversing = true;
-			abstract_robot.ToggleReverse();
-		}
-
-		else if (isMyTurn) {
-			StartMoving(curr_time);
-		}
+//		else if (IsFirstToRun(curr_time)) {
+//			isMyTurn = true;
+//
+//			StartMoving(curr_time);
+//		}
+//
+//		else if (isMoving && IsOpenArea(curr_time)){
+//			isReversing = true;
+//			abstract_robot.ToggleReverse();
+//		}
+//
+//		else if (isMyTurn) {
+//			StartMoving(curr_time);
+//		}
 
 		return CSSTAT_OK;
 	}

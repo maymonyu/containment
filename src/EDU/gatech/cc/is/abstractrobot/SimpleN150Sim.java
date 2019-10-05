@@ -906,6 +906,22 @@ public class SimpleN150Sim extends Simple
 	private boolean	in_reverse = false;
 	/**
 	*/
+
+	public double Calculate_r_x(){
+		double d = MultiForageN150.VISION_RANGE ;
+		double x = d / 2;
+
+		return 2 * Math.sqrt(d*x - (x*x / 4));
+	}
+
+	public int GetIndexOnEdge(){
+		return indexOnEdge;
+	}
+
+	public boolean GetIsLastOnEdge(){
+		return isLastOnEdge;
+	}
+
 	public double getSteerHeading(long timestamp)
 		{
 		return(steer.t);

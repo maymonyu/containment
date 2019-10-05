@@ -92,4 +92,8 @@ public interface MultiForageN150 extends SimpleN150,
         public double GetRobotSteer(int robotId);
         public double getTurretHeadingOfRobot(int robotId);
         public void ToggleReverse();
+        public int GetIndexOnEdge();
+        public boolean GetIsLastOnEdge();
+        public double Calculate_r_x();
+        public Vec2 getPosition();
     }
