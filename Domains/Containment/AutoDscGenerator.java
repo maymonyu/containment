@@ -364,10 +364,10 @@ public class AutoDscGenerator
             if(y > maxY) maxY = y;
         }
 
-        minX -= 25;
-        minY -= 25;
-        maxX += 25;
-        maxY += 25;
+        minX -= 30;
+        minY -= 30;
+        maxX += 30;
+        maxY += 40;
 
         return new String[]{Double.toString(minX), Double.toString(maxX), Double.toString(minY), Double.toString(maxY)};
     }
