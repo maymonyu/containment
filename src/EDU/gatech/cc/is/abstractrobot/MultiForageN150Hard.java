@@ -628,4 +628,9 @@ public class MultiForageN150Hard extends SimpleN150Hard
 		public double getTurretHeadingOfRobot(int robotId) {
 			return 0;
 		}
+
+		@Override
+		public void ToggleReverse(){
+
+		}
 	}
