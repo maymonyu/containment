@@ -347,7 +347,7 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	private boolean IsFirstToRun(long time){
-		return time == 0 && id == 0;
+		return isEven && time == 0;
 	}
 
 	private boolean IsMyTurnToMove(){
@@ -368,6 +368,21 @@ public class containment extends ControlSystemMFN150 {
 
 		try{
 			abstract_robot.unicast(nextRobotToRun, new ChangeTurnMessage());
+		}
+		catch (CommunicationException ex){
+		}
+	}
+
+
+	private void TellNeighbourstToStartMoving(){
+		isMyTurn = false;
+
+		int nextNeighbour = GetInitialRightNeighbourId();
+		int previousNeighbour = GetInitialLeftNeighbourId();
+
+		try{
+			abstract_robot.unicast(nextNeighbour, new ChangeTurnMessage());
+			abstract_robot.unicast(previousNeighbour, new ChangeTurnMessage());
 		}
 		catch (CommunicationException ex){
 		}
@@ -437,7 +452,7 @@ public class containment extends ControlSystemMFN150 {
 
 		CheckMessages();
 
-		if(isEven && curr_time == 0){
+		if(IsFirstToRun(curr_time)){
 			isMyTurn = true;
 			StartMoving(curr_time);
 		}
@@ -446,8 +461,16 @@ public class containment extends ControlSystemMFN150 {
 			Vec2 currPosition = abstract_robot.getPosition();
 			if(calculateDistance(currPosition, lastPosition) >= r_x){
 				StopMoving(curr_time);
-//				System.out.println("innnn");
+				TellNeighbourstToStartMoving();
+
+				isMyTurn = false;
+				lastPosition = currPosition;
+				//				System.out.println("innnn");
 			}
+		}
+
+		else if(isMyTurn){
+			StartMoving(curr_time);
 		}
 
 //		else if(isEven){
