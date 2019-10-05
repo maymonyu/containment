@@ -35,8 +35,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="466" column="44" selection-start-line="466" selection-start-column="44" selection-end-line="466" selection-end-column="44" />
+            <state relative-caret-position="22">
+              <caret line="452" column="24" lean-forward="true" selection-start-line="452" selection-start-column="24" selection-end-line="452" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#10048#10049#0" expanded="true" />
@@ -269,7 +269,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570284977223" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570285329118" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/tb" />
   </component>
   <component name="ReadonlyStatusHandler">
@@ -744,8 +744,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="466" column="44" selection-start-line="466" selection-start-column="44" selection-end-line="466" selection-end-column="44" />
+        <state relative-caret-position="22">
+          <caret line="452" column="24" lean-forward="true" selection-start-line="452" selection-start-column="24" selection-end-line="452" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#10048#10049#0" expanded="true" />
