@@ -276,9 +276,9 @@ public class AutoDscGenerator
             int j = 0;
 
             System.out.println("Next edgeeeee");
+            boolean isLastOnEdge = false;
 
-//            for(int j = 0; j < numOfRobotsToCoverEdge; j++){
-            while (currLocation == currVertex || calculateDistance(currLocation, nextVertex) > FOV_DISTANCE){
+            while (!isLastOnEdge){
                 System.out.println("lastRobotLocationOnSegment: " + lastRobotLocationOnSegment);
 //                System.out.println("currVertex: " + currVertex);
 //                System.out.println("nextVertex: " + nextVertex);
@@ -301,14 +301,12 @@ public class AutoDscGenerator
                     robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
                 }
 
-                robotLocation.t = robotHeading;
-                robotLocation.r = robotSteer;
-
-                RobotMetadata robotMetadata = new RobotMetadata(robotLocation, robotHeading, robotSteer);
+                RobotMetadata robotMetadata = new RobotMetadata(robotLocation, robotHeading, robotSteer, j+1);
 
                 robotsMetadatas.add(robotMetadata);
 
                 currLocation = robotLocation;
+                isLastOnEdge = calculateDistance(currLocation, nextVertex) < FOV_DISTANCE;
                 j++;
             }
 
