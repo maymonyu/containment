@@ -301,7 +301,7 @@ public class AutoDscGenerator
                     robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
                 }
 
-                RobotMetadata robotMetadata = new RobotMetadata(robotLocation, robotHeading, robotSteer, j+1);
+                RobotMetadata robotMetadata = new RobotMetadata(robotLocation, robotHeading, robotSteer, j+1, convertBooleanToInt(isLastOnEdge));
 
                 robotsMetadatas.add(robotMetadata);
 
@@ -314,6 +314,11 @@ public class AutoDscGenerator
         }
 
         return robotsMetadatas;
+    }
+
+    private static int convertBooleanToInt(boolean bool){
+        if(bool) return 1;
+        return 0;
     }
 
     private static Vec2[] generatePolygonVertices(int [][] coordinates){
@@ -334,8 +339,8 @@ public class AutoDscGenerator
             RobotMetadata currRobotMetadata = robotsMetadatas.get(i);
             robotsDefinitions[i] = String.format(
                     "robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim\n" +
-                    "\tcontainment %s %s %s x000000 xFF0000 2 %s",
-                    currRobotMetadata.location.x, currRobotMetadata.location.y, currRobotMetadata.heading, currRobotMetadata.steering);
+                    "\tcontainment %s %s %s x000000 xFF0000 2 %s %s %s",
+                    currRobotMetadata.location.x, currRobotMetadata.location.y, currRobotMetadata.heading, currRobotMetadata.steering, currRobotMetadata.indexOnEdge, currRobotMetadata.isLastOnEdge);
         }
 
         return robotsDefinitions;

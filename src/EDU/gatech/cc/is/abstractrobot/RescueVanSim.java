@@ -96,7 +96,13 @@ public class RescueVanSim extends Simple
 	 * Take a simulated step;
 	 */
 	private double last_traversability = 1.0;
-	public void takeStep(long time_increment, SimulatedObject[] all_objs)
+
+		@Override
+		public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, int id, long s) {
+
+		}
+
+		public void takeStep(long time_increment, SimulatedObject[] all_objs)
 		{
 		if (DEBUG) System.out.println("RescueVanSim.TakeStep()");
 

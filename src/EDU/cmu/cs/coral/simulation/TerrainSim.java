@@ -72,7 +72,7 @@ public class TerrainSim extends Object implements SimulatedLinearObject,
 	 * @param s	random number seed.
          */
 	public void init(double x, double y, double t,
-		double r, Color f, Color back, int v, int i, long s)
+		double r, Color f, Color back, int v, int ttt, boolean dsadsa, int i, long s)
 		{
 		System.out.println("RoadSim: initialized with wrong arguments.\n"
 			+"use `linearobject' declaration in description \n"
@@ -108,7 +108,7 @@ public class TerrainSim extends Object implements SimulatedLinearObject,
 	 * @param s	random number seed.
          */
 	public void init(double x1, double y1, double x2, double y2,
-		double r, Color f, Color back, int v, int i, long s)
+		double r, Color f, Color back, int v, int ttt, boolean dsadsa, int i, long s)
 		{
 		start = new Vec2(x1,y1);
 		end = new Vec2(x2,y2);
@@ -154,7 +154,12 @@ public class TerrainSim extends Object implements SimulatedLinearObject,
 		}
 
 
-	/**
+        @Override
+        public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, int id, long s) {
+
+        }
+
+        /**
 	 * Take a simulated step;
 	 */
 	public void takeStep(long time_increment, SimulatedObject[] all_objs)
@@ -508,4 +513,9 @@ public class TerrainSim extends Object implements SimulatedLinearObject,
 		draw(g,w,h,t,b,l,r);
 		center = old_pos;
 		}
-	}
+
+        @Override
+        public void init(double x1, double y1, double x2, double y2, double r, Color fg, Color bg, int vc, int id, long s) {
+
+        }
+    }

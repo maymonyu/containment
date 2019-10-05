@@ -31,11 +31,13 @@ public class RobotMetadata {
     public double heading;
     public double steering;
     public int indexOnEdge;
+    public int isLastOnEdge;
 
-    public RobotMetadata(Vec2 location, double heading, double steering, int indexOnEdge) {
+    public RobotMetadata(Vec2 location, double heading, double steering, int indexOnEdge, int isLastOnEdge) {
         this.location = location;
         this.heading = heading;
         this.steering = steering;
         this.indexOnEdge = indexOnEdge;
+        this.isLastOnEdge = isLastOnEdge;
     }
 }

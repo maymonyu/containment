@@ -94,8 +94,12 @@ public class SimulationCanvas extends Canvas implements Runnable
 		double	x1, y1, x2, y2;
 		int	color1, color2;
 		int	vc;
-        double steer;
-        idcounter = 0;
+		double steer;
+		int indexOnEdge;
+		int isLastOnEdge;
+		boolean isLastOnEdgeAsBoolean;
+
+		idcounter = 0;
 		String	string1, string2;
 		TBDictionary bboard = new TBDictionary();
 		/*--- assume success. reset later if failure ---*/
@@ -558,13 +562,34 @@ public class SimulationCanvas extends Canvas implements Runnable
                         token = in.sval; // for error report
                         throw new IOException();
                     }
+					if (in.nextToken()==StreamTokenizer.TT_NUMBER) {
+						indexOnEdge = (int)in.nval;
+					}
+					else
+					{
+						token = in.sval; // for error report
+						throw new IOException();
+					}
+					if (in.nextToken()==StreamTokenizer.TT_NUMBER) {
+						isLastOnEdge = (int)in.nval;
+						if(isLastOnEdge == 0){
+							isLastOnEdgeAsBoolean = false;
+						}
+						else{
+							isLastOnEdgeAsBoolean = true;						}
+					}
+					else
+					{
+						token = in.sval; // for error report
+						throw new IOException();
+					}
 					/*--- instantiate the obj ---*/
 					token = string1; // in case of error
                         		Class rclass = Class.forName(string1);
                         		SimulatedObject
 						obj = (SimulatedObject)rclass.newInstance();
 					obj.init(x, y, t, r, new Color(color1),
-						new Color(color2),vc, steer,
+						new Color(color2),vc, steer, indexOnEdge, isLastOnEdgeAsBoolean,
 						idcounter++,seed++);
 					temp_objs[temp_objs_count++] = obj;
 					}
@@ -749,13 +774,34 @@ public class SimulationCanvas extends Canvas implements Runnable
                         token = in.sval; // for error report
                         throw new IOException();
                     }
+					if (in.nextToken()==StreamTokenizer.TT_NUMBER) {
+						indexOnEdge = (int)in.nval;
+					}
+					else
+					{
+						token = in.sval; // for error report
+						throw new IOException();
+					}
+					if (in.nextToken()==StreamTokenizer.TT_NUMBER) {
+						isLastOnEdge = (int)in.nval;
+						if(isLastOnEdge == 0){
+							isLastOnEdgeAsBoolean = false;
+						}
+						else{
+							isLastOnEdgeAsBoolean = true;						}
+					}
+					else
+					{
+						token = in.sval; // for error report
+						throw new IOException();
+					}
 					/*--- the robot ---*/
 					token = string1; // in case of error
                         		Class rclass = Class.forName(string1);
                         		SimulatedObject
 						obj = (SimulatedObject)rclass.newInstance();
 					obj.init(x, y, t, 0, new Color(color1),
-						new Color(color2),vc, steer,
+						new Color(color2),vc, steer, indexOnEdge, isLastOnEdgeAsBoolean,
 						idcounter++,seed++);
 					temp_objs[temp_objs_count++] = obj;
 					
