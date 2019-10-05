@@ -909,7 +909,7 @@ public class SimpleN150Sim extends Simple
 
 	public double Calculate_r_x(){
 		double d = MultiForageN150.VISION_RANGE ;
-		double x = d / 2;
+		double x = d / 3;
 
 		return 2 * Math.sqrt(d*x - (x*x / 4));
 	}

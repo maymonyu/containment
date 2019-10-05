@@ -241,7 +241,7 @@ public class AutoDscGenerator
 
     private static List<RobotMetadata> generateRobots(Vec2 [] polygonVertices){
         final double FOV_DISTANCE = 3;
-        final double X = FOV_DISTANCE / 2;
+        final double X = FOV_DISTANCE / 3;
 
         int numOfVertices = polygonVertices.length;
         List<RobotMetadata> robotsMetadatas = new ArrayList<RobotMetadata>();
