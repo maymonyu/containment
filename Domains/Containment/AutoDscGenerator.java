@@ -262,7 +262,9 @@ public class AutoDscGenerator
 
             double previousRadianIncline = calculateRadianIncline(previousVertex, currVertex);
             double previousEdgeHeading = previousRadianIncline + Math.PI / 2;
-            double robotSteer = GetSteerByHeadings(previousEdgeHeading, robotHeading);
+//            double robotSteer = GetSteerByHeadings(previousEdgeHeading, robotHeading);
+            double robotSteer = robotHeading;
+
 
 //            if(lastRobotLocationOnSegment != null){
 //                currVertex = getCircleLineIntersectionPoint(currVertex,
@@ -280,8 +282,6 @@ public class AutoDscGenerator
 
             while (!isLastOnEdge){
                 System.out.println("lastRobotLocationOnSegment: " + lastRobotLocationOnSegment);
-//                System.out.println("currVertex: " + currVertex);
-//                System.out.println("nextVertex: " + nextVertex);
 
                 double distanceBetweenRobots = 2 * FOV_DISTANCE - X;
                 if(i == 0 && j == 0) distanceBetweenRobots = FOV_DISTANCE;
