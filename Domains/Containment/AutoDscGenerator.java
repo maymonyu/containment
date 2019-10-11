@@ -403,9 +403,36 @@ public class AutoDscGenerator
         return 2 * secRadius;
     }
 
+    private static int getHighestNumberInStringsArray(String[] stringArray){
+        int [] intsArray = new int[stringArray.length];
+        for (int i=0; i<stringArray.length; i++){
+            intsArray[i] = Integer.parseInt(stringArray[i]);
+        }
+
+        int max = Arrays.stream(intsArray).max().getAsInt();
+        return max;
+    }
+
+    private static String getNextArchivedDirNumber(){
+        File file = new File("ContainmentDsc/");
+        String[] directories = file.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File current, String name) {
+                return new File(current, name).isDirectory();
+            }
+        });
+//        System.out.println(Arrays.toString(directories));
+
+        int nextArchiveDirNumber = getHighestNumberInStringsArray(directories) + 1;
+        String nextArchiveDirNumberAsString = Integer.toString(nextArchiveDirNumber);
+
+        return nextArchiveDirNumberAsString;
+    }
+
     public static void main(String[] args)
     {
         String filename = "containment2.dsc";
+        double secRadius = 0;
 
         try {
             copyFileUsingChannel(new File("descPrefix.txt"), new File(filename));
@@ -418,7 +445,7 @@ public class AutoDscGenerator
 
             Vec2 [] polygonVertices = generatePolygonVertices(coordinates[0]);
 
-            double secRadius = SmallestEnclosingCircle.getSmallestEnclosingCircleRadius(polygonVertices);
+            secRadius = SmallestEnclosingCircle.getSmallestEnclosingCircleRadius(polygonVertices);
             System.out.println("UpperBound: " + calculateRuntimeUpperBound(secRadius));
 
             List<RobotMetadata> robots = generateRobots(polygonVertices);
@@ -437,6 +464,35 @@ public class AutoDscGenerator
             System.out.println(ex);
         }
 
+        try {
+            String archiveDirNumber = getNextArchivedDirNumber();
+            new File("ContainmentDsc/" + archiveDirNumber).mkdirs();
+
+            System.out.println("archiveFilePath: " + archiveDirNumber);
+            String dirPath = "ContainmentDsc/" + archiveDirNumber;
+            String filePath = dirPath + "/" + archiveDirNumber;
+
+            copyFileUsingChannel(new File(filename), new File(filePath));
+
+            try {
+                String upperBoundFilePath = dirPath + "/" + "upperBound.txt";
+                Writer upperBoundFile = new BufferedWriter(new FileWriter(upperBoundFilePath, true));
+
+                upperBoundFile.append("\n");
+                upperBoundFile.append("Upper Bound: ");
+
+                upperBoundFile.append(Double.toString(calculateRuntimeUpperBound(secRadius)));
+                upperBoundFile.append("\n");
+
+                upperBoundFile.close();
+            }
+            catch (Exception ex){
+                System.out.println(ex);
+            }
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
 }
 

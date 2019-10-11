@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b22b1fa8-4e4a-4092-b3f2-023d077ad013" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domains/Containment/Design.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Domains/Containment/Design.txt" afterDir="false" />
-    </list>
+    <list default="true" id="b22b1fa8-4e4a-4092-b3f2-023d077ad013" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,12 +32,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-159">
-              <caret line="402" column="15" selection-start-line="402" selection-start-column="15" selection-end-line="402" selection-end-column="15" />
+            <state relative-caret-position="-964">
+              <caret line="434" column="28" selection-start-line="434" selection-start-column="28" selection-end-line="434" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#14188#14189#0" expanded="true" />
                 <element signature="e#14216#14217#0" expanded="true" />
+                <element signature="e#14820#14821#0" expanded="true" />
+                <element signature="e#14896#14897#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -50,7 +49,7 @@
         <entry file="file://$PROJECT_DIR$/Domains/Containment/SmallestEnclosingCircle.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="682">
-              <caret line="49" column="7" lean-forward="true" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
+              <caret line="49" column="7" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
               <folding>
                 <element signature="e#0#5988#0" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -75,7 +74,7 @@
         <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="484">
-              <caret line="461" column="46" lean-forward="true" selection-start-line="461" selection-start-column="46" selection-end-line="461" selection-end-column="46" />
+              <caret line="461" column="46" selection-start-line="461" selection-start-column="46" selection-end-line="461" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#10048#10049#0" expanded="true" />
@@ -124,8 +123,8 @@
       <find>tellnext</find>
       <find>calculate</find>
       <find>polygen</find>
-      <find>arraylis</find>
       <find>Point</find>
+      <find>arraylis</find>
     </findStrings>
     <replaceStrings>
       <replace>ContRobSim.class</replace>
@@ -228,6 +227,21 @@
             <path>
               <item name="tb" type="b2602c69:ProjectViewProjectNode" />
               <item name="tb" type="462c0819:PsiDirectoryNode" />
+              <item name="Domains" type="462c0819:PsiDirectoryNode" />
+              <item name="Containment" type="462c0819:PsiDirectoryNode" />
+              <item name="ContainmentDsc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tb" type="462c0819:PsiDirectoryNode" />
+              <item name="Domains" type="462c0819:PsiDirectoryNode" />
+              <item name="Containment" type="462c0819:PsiDirectoryNode" />
+              <item name="ContainmentDsc" type="462c0819:PsiDirectoryNode" />
+              <item name="3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tb" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -279,7 +293,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570787466104" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570793016927" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/tb" />
   </component>
   <component name="ReadonlyStatusHandler">
@@ -320,7 +334,7 @@
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1853" height="1055" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20088544" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20088544" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -334,7 +348,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.26241902" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32397407" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32937366" />
@@ -352,16 +366,6 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/descPrefix.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jrt:///usr/lib/jvm/java-1.11.0-openjdk-amd64!/java.base/java/lang/Math.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1458">
-          <caret line="649" column="5" lean-forward="true" selection-start-line="649" selection-start-column="5" selection-end-line="649" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/Makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -731,7 +735,7 @@
     <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
-          <caret line="461" column="46" lean-forward="true" selection-start-line="461" selection-start-column="46" selection-end-line="461" selection-end-column="46" />
+          <caret line="461" column="46" selection-start-line="461" selection-start-column="46" selection-end-line="461" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#10048#10049#0" expanded="true" />
@@ -750,7 +754,7 @@
     <entry file="file://$PROJECT_DIR$/Domains/Containment/SmallestEnclosingCircle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="682">
-          <caret line="49" column="7" lean-forward="true" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
+          <caret line="49" column="7" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
           <folding>
             <element signature="e#0#5988#0" expanded="true" />
             <element signature="imports" expanded="true" />
@@ -770,14 +774,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment3.dsc">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/3/3">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-159">
-          <caret line="402" column="15" selection-start-line="402" selection-start-column="15" selection-end-line="402" selection-end-column="15" />
+        <state relative-caret-position="-964">
+          <caret line="434" column="28" selection-start-line="434" selection-start-column="28" selection-end-line="434" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#14188#14189#0" expanded="true" />
             <element signature="e#14216#14217#0" expanded="true" />
+            <element signature="e#14820#14821#0" expanded="true" />
+            <element signature="e#14896#14897#0" expanded="true" />
           </folding>
         </state>
       </provider>
