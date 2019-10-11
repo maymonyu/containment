@@ -399,6 +399,10 @@ public class AutoDscGenerator
         }
     }
 
+    private static double calculateRuntimeUpperBound(double secRadius){
+        return 2 * secRadius;
+    }
+
     public static void main(String[] args)
     {
         String filename = "containment2.dsc";
@@ -413,6 +417,9 @@ public class AutoDscGenerator
             int[][][] coordinates = gen.getCoordinates();
 
             Vec2 [] polygonVertices = generatePolygonVertices(coordinates[0]);
+
+            double secRadius = SmallestEnclosingCircle.getSmallestEnclosingCircleRadius(polygonVertices);
+            System.out.println("UpperBound: " + calculateRuntimeUpperBound(secRadius));
 
             List<RobotMetadata> robots = generateRobots(polygonVertices);
 

@@ -1,13 +1,6 @@
 
 Target:
-Implement the even-odd algorithm.
+Check what is the upper bound of the runtime
 
-# Change the initial locations of the robots
-    - Define x (for now, define it to be half the radius)
-    - Define r(x)
-    - Set edge index for each robot
-
-
-# Define the algorithm
-    - Set steer be vertical to the line
-    - Divide the algorithm by the edge index
+# Add the code of the smallest enclosing circle
+# Run SCE and print the diameter and the upper bound expected
