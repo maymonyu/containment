@@ -29,16 +29,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="408" column="57" lean-forward="true" selection-start-line="408" selection-start-column="57" selection-end-line="408" selection-end-column="57" />
+            <state relative-caret-position="281">
+              <caret line="484" column="63" selection-start-line="484" selection-start-column="63" selection-end-line="484" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#14820#14821#0" expanded="true" />
                 <element signature="e#14896#14897#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/2/upperBound.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -69,8 +78,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="485" column="22" selection-start-line="485" selection-start-column="22" selection-end-line="485" selection-end-column="22" />
+            <state relative-caret-position="237">
+              <caret line="459" selection-start-line="459" selection-end-line="459" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#10048#10049#0" expanded="true" />
@@ -84,7 +93,7 @@
         <entry file="file://$PROJECT_DIR$/Domains/Containment/containment2.dsc">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="282">
-              <caret line="69" column="8" lean-forward="true" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="8" />
+              <caret line="69" column="8" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -127,9 +136,9 @@
       <find>polygen</find>
       <find>tellnext</find>
       <find>Circle</find>
+      <find>Point</find>
       <find>arraylis</find>
       <find>circle</find>
-      <find>Point</find>
     </findStrings>
     <replaceStrings>
       <replace>ContRobSim.class</replace>
@@ -193,8 +202,9 @@
         <option value="$PROJECT_DIR$/Domains/Containment/SmallestEnclosingCircle.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/ContainmentDsc/3/upperBound.txt" />
         <option value="$PROJECT_DIR$/Domains/Containment/containment2.dsc" />
-        <option value="$PROJECT_DIR$/Domains/Containment/containment.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java" />
+        <option value="$PROJECT_DIR$/Domains/Containment/containment.java" />
+        <option value="$PROJECT_DIR$/Domains/Containment/ContainmentDsc/2/upperBound.txt" />
       </list>
     </option>
   </component>
@@ -291,7 +301,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570971547134" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570971896611" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/tb" />
   </component>
   <component name="ReadonlyStatusHandler">
@@ -332,7 +342,7 @@
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1853" height="1055" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20088544" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20088544" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -346,7 +356,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3574514" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3574514" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32937366" />
@@ -697,9 +707,6 @@
         <state relative-caret-position="-3053" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/2/upperBound.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/2/2">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -720,19 +727,7 @@
     <entry file="file://$PROJECT_DIR$/Domains/Containment/containment2.dsc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
-          <caret line="69" column="8" lean-forward="true" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="485" column="22" selection-start-line="485" selection-start-column="22" selection-end-line="485" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#10048#10049#0" expanded="true" />
-            <element signature="e#10082#10083#0" expanded="true" />
-          </folding>
+          <caret line="69" column="8" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -759,13 +754,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="408" column="57" lean-forward="true" selection-start-line="408" selection-start-column="57" selection-end-line="408" selection-end-column="57" />
+        <state relative-caret-position="281">
+          <caret line="484" column="63" selection-start-line="484" selection-start-column="63" selection-end-line="484" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#14820#14821#0" expanded="true" />
             <element signature="e#14896#14897#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="459" selection-start-line="459" selection-end-line="459" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#10048#10049#0" expanded="true" />
+            <element signature="e#10082#10083#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/2/upperBound.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
         </state>
       </provider>
     </entry>

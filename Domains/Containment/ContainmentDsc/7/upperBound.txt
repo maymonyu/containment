@@ -1,0 +1,3 @@
+
+Upper Bound: 40619.17407949052
+Actual time: 14100
