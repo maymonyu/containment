@@ -400,7 +400,13 @@ public class AutoDscGenerator
     }
 
     private static double calculateRuntimeUpperBound(double secRadius){
-        return 2 * secRadius;
+        double maxPassingLength = secRadius / 2;
+        double totalNumberOfRobotTypes = 4;
+        double totalLength = maxPassingLength * totalNumberOfRobotTypes;
+
+        double totalTimeUnitsToPassOneMeter = 2000;
+
+        return totalLength * totalTimeUnitsToPassOneMeter;
     }
 
     private static int getHighestNumberInStringsArray(String[] stringArray){
@@ -483,6 +489,8 @@ public class AutoDscGenerator
 
                 upperBoundFile.append(Double.toString(calculateRuntimeUpperBound(secRadius)));
                 upperBoundFile.append("\n");
+
+                upperBoundFile.append("Actual time: ");
 
                 upperBoundFile.close();
             }

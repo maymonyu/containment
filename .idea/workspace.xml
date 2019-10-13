@@ -32,12 +32,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-964">
-              <caret line="434" column="28" selection-start-line="434" selection-start-column="28" selection-end-line="434" selection-end-column="28" />
+            <state relative-caret-position="325">
+              <caret line="408" column="57" lean-forward="true" selection-start-line="408" selection-start-column="57" selection-end-line="408" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#14188#14189#0" expanded="true" />
-                <element signature="e#14216#14217#0" expanded="true" />
                 <element signature="e#14820#14821#0" expanded="true" />
                 <element signature="e#14896#14897#0" expanded="true" />
               </folding>
@@ -48,23 +46,21 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/SmallestEnclosingCircle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="682">
-              <caret line="49" column="7" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
+            <state relative-caret-position="132">
+              <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
               <folding>
-                <element signature="e#0#5988#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-                <element signature="e#5071#5072#0" expanded="true" />
-                <element signature="e#5137#5138#0" expanded="true" />
-                <element signature="e#5350#5351#0" expanded="true" />
-                <element signature="e#5427#5428#0" expanded="true" />
-                <element signature="e#5634#5635#0" expanded="true" />
-                <element signature="e#5684#5685#0" expanded="true" />
-                <element signature="e#5724#5725#0" expanded="true" />
-                <element signature="e#5775#5776#0" expanded="true" />
-                <element signature="e#5851#5852#0" expanded="true" />
-                <element signature="e#5891#5892#0" expanded="true" />
-                <element signature="e#5924#5925#0" expanded="true" />
-                <element signature="e#5983#5984#0" expanded="true" />
+                <element signature="e#5574#5575#0" expanded="true" />
+                <element signature="e#5640#5641#0" expanded="true" />
+                <element signature="e#5853#5854#0" expanded="true" />
+                <element signature="e#5930#5931#0" expanded="true" />
+                <element signature="e#6137#6138#0" expanded="true" />
+                <element signature="e#6187#6188#0" expanded="true" />
+                <element signature="e#6227#6228#0" expanded="true" />
+                <element signature="e#6278#6279#0" expanded="true" />
+                <element signature="e#6354#6355#0" expanded="true" />
+                <element signature="e#6394#6395#0" expanded="true" />
+                <element signature="e#6427#6428#0" expanded="true" />
+                <element signature="e#6486#6487#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -73,13 +69,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="461" column="46" selection-start-line="461" selection-start-column="46" selection-end-line="461" selection-end-column="46" />
+            <state relative-caret-position="413">
+              <caret line="485" column="22" selection-start-line="485" selection-start-column="22" selection-end-line="485" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#10048#10049#0" expanded="true" />
                 <element signature="e#10082#10083#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Domains/Containment/containment2.dsc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="282">
+              <caret line="69" column="8" lean-forward="true" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -95,8 +100,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>startmovi</find>
-      <find>isMy</find>
       <find>turnmes</find>
       <find>TellNextRobotToStartMoving</find>
       <find>shou</find>
@@ -120,11 +123,13 @@
       <find>firstto</find>
       <find>r_x</find>
       <find>foreground</find>
-      <find>tellnext</find>
       <find>calculate</find>
       <find>polygen</find>
-      <find>Point</find>
+      <find>tellnext</find>
+      <find>Circle</find>
       <find>arraylis</find>
+      <find>circle</find>
+      <find>Point</find>
     </findStrings>
     <replaceStrings>
       <replace>ContRobSim.class</replace>
@@ -164,7 +169,6 @@
         <option value="$PROJECT_DIR$/Domains/Containment/Vector2.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/Circle.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/FOV.java" />
-        <option value="$PROJECT_DIR$/Domains/Containment/containment2.dsc" />
         <option value="$PROJECT_DIR$/Domains/Containment/SetLeftNeighbourMessage" />
         <option value="$PROJECT_DIR$/Domains/Containment/SetLeftNeighbourMessage.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/SetRightNeighbourMessage.java" />
@@ -183,11 +187,13 @@
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/RescueVanSim.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SocSmallSim.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java" />
-        <option value="$PROJECT_DIR$/Domains/Containment/containment.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/demo" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/Design.txt" />
         <option value="$PROJECT_DIR$/Domains/Containment/SmallestEnclosingCircle.java" />
+        <option value="$PROJECT_DIR$/Domains/Containment/ContainmentDsc/3/upperBound.txt" />
+        <option value="$PROJECT_DIR$/Domains/Containment/containment2.dsc" />
+        <option value="$PROJECT_DIR$/Domains/Containment/containment.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java" />
       </list>
     </option>
@@ -230,14 +236,6 @@
               <item name="Domains" type="462c0819:PsiDirectoryNode" />
               <item name="Containment" type="462c0819:PsiDirectoryNode" />
               <item name="ContainmentDsc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tb" type="462c0819:PsiDirectoryNode" />
-              <item name="Domains" type="462c0819:PsiDirectoryNode" />
-              <item name="Containment" type="462c0819:PsiDirectoryNode" />
-              <item name="ContainmentDsc" type="462c0819:PsiDirectoryNode" />
-              <item name="3" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="tb" type="b2602c69:ProjectViewProjectNode" />
@@ -293,7 +291,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570793016927" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570971547134" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/tb" />
   </component>
   <component name="ReadonlyStatusHandler">
@@ -348,7 +346,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32397407" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3574514" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32937366" />
@@ -366,53 +364,6 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="10" lean-forward="true" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/Vector2.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="36" lean-forward="true" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#2811#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EDU/cmu/cs/coral/util/Circle2.class">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/Vector2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/ControlSystemS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3049">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TBHard/TBHard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="223" column="32" lean-forward="true" selection-start-line="223" selection-start-column="32" selection-end-line="223" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#6613#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Forage/forage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
@@ -541,13 +492,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/CircleCircleIntersection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1584">
-          <caret line="82" column="43" selection-start-line="82" selection-start-column="43" selection-end-line="82" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/Polygen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -596,13 +540,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
           <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment2.dsc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="937">
-          <caret line="145" column="42" selection-start-line="145" selection-start-column="42" selection-end-line="145" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -732,45 +669,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="461" column="46" selection-start-line="461" selection-start-column="46" selection-end-line="461" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#10048#10049#0" expanded="true" />
-            <element signature="e#10082#10083#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/Design.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="5" column="61" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/SmallestEnclosingCircle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
-          <caret line="49" column="7" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#5988#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="e#5071#5072#0" expanded="true" />
-            <element signature="e#5137#5138#0" expanded="true" />
-            <element signature="e#5350#5351#0" expanded="true" />
-            <element signature="e#5427#5428#0" expanded="true" />
-            <element signature="e#5634#5635#0" expanded="true" />
-            <element signature="e#5684#5685#0" expanded="true" />
-            <element signature="e#5724#5725#0" expanded="true" />
-            <element signature="e#5775#5776#0" expanded="true" />
-            <element signature="e#5851#5852#0" expanded="true" />
-            <element signature="e#5891#5892#0" expanded="true" />
-            <element signature="e#5924#5925#0" expanded="true" />
-            <element signature="e#5983#5984#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -784,14 +686,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/5/upperBound.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/6/upperBound.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/6/6">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-964">
-          <caret line="434" column="28" selection-start-line="434" selection-start-column="28" selection-end-line="434" selection-end-column="28" />
+        <state relative-caret-position="-3053" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/2/upperBound.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/2/2">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/CircleCircleIntersection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="73" column="37" lean-forward="true" selection-start-line="73" selection-start-column="37" selection-end-line="73" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/3/upperBound.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment2.dsc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="69" column="8" lean-forward="true" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="485" column="22" selection-start-line="485" selection-start-column="22" selection-end-line="485" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#14188#14189#0" expanded="true" />
-            <element signature="e#14216#14217#0" expanded="true" />
+            <element signature="e#10048#10049#0" expanded="true" />
+            <element signature="e#10082#10083#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/SmallestEnclosingCircle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
+          <folding>
+            <element signature="e#5574#5575#0" expanded="true" />
+            <element signature="e#5640#5641#0" expanded="true" />
+            <element signature="e#5853#5854#0" expanded="true" />
+            <element signature="e#5930#5931#0" expanded="true" />
+            <element signature="e#6137#6138#0" expanded="true" />
+            <element signature="e#6187#6188#0" expanded="true" />
+            <element signature="e#6227#6228#0" expanded="true" />
+            <element signature="e#6278#6279#0" expanded="true" />
+            <element signature="e#6354#6355#0" expanded="true" />
+            <element signature="e#6394#6395#0" expanded="true" />
+            <element signature="e#6427#6428#0" expanded="true" />
+            <element signature="e#6486#6487#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="408" column="57" lean-forward="true" selection-start-line="408" selection-start-column="57" selection-end-line="408" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#14820#14821#0" expanded="true" />
             <element signature="e#14896#14897#0" expanded="true" />
           </folding>

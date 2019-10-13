@@ -86,6 +86,8 @@ public class containment extends ControlSystemMFN150 {
 	double steerHeading;
 	private Enumeration messages;
 
+	private double savedTime;
+
 	Vec2 lastPosition;
 	double r_x;
 
@@ -113,6 +115,8 @@ public class containment extends ControlSystemMFN150 {
 
 		lastPosition = abstract_robot.getPosition();
 		r_x = abstract_robot.Calculate_r_x();
+
+		savedTime = 0;
 	}
 
 	private void SetLeftNeighbourId(int leftNeighbourId){
@@ -440,8 +444,6 @@ public class containment extends ControlSystemMFN150 {
 	}
 
 	public int TakeStep() {
-//		System.out.println("Yes! " + id);
-
 		double result;
 		Message message;
 		long curr_time = abstract_robot.getTime();
@@ -452,9 +454,15 @@ public class containment extends ControlSystemMFN150 {
 
 		CheckMessages();
 
+		if(id == 0){
+            System.out.println("time: " + curr_time);
+        }
+
 		if(IsFirstToRun(curr_time)){
 			isMyTurn = true;
 			StartMoving(curr_time);
+
+			savedTime = curr_time;
 		}
 
 		else if(isMoving){
@@ -465,12 +473,18 @@ public class containment extends ControlSystemMFN150 {
 
 				isMyTurn = false;
 				lastPosition = currPosition;
-				//				System.out.println("innnn");
+
+//				if(id == 1){
+//					System.out.println("saved time: " + savedTime);
+//					System.out.println("r_x: " + r_x);
+//					System.out.println("time to pass r_x distance: " + (curr_time - savedTime));
+//				}
 			}
 		}
 
 		else if(isMyTurn){
 			StartMoving(curr_time);
+			savedTime = curr_time;
 		}
 
 //		else if(isEven){
