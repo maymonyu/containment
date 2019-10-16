@@ -96,4 +96,6 @@ public interface MultiForageN150 extends SimpleN150,
         public boolean GetIsLastOnEdge();
         public double Calculate_r_x();
         public Vec2 getPosition();
-    }
+        public void SetBackground();
+        public void CalculateRedundantRobots();
+	}

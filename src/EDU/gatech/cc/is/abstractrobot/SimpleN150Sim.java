@@ -4,17 +4,17 @@
 
 package EDU.gatech.cc.is.abstractrobot;
 
+import java.util.List;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import EDU.gatech.cc.is.util.*;
 import EDU.gatech.cc.is.simulation.*;
 import EDU.gatech.cc.is.communication.*;
 import EDU.cmu.cs.coral.simulation.*;
-import EDU.cmu.cs.coral.abstractrobot.*;
 
 import EDU.cmu.cs.coral.util.Polygon2;
 import EDU.cmu.cs.coral.util.Circle2;
-
 
 /**
  * SimpleN150Sim implements SimpleN150 for simulation.
@@ -49,6 +49,11 @@ public class SimpleN150Sim extends Simple
 	private	SimulatedObject[] all_objects = new SimulatedObject[0];
 	private	int	visionclass;
 	public	static final boolean DEBUG = false;
+
+	private Graphics graphics;
+		private boolean firstTimeToRun;
+		private List<RobotNode> list;
+		private int countOfRedundant;
 	 
 	/**
 	 * Instantiate a <B>SimpleN150Sim</B> object.  Be sure
@@ -73,6 +78,8 @@ public class SimpleN150Sim extends Simple
 		bottom = -1000;
 		left = -1000;
 		right = 1000;
+
+		firstTimeToRun = true;
 		}	
 
 
@@ -117,6 +124,12 @@ public class SimpleN150Sim extends Simple
 
 		/*--- keep pointer to the other objects ---*/
 		all_objects = all_objs;
+
+			if(firstTimeToRun) {
+				list = getRobotList();
+				countOfRedundant = 0;
+				firstTimeToRun = false;
+			}
 
 		/*--- update the time ---*/
 		time += time_increment;
@@ -255,10 +268,72 @@ public class SimpleN150Sim extends Simple
 		return null;
 	}
 
-	public void ToggleReverse(){
+	public void CalculateRedundantRobots(){
+//		List<RobotNode> list = getRobotList();
+//		int countOfRedundant = 0;
+
+		for(int i=0; i<list.size(); i++){
+//			System.out.println(list.size());
+
+			RobotNode currRobot = list.get(i);
+			if(!currRobot.isRedundant) {
+				if (AreRobotsFovsCollide(currRobot.previousId, currRobot.nextId)) {
+					countOfRedundant++;
+					currRobot.isRedundant = true;
+					list.get(currRobot.previousId).setNext(currRobot.nextId);
+					list.get(currRobot.nextId).setNext(currRobot.previousId);
+				}
+			}
+		}
+
+		System.out.println("Redundants: " + countOfRedundant);
+	}
+
+		private Circle GetRobotCircle(int robotId){
+			Circle2 robotFov = GetFOV(robotId);
+			return new Circle(robotFov);
+		}
+
+		private boolean AreRobotsFovsCollide(int leftNeighbourId, int rightNeighbourId){
+			Circle leftNeighbourCircle = GetRobotCircle(leftNeighbourId);
+			Circle rightNeighbourCircle = GetRobotCircle(rightNeighbourId);
+
+			CircleCircleIntersection circleCircleIntersection = new CircleCircleIntersection(leftNeighbourCircle, rightNeighbourCircle);
+			int intersectionPointsCount = circleCircleIntersection.type.getIntersectionPointCount();
+
+			return intersectionPointsCount > 0;
+		}
+
+		private List<RobotNode> getRobotList() {
+			List<RobotNode> list = new ArrayList();
+			int numberOfRobots = GetNumberOfRobots();
+			for (int i=0; i<numberOfRobots; i++){
+				SimpleN150Sim robot = GetRobot(i);
+				int previousId = i-1;
+				int nextId = i+1;
+
+				if (previousId == -1) {
+					previousId = numberOfRobots - 1;
+				}
+				if(nextId == numberOfRobots){
+					nextId = 0;
+				}
+
+				list.add(new RobotNode(robot, previousId, nextId));
+			}
+
+			return list;
+		}
+
+		public void ToggleReverse(){
 //		in_reverse = !in_reverse;
 		steerAngle = steerAngle + Math.PI;
 		setSteerHeading(0l, steerAngle);
+	}
+
+	public void SetBackground(){
+		Color color = new Color(0, 255, 0);
+		graphics.setColor(color);
 	}
 
 	public Vec2 GetTopPoint(long time, int robotId){
@@ -444,6 +519,7 @@ public class SimpleN150Sim extends Simple
         public void drawID(Graphics g, int w, int h,
                 double t, double b, double l, double r)
                 {
+
                 top =t; bottom =b; left =l; right =r;
                 if (DEBUG) System.out.println("draw "+
                         w + " " +
@@ -1235,4 +1311,39 @@ public class SimpleN150Sim extends Simple
                 {
                 return(true);
                 }
+
+		final class RobotNode {
+        	public SimpleN150Sim robot;
+        	public int previousId;
+        	public int nextId;
+        	public int numberOfRobots;
+        	public boolean isRedundant;
+
+        	public RobotNode(SimpleN150Sim robot, int previousId, int nextId){
+        		this.robot = robot;
+        		this.previousId = previousId;
+        		this.nextId = nextId;
+        		numberOfRobots = GetNumberOfRobots();
+        		isRedundant = false;
+			}
+
+			public void setNext(int id){
+        		if(id == numberOfRobots){
+        			nextId = 0;
+				}
+        		else{
+        			nextId = id;
+				}
+			}
+
+			public void setPrevious(int id){
+        		if(id == -1){
+        			nextId = numberOfRobots - 1;
+				}
+        		else{
+        			nextId = id;
+				}
+			}
+		}
+
 	}

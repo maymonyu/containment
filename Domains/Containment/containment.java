@@ -454,9 +454,9 @@ public class containment extends ControlSystemMFN150 {
 
 		CheckMessages();
 
-		if(id == 0){
-            System.out.println("time: " + curr_time);
-        }
+//		if(id == 0){
+//            System.out.println("time: " + curr_time);
+//        }
 
 		if(IsFirstToRun(curr_time)){
 			isMyTurn = true;
@@ -487,6 +487,11 @@ public class containment extends ControlSystemMFN150 {
 			savedTime = curr_time;
 		}
 
+
+		if(id == numberOfRobots - 1 && !isMoving){
+			abstract_robot.CalculateRedundantRobots();
+		}
+
 //		else if(isEven){
 //			StartMoving(curr_time);
 //		}
@@ -506,6 +511,8 @@ public class containment extends ControlSystemMFN150 {
 //		}
 //
 //		if(isMyTurn && AreNeighboursCollide()){
+//			abstract_robot.SetBackground();
+
 //			isRedundant = true;
 //			SendNewNeighboursMessages();
 //			return CSSTAT_OK;

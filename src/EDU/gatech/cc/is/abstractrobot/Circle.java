@@ -1,0 +1,63 @@
+package EDU.gatech.cc.is.abstractrobot;
+
+import java.io.Serializable;
+import EDU.cmu.cs.coral.util.Circle2;
+
+
+public final class Circle implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	public final Vector2 c;
+	public final double r;
+
+	public Circle(Vector2 c, double r) {
+		if (!(r > 0)) throw new IllegalArgumentException("Radius must be positive");
+		this.c = c;
+		this.r = r;
+	}
+
+	public Circle(Circle2 c){
+		Vector2 center = new Vector2(c.centre.x, c.centre.y);
+		double radius = c.radius;
+
+		this.c = center;
+		this.r = radius;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((c == null) ? 0 : c.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(r);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Circle other = (Circle) obj;
+		if (c == null) {
+			if (other.c != null)
+				return false;
+		} else if (!c.equals(other.c))
+			return false;
+		if (Double.doubleToLongBits(r) != Double.doubleToLongBits(other.r))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "(c: " + c + ", r: " + r + ")";
+	}
+
+}
