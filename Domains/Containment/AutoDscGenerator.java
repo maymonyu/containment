@@ -439,6 +439,7 @@ public class AutoDscGenerator
     {
         String filename = "containment2.dsc";
         double secRadius = 0;
+        String archiveDirNumber = getNextArchivedDirNumber();
 
         try {
             copyFileUsingChannel(new File("descPrefix.txt"), new File(filename));
@@ -471,7 +472,6 @@ public class AutoDscGenerator
         }
 
         try {
-            String archiveDirNumber = getNextArchivedDirNumber();
             new File("ContainmentDsc/" + archiveDirNumber).mkdirs();
 
             System.out.println("archiveFilePath: " + archiveDirNumber);
@@ -491,6 +491,10 @@ public class AutoDscGenerator
                 upperBoundFile.append("\n");
 
                 upperBoundFile.append("Actual time: ");
+                upperBoundFile.append("\n");
+
+                upperBoundFile.append("Redundant robots per round: ");
+                upperBoundFile.append("\n");
 
                 upperBoundFile.close();
             }

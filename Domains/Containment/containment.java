@@ -9,7 +9,11 @@ import EDU.cmu.cs.coral.simulation.*;
 import EDU.gatech.cc.is.simulation.*;
 import EDU.cmu.cs.coral.util.Circle2;
 
-
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.Writer;
 
 /**
  * A homogeneous robot soccer team.
@@ -489,7 +493,29 @@ public class containment extends ControlSystemMFN150 {
 
 
 		if(id == numberOfRobots - 1 && !isMoving){
-			abstract_robot.CalculateRedundantRobots();
+			int numOfRedundants = abstract_robot.CalculateRedundantRobots();
+
+//            BufferedWriter out = null;
+//
+//            try {
+//                FileWriter fstream = new FileWriter("out.txt", true); //true tells to append data.
+//                out = new BufferedWriter(fstream);
+//                out.write("\nsue");
+//            }
+
+            try {
+                String dirPath = "ContainmentDsc/" + 7;
+                String upperBoundFilePath = dirPath + "/" + "upperBound.txt";
+                BufferedWriter upperBoundFile = new BufferedWriter(new FileWriter(upperBoundFilePath, true));
+
+                upperBoundFile.write("\n");
+                upperBoundFile.write(Integer.toString(numOfRedundants));
+
+                upperBoundFile.close();
+            }
+            catch (Exception e){
+                System.out.println(e);
+            }
 		}
 
 //		else if(isEven){

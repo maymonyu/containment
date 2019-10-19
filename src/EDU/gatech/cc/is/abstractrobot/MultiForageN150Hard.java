@@ -633,4 +633,34 @@ public class MultiForageN150Hard extends SimpleN150Hard
 		public void ToggleReverse(){
 
 		}
+
+		@Override
+		public int GetIndexOnEdge() {
+			return 0;
+		}
+
+		@Override
+		public boolean GetIsLastOnEdge() {
+			return false;
+		}
+
+		@Override
+		public double Calculate_r_x() {
+			return 0;
+		}
+
+		@Override
+		public Vec2 getPosition() {
+			return null;
+		}
+
+		@Override
+		public void SetBackground() {
+
+		}
+
+		@Override
+		public int CalculateRedundantRobots(){
+        	return 0;
+		}
 	}

@@ -16,6 +16,7 @@ import EDU.cmu.cs.coral.simulation.*;
 import EDU.cmu.cs.coral.util.Polygon2;
 import EDU.cmu.cs.coral.util.Circle2;
 
+
 /**
  * SimpleN150Sim implements SimpleN150 for simulation.
  * Also includes code implementing communication, gripper and
@@ -268,7 +269,7 @@ public class SimpleN150Sim extends Simple
 		return null;
 	}
 
-	public void CalculateRedundantRobots(){
+	public int CalculateRedundantRobots(){
 //		List<RobotNode> list = getRobotList();
 //		int countOfRedundant = 0;
 
@@ -287,6 +288,8 @@ public class SimpleN150Sim extends Simple
 		}
 
 		System.out.println("Redundants: " + countOfRedundant);
+
+		return countOfRedundant;
 	}
 
 		private Circle GetRobotCircle(int robotId){
