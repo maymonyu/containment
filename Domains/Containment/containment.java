@@ -495,27 +495,19 @@ public class containment extends ControlSystemMFN150 {
 		if(id == numberOfRobots - 1 && !isMoving){
 			int numOfRedundants = abstract_robot.CalculateRedundantRobots();
 
-//            BufferedWriter out = null;
-//
 //            try {
-//                FileWriter fstream = new FileWriter("out.txt", true); //true tells to append data.
-//                out = new BufferedWriter(fstream);
-//                out.write("\nsue");
+//                String dirPath = "ContainmentDsc/" + 7;
+//                String upperBoundFilePath = dirPath + "/" + "upperBound.txt";
+//                BufferedWriter upperBoundFile = new BufferedWriter(new FileWriter(upperBoundFilePath, true));
+//
+//                upperBoundFile.write("\n");
+//                upperBoundFile.write(Integer.toString(numOfRedundants));
+//
+//                upperBoundFile.close();
 //            }
-
-            try {
-                String dirPath = "ContainmentDsc/" + 7;
-                String upperBoundFilePath = dirPath + "/" + "upperBound.txt";
-                BufferedWriter upperBoundFile = new BufferedWriter(new FileWriter(upperBoundFilePath, true));
-
-                upperBoundFile.write("\n");
-                upperBoundFile.write(Integer.toString(numOfRedundants));
-
-                upperBoundFile.close();
-            }
-            catch (Exception e){
-                System.out.println(e);
-            }
+//            catch (Exception e){
+//                System.out.println(e);
+//            }
 		}
 
 //		else if(isEven){
