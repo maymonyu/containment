@@ -435,6 +435,68 @@ public class AutoDscGenerator
         return nextArchiveDirNumberAsString;
     }
 
+    public static String verticesToString(Vec2 [] vertices){
+        String restult = "";
+
+        for(int i = 0; i < vertices.length; i++){
+            restult += String.format("(%f %f)", vertices[i].x, vertices[i].y);
+        }
+
+        return restult;
+    }
+
+    public static void saveSimulationMetadata(String archiveDirNumber, Vec2 [] polygonVertices, double runtimeUpperBound,
+                                              double secRadius, double polygonArea, int numberOfRobots){
+        try {
+            String filePath = "ContainmentDsc/simulationsMetadatas.csv";
+            File f = new File(filePath);
+
+            PrintWriter out = null;
+            if (f.exists() && !f.isDirectory()) {
+                out = new PrintWriter(new FileOutputStream(new File(filePath), true));
+            } else {
+                out = new PrintWriter(filePath);
+            }
+
+            String vertices = verticesToString(polygonVertices);
+            double secDiameter = 2 * secRadius;
+            String simulationMetadata = String.format("%s,%s,,%f,%f,%f,%d", archiveDirNumber, vertices, runtimeUpperBound,
+                    secDiameter, polygonArea, numberOfRobots);
+
+            out.append(simulationMetadata);
+            out.append("\n");
+            out.close();
+        }
+        catch (Exception ex){
+
+        }
+    }
+
+    public static double calculatePolygonArea(Vec2 [] vertices){
+        double sum = 0;
+        for (int i = 0; i < vertices.length ; i++)
+        {
+            if (i == 0)
+            {
+//                System.out.println(vertices[i].x + "x" + (vertices[i + 1].y + "-" + vertices[vertices.length - 1].y));
+                sum += vertices[i].x * (vertices[i + 1].y - vertices[vertices.length - 1].y);
+            }
+            else if (i == vertices.length - 1)
+            {
+//                System.out.println(vertices[i].x + "x" + (vertices[0].y + "-" + vertices[i - 1].y));
+                sum += vertices[i].x * (vertices[0].y - vertices[i - 1].y);
+            }
+            else
+            {
+//                System.out.println(vertices[i].x + "x" + (vertices[i + 1].y + "-" + vertices[i - 1].y));
+                sum += vertices[i].x * (vertices[i + 1].y - vertices[i - 1].y);
+            }
+        }
+
+        double area = 0.5 * Math.abs(sum);
+        return area;
+    }
+
     public static void main(String[] args)
     {
         String filename = "containment2.dsc";
@@ -451,9 +513,11 @@ public class AutoDscGenerator
             int[][][] coordinates = gen.getCoordinates();
 
             Vec2 [] polygonVertices = generatePolygonVertices(coordinates[0]);
+            double polygonArea = calculatePolygonArea(polygonVertices);
 
             secRadius = SmallestEnclosingCircle.getSmallestEnclosingCircleRadius(polygonVertices);
-            System.out.println("UpperBound: " + calculateRuntimeUpperBound(secRadius));
+            double runtimeUpperBound = calculateRuntimeUpperBound(secRadius);
+            System.out.println("UpperBound: " + runtimeUpperBound);
 
             List<RobotMetadata> robots = generateRobots(polygonVertices);
 
@@ -465,6 +529,8 @@ public class AutoDscGenerator
 
             writeBounds(outputFile, bounds);
 
+            saveSimulationMetadata(archiveDirNumber, polygonVertices, runtimeUpperBound,
+                    secRadius, polygonArea, robots.size());
             outputFile.close();
         }
         catch (Exception ex) {

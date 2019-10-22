@@ -1,0 +1,4 @@
+
+Upper Bound: 48388.74861762152
+Actual time: 
+Redundant robots per round: 
