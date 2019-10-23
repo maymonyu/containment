@@ -1,0 +1,155 @@
+//======
+// SEED
+//======
+//
+// seed number
+//
+// The seed statement sets the random number seed.  The default is
+// -1
+
+seed 3
+
+
+//======
+// TIME
+//======
+//
+// time accel_rate
+//
+// DEPRECATED.  This statement is ignored.
+
+//======
+// TIMEOUT
+//======
+//
+// timeout time
+//
+// The timeout statement indicates when the simulation will terminate in
+// milliseconds.  The program automatically terminates when this time
+// is reached.  If no timeout statement is given, the default is no
+// termination.  NOTE: you *must* use a timeout with a trials statement.
+//
+// timeout 10000 // ten seconds
+
+
+//======
+// TRIALS
+//======
+//
+// trials num_trials
+//
+// The trials statement indicates that the simulation should be run
+// a certain number of times.  Each trial automatically terminates when the
+// timeout time is reached, then a new trial is begun.  Note: certain hooks
+// are available in the ControlSystem class for you to know when trials
+// begin and end.  See the javadoc documentation.
+//
+// trials 100 // 100 trials
+
+
+//======
+// MAX TIME STEP
+//======
+//
+// maxtimestep milliseconds
+//
+// DEPRECATED.  This statement is processed as if it were a "timestep" statment.
+
+
+//======
+// TIMESTEP
+//======
+//
+// timestep milliseconds
+//
+// timestep statements set the time (in milliseconds) transpices
+// between discrete simulation steps.
+
+timestep 100 // 1/10th of a second
+
+//======
+// WINDOWSIZE
+//======
+//
+// windowsize width height
+//
+// The windowsize statement gives a default window size.  This can be
+// overridden on the command line.
+
+windowsize 500 500
+
+
+//======
+// BACKGROUND COLOR
+//======
+//
+// background color
+//
+// A background statement sets the background color for the simulation.
+// The color must be given in hex format as "xRRGGBB" where RR indicates
+// the red component (00 for none, FF for full), GG is the green component,
+// and BB is the blue.  Here we use white:
+
+background xFFFFFF
+
+
+//======
+// ROBOTS
+//======
+//
+// robot robottype controlsystem x y theta forecolor backcolor
+//              visionclass
+//
+// robot statements cause a robot with a control system to be instantiated
+// in the simulation.  Be sure to include the full class name for the
+// abstract robot type and your control system.  The x y and theta
+// parameters set the initial position of the robot in the field.
+// You can used different colors to tell robots apart from one another.
+// The visionclass indicates which color the robots see each other as.
+
+
+
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 51.40156019094158 8.538698520269252 3.7035142158466083 x000000 xFF0000 2 3.7035142158466083 1 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 48.73749384251089 12.769862720718006 3.7035142158466083 x000000 xFF0000 2 3.7035142158466083 2 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 46.07342749408019 17.00102692116676 3.7035142158466083 x000000 xFF0000 2 3.7035142158466083 3 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 43.4093611456495 21.23219112161551 3.7035142158466083 x000000 xFF0000 2 3.7035142158466083 4 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 40.745294797218804 25.463355322064263 3.7035142158466083 x000000 xFF0000 2 3.7035142158466083 5 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 38.08122844878811 29.694519522513016 3.7035142158466083 x000000 xFF0000 2 3.7035142158466083 6 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 35.417162100357416 33.92568372296177 3.7035142158466083 x000000 xFF0000 2 3.7035142158466083 7 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 31.997287874519273 30.278155754673104 5.309565638477367 x000000 xFF0000 2 5.309565638477367 1 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 27.86265536417163 27.46660564763671 5.309565638477367 x000000 xFF0000 2 5.309565638477367 2 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 23.728022853823987 24.655055540600316 5.309565638477367 x000000 xFF0000 2 5.309565638477367 3 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 19.593390343476344 21.84350543356392 5.309565638477367 x000000 xFF0000 2 5.309565638477367 4 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 15.458757833128702 19.031955326527523 5.309565638477367 x000000 xFF0000 2 5.309565638477367 5 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 11.324125322781061 16.220405219491127 5.309565638477367 x000000 xFF0000 2 5.309565638477367 6 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 16.11294643040008 14.782631802285696 1.3370531459259951 x000000 xFF0000 2 1.3370531459259951 1 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 20.976977503826912 13.624529165755497 1.3370531459259951 x000000 xFF0000 2 1.3370531459259951 2 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 25.841008577253746 12.466426529225298 1.3370531459259951 x000000 xFF0000 2 1.3370531459259951 3 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 30.70503965068058 11.3083238926951 1.3370531459259951 x000000 xFF0000 2 1.3370531459259951 4 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 35.56907072410741 10.150221256164901 1.3370531459259951 x000000 xFF0000 2 1.3370531459259951 5 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 40.43310179753425 8.992118619634702 1.3370531459259951 x000000 xFF0000 2 1.3370531459259951 6 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 45.297132870961086 7.8340159831045035 1.3370531459259951 x000000 xFF0000 2 1.3370531459259951 7 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 50.16116394438792 6.675913346574305 1.3370531459259951 x000000 xFF0000 2 1.3370531459259951 8 0
+
+bounds -18.67587467721894 81.40156019094158 -23.324086653425695 73.92568372296176 

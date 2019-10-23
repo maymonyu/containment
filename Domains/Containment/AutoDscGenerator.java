@@ -400,7 +400,7 @@ public class AutoDscGenerator
     }
 
     private static double calculateRuntimeUpperBound(double secRadius){
-        double maxPassingLength = secRadius / 2;
+        double maxPassingLength = secRadius;
         double totalNumberOfRobotTypes = 2;
         double totalLength = maxPassingLength * totalNumberOfRobotTypes;
 

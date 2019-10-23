@@ -1,0 +1,145 @@
+//======
+// SEED
+//======
+//
+// seed number
+//
+// The seed statement sets the random number seed.  The default is
+// -1
+
+seed 3
+
+
+//======
+// TIME
+//======
+//
+// time accel_rate
+//
+// DEPRECATED.  This statement is ignored.
+
+//======
+// TIMEOUT
+//======
+//
+// timeout time
+//
+// The timeout statement indicates when the simulation will terminate in
+// milliseconds.  The program automatically terminates when this time
+// is reached.  If no timeout statement is given, the default is no
+// termination.  NOTE: you *must* use a timeout with a trials statement.
+//
+// timeout 10000 // ten seconds
+
+
+//======
+// TRIALS
+//======
+//
+// trials num_trials
+//
+// The trials statement indicates that the simulation should be run
+// a certain number of times.  Each trial automatically terminates when the
+// timeout time is reached, then a new trial is begun.  Note: certain hooks
+// are available in the ControlSystem class for you to know when trials
+// begin and end.  See the javadoc documentation.
+//
+// trials 100 // 100 trials
+
+
+//======
+// MAX TIME STEP
+//======
+//
+// maxtimestep milliseconds
+//
+// DEPRECATED.  This statement is processed as if it were a "timestep" statment.
+
+
+//======
+// TIMESTEP
+//======
+//
+// timestep milliseconds
+//
+// timestep statements set the time (in milliseconds) transpices
+// between discrete simulation steps.
+
+timestep 100 // 1/10th of a second
+
+//======
+// WINDOWSIZE
+//======
+//
+// windowsize width height
+//
+// The windowsize statement gives a default window size.  This can be
+// overridden on the command line.
+
+windowsize 500 500
+
+
+//======
+// BACKGROUND COLOR
+//======
+//
+// background color
+//
+// A background statement sets the background color for the simulation.
+// The color must be given in hex format as "xRRGGBB" where RR indicates
+// the red component (00 for none, FF for full), GG is the green component,
+// and BB is the blue.  Here we use white:
+
+background xFFFFFF
+
+
+//======
+// ROBOTS
+//======
+//
+// robot robottype controlsystem x y theta forecolor backcolor
+//              visionclass
+//
+// robot statements cause a robot with a control system to be instantiated
+// in the simulation.  Be sure to include the full class name for the
+// abstract robot type and your control system.  The x y and theta
+// parameters set the initial position of the robot in the field.
+// You can used different colors to tell robots apart from one another.
+// The visionclass indicates which color the robots see each other as.
+
+
+
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 18.728392761872446 43.98767961940311 3.2322525407905385 x000000 xFF0000 2 3.2322525407905385 1 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 18.275714031659852 48.96714565174163 3.2322525407905385 x000000 xFF0000 2 3.2322525407905385 2 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 17.82303530144726 53.94661168408015 3.2322525407905385 x000000 xFF0000 2 3.2322525407905385 3 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 17.370356571234666 58.926077716418675 3.2322525407905385 x000000 xFF0000 2 3.2322525407905385 4 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 16.917677841022073 63.9055437487572 3.2322525407905385 x000000 xFF0000 2 3.2322525407905385 5 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 11.94115598997271 63.42157033416894 4.629247748496248 x000000 xFF0000 2 4.629247748496248 1 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 6.958427198748312 63.83679773343764 4.629247748496248 x000000 xFF0000 2 4.629247748496248 2 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 5.363101192654742 59.09813389916098 0.0739390376579403 x000000 xFF0000 2 0.0739390376579403 1 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 5.732459620231301 54.11179512687743 0.0739390376579403 x000000 xFF0000 2 0.0739390376579403 2 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 6.1018180478078605 49.12545635459389 0.0739390376579403 x000000 xFF0000 2 0.0739390376579403 3 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 6.47117647538442 44.13911758231034 0.0739390376579403 x000000 xFF0000 2 0.0739390376579403 4 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 6.840534902960979 39.152778810026795 0.0739390376579403 x000000 xFF0000 2 0.0739390376579403 5 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 3.194366209030351 35.731455403010116 1.8925468811915387 x000000 xFF0000 2 1.8925468811915387 1 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 7.93778269928292 37.31259423309431 1.8925468811915387 x000000 xFF0000 2 1.8925468811915387 2 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 12.681199189535489 38.8937330631785 1.8925468811915387 x000000 xFF0000 2 1.8925468811915387 3 0
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	containment 17.424615679788058 40.474871893262694 1.8925468811915387 x000000 xFF0000 2 1.8925468811915387 4 0
+
+bounds -26.80563379096965 48.72839276187244 5.731455403010116 103.9055437487572 
