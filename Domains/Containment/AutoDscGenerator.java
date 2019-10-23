@@ -460,7 +460,7 @@ public class AutoDscGenerator
 
             String vertices = verticesToString(polygonVertices);
             double secDiameter = 2 * secRadius;
-            String simulationMetadata = String.format("%s,%s,,%f,%f,%f,%d", archiveDirNumber, vertices, runtimeUpperBound,
+            String simulationMetadata = String.format("%s,,%s,%f,%f,%f,%d", archiveDirNumber, vertices, runtimeUpperBound,
                     secDiameter, polygonArea, numberOfRobots);
 
             out.append(simulationMetadata);

@@ -458,9 +458,9 @@ public class containment extends ControlSystemMFN150 {
 
 		CheckMessages();
 
-//		if(id == 0){
-//            System.out.println("time: " + curr_time);
-//        }
+		if(id == 0){
+            System.out.println("time: " + curr_time);
+        }
 
 		if(IsFirstToRun(curr_time)){
 			isMyTurn = true;

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b22b1fa8-4e4a-4092-b3f2-023d077ad013" name="Default Changelist" comment="" />
+    <list default="true" id="b22b1fa8-4e4a-4092-b3f2-023d077ad013" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,12 +17,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="442" selection-start-line="442" selection-end-line="442" />
+            <state relative-caret-position="375">
+              <caret line="464" selection-start-line="464" selection-end-line="464" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#14820#14821#0" expanded="true" />
-                <element signature="e#14896#14897#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -28,8 +29,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/simulationsMetadatas.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+            <state>
+              <caret column="8" selection-start-column="8" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -37,12 +38,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="496" selection-start-line="496" selection-end-line="496" />
+            <state relative-caret-position="171">
+              <caret line="495" column="26" selection-start-line="495" selection-start-column="21" selection-end-line="495" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#10048#10049#0" expanded="true" />
-                <element signature="e#10082#10083#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -51,34 +50,47 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="215">
+              <caret line="288" selection-start-line="288" selection-end-line="288" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#6402#6403#0" expanded="true" />
-                <element signature="e#6440#6441#0" expanded="true" />
+                <element signature="e#10243#10244#0" expanded="true" />
                 <element signature="e#10264#10265#0" expanded="true" />
+                <element signature="e#10301#10302#0" expanded="true" />
                 <element signature="e#10322#10323#0" expanded="true" />
+                <element signature="e#13139#13140#0" expanded="true" />
                 <element signature="e#13162#13163#0" expanded="true" />
+                <element signature="e#13196#13197#0" expanded="true" />
                 <element signature="e#13223#13224#0" expanded="true" />
+                <element signature="e#16315#16316#0" expanded="true" />
                 <element signature="e#16341#16342#0" expanded="true" />
+                <element signature="e#17514#17515#0" expanded="true" />
                 <element signature="e#17551#17552#0" expanded="true" />
+                <element signature="e#17642#17643#0" expanded="true" />
                 <element signature="e#17663#17664#0" expanded="true" />
+                <element signature="e#19982#19983#0" expanded="true" />
                 <element signature="e#20002#20003#0" expanded="true" />
+                <element signature="e#21661#21662#0" expanded="true" />
                 <element signature="e#21692#21693#0" expanded="true" />
+                <element signature="e#26338#26339#0" expanded="true" />
                 <element signature="e#26386#26387#0" expanded="true" />
+                <element signature="e#26514#26515#0" expanded="true" />
                 <element signature="e#26562#26563#0" expanded="true" />
-                <element signature="e#27119#27120#0" expanded="true" />
-                <element signature="e#27144#27145#0" expanded="true" />
-                <element signature="e#27180#27181#0" expanded="true" />
-                <element signature="e#27206#27207#0" expanded="true" />
+                <element signature="e#27369#27370#0" expanded="true" />
                 <element signature="e#27392#27393#0" expanded="true" />
+                <element signature="e#28329#28330#0" expanded="true" />
                 <element signature="e#28350#28351#0" expanded="true" />
+                <element signature="e#32498#32499#0" expanded="true" />
                 <element signature="e#32581#32582#0" expanded="true" />
+                <element signature="e#34483#34484#0" expanded="true" />
                 <element signature="e#34556#34557#0" expanded="true" />
+                <element signature="e#34823#34824#0" expanded="true" />
                 <element signature="e#34898#34899#0" expanded="true" />
+                <element signature="e#34972#34973#0" expanded="true" />
                 <element signature="e#35047#35048#0" expanded="true" />
+                <element signature="e#35105#35106#0" expanded="true" />
                 <element signature="e#35163#35164#0" expanded="true" />
+                <element signature="e#35217#35218#0" expanded="true" />
                 <element signature="e#35265#35266#0" expanded="true" />
               </folding>
             </state>
@@ -88,7 +100,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
+            <state relative-caret-position="1980">
               <caret line="95" column="32" selection-start-line="95" selection-start-column="32" selection-end-line="95" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -100,7 +112,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150Hard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-205">
+            <state relative-caret-position="13090">
               <caret line="638" column="12" selection-start-line="638" selection-start-column="12" selection-end-line="638" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -116,8 +128,6 @@
                 <element signature="e#18546#18547#0" expanded="true" />
                 <element signature="e#18589#18590#0" expanded="true" />
                 <element signature="e#18609#18610#0" expanded="true" />
-                <element signature="e#18405#18406#0" expanded="true" />
-                <element signature="e#18428#18429#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -126,7 +136,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Domains/Containment/containment2.dsc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-132">
+            <state relative-caret-position="2420">
               <caret line="110" selection-start-line="110" selection-end-line="110" />
             </state>
           </provider>
@@ -167,12 +177,12 @@
       <find>array</find>
       <find>arene</find>
       <find>circle</find>
-      <find>redun</find>
       <find>redunda</find>
-      <find>redund</find>
       <find>arraylis</find>
       <find>forma</find>
       <find>simula</find>
+      <find>redund</find>
+      <find>redun</find>
     </findStrings>
     <replaceStrings>
       <replace>ContRobSim.class</replace>
@@ -235,11 +245,11 @@
         <option value="$PROJECT_DIR$/Domains/Containment/containment2.dsc" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150Hard.java" />
         <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java" />
-        <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/ContainmentDsc/7/upperBound.txt" />
+        <option value="$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java" />
+        <option value="$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/containment.java" />
         <option value="$PROJECT_DIR$/Domains/Containment/ContainmentDsc/simulationsMetadatas.csv" />
-        <option value="$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java" />
       </list>
     </option>
   </component>
@@ -331,8 +341,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -381,7 +391,7 @@
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1853" height="1055" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20088544" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20309906" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -595,9 +605,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment3.dsc">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment3.dsc" />
     <entry file="file://$PROJECT_DIR$/Domains/Containment/CircleCircleIntersection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="412">
@@ -728,16 +736,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment2.dsc">
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/7/upperBound.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-132">
-          <caret line="110" selection-start-line="110" selection-end-line="110" />
+        <state relative-caret-position="-2402">
+          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1980">
+          <caret line="95" column="32" selection-start-line="95" selection-start-column="32" selection-end-line="95" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150Hard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-205">
+        <state relative-caret-position="13090">
           <caret line="638" column="12" selection-start-line="638" selection-start-column="12" selection-end-line="638" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -753,92 +771,89 @@
             <element signature="e#18546#18547#0" expanded="true" />
             <element signature="e#18589#18590#0" expanded="true" />
             <element signature="e#18609#18610#0" expanded="true" />
-            <element signature="e#18405#18406#0" expanded="true" />
-            <element signature="e#18428#18429#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Domains/Containment/containment2.dsc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2420">
+          <caret line="110" selection-start-line="110" selection-end-line="110" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/SimpleN150Sim.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="215">
+          <caret line="288" selection-start-line="288" selection-end-line="288" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6402#6403#0" expanded="true" />
-            <element signature="e#6440#6441#0" expanded="true" />
+            <element signature="e#10243#10244#0" expanded="true" />
             <element signature="e#10264#10265#0" expanded="true" />
+            <element signature="e#10301#10302#0" expanded="true" />
             <element signature="e#10322#10323#0" expanded="true" />
+            <element signature="e#13139#13140#0" expanded="true" />
             <element signature="e#13162#13163#0" expanded="true" />
+            <element signature="e#13196#13197#0" expanded="true" />
             <element signature="e#13223#13224#0" expanded="true" />
+            <element signature="e#16315#16316#0" expanded="true" />
             <element signature="e#16341#16342#0" expanded="true" />
+            <element signature="e#17514#17515#0" expanded="true" />
             <element signature="e#17551#17552#0" expanded="true" />
+            <element signature="e#17642#17643#0" expanded="true" />
             <element signature="e#17663#17664#0" expanded="true" />
+            <element signature="e#19982#19983#0" expanded="true" />
             <element signature="e#20002#20003#0" expanded="true" />
+            <element signature="e#21661#21662#0" expanded="true" />
             <element signature="e#21692#21693#0" expanded="true" />
+            <element signature="e#26338#26339#0" expanded="true" />
             <element signature="e#26386#26387#0" expanded="true" />
+            <element signature="e#26514#26515#0" expanded="true" />
             <element signature="e#26562#26563#0" expanded="true" />
-            <element signature="e#27119#27120#0" expanded="true" />
-            <element signature="e#27144#27145#0" expanded="true" />
-            <element signature="e#27180#27181#0" expanded="true" />
-            <element signature="e#27206#27207#0" expanded="true" />
+            <element signature="e#27369#27370#0" expanded="true" />
             <element signature="e#27392#27393#0" expanded="true" />
+            <element signature="e#28329#28330#0" expanded="true" />
             <element signature="e#28350#28351#0" expanded="true" />
+            <element signature="e#32498#32499#0" expanded="true" />
             <element signature="e#32581#32582#0" expanded="true" />
+            <element signature="e#34483#34484#0" expanded="true" />
             <element signature="e#34556#34557#0" expanded="true" />
+            <element signature="e#34823#34824#0" expanded="true" />
             <element signature="e#34898#34899#0" expanded="true" />
+            <element signature="e#34972#34973#0" expanded="true" />
             <element signature="e#35047#35048#0" expanded="true" />
+            <element signature="e#35105#35106#0" expanded="true" />
             <element signature="e#35163#35164#0" expanded="true" />
+            <element signature="e#35217#35218#0" expanded="true" />
             <element signature="e#35265#35266#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EDU/gatech/cc/is/abstractrobot/MultiForageN150.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="95" column="32" selection-start-line="95" selection-start-column="32" selection-end-line="95" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/7/upperBound.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2402">
-          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/containment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="496" selection-start-line="496" selection-end-line="496" />
+        <state relative-caret-position="171">
+          <caret line="495" column="26" selection-start-line="495" selection-start-column="21" selection-end-line="495" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10048#10049#0" expanded="true" />
-            <element signature="e#10082#10083#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/AutoDscGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="442" selection-start-line="442" selection-end-line="442" />
+        <state relative-caret-position="375">
+          <caret line="464" selection-start-line="464" selection-end-line="464" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#14820#14821#0" expanded="true" />
-            <element signature="e#14896#14897#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Domains/Containment/ContainmentDsc/simulationsMetadatas.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        <state>
+          <caret column="8" selection-start-column="8" selection-end-column="8" />
         </state>
       </provider>
     </entry>

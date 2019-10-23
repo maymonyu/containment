@@ -287,7 +287,7 @@ public class SimpleN150Sim extends Simple
 			}
 		}
 
-		System.out.println("Redundants: " + countOfRedundant);
+//		System.out.println("Redundants: " + countOfRedundant);
 
 		return countOfRedundant;
 	}
