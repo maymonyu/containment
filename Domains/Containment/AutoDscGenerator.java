@@ -456,6 +456,8 @@ public class AutoDscGenerator
                 out = new PrintWriter(new FileOutputStream(new File(filePath), true));
             } else {
                 out = new PrintWriter(filePath);
+                out.append("id,practical time,polygon, theoretical time,SEC diameter,polygon area,number of robots");
+                out.append("\n");
             }
 
             String vertices = verticesToString(polygonVertices);
