@@ -24,6 +24,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.*;
+import java.nio.file.Files;
 
 
 public class AutoDscGenerator
@@ -181,7 +182,19 @@ public class AutoDscGenerator
     }
 
     private static boolean isPointCBetweenPointsAAndB(Vec2 A, Vec2 B, Vec2 C){
-        return calculateDistance(A, C) + calculateDistance(B, C) == calculateDistance(A, B);
+        double error = 0.2;
+        double totalDistance = calculateDistance(A, B);
+        double distanceSum = calculateDistance(A, C) + calculateDistance(B, C);
+        double distanceSubtract = calculateDistance(A, C) - calculateDistance(B, C);
+
+        System.out.println("firstLength = " + calculateDistance(A, C));
+        System.out.println("secondLength = " + calculateDistance(B, C));
+        System.out.println("adding = " + distanceSum);
+        System.out.println("subtructing = " + distanceSubtract);
+        System.out.println("actual result = " + calculateDistance(A, B));
+
+        return (distanceSum + error >= totalDistance && distanceSum - error <= totalDistance) ||
+                (distanceSubtract + error >= totalDistance && distanceSubtract - error <= totalDistance);
     }
 
     private static Vec2 GetPointOnLineWithDistanceFromOtherPoint(Vec2 lineStart, Vec2 lineEnd,
@@ -240,8 +253,11 @@ public class AutoDscGenerator
     }
 
     private static List<RobotMetadata> generateRobots(Vec2 [] polygonVertices){
-        final double FOV_DISTANCE = 3;
-        final double X = FOV_DISTANCE / 3;
+//        final double FOV_DISTANCE = 3;
+//        final double X = FOV_DISTANCE / 3;
+
+        final double FOV_DISTANCE = 7;
+        final double X = 2;
 
         int numOfVertices = polygonVertices.length;
         List<RobotMetadata> robotsMetadatas = new ArrayList<RobotMetadata>();
@@ -448,7 +464,8 @@ public class AutoDscGenerator
     public static void saveSimulationMetadata(String archiveDirNumber, Vec2 [] polygonVertices, double runtimeUpperBound,
                                               double secRadius, double polygonArea, int numberOfRobots){
         try {
-            String filePath = "ContainmentDsc/simulationsMetadatas.csv";
+            //            String filePath = "ContainmentDsc/simulationsMetadatas.csv";
+            String filePath = "ContainmentDsc/differentX.csv";
             File f = new File(filePath);
 
             PrintWriter out = null;
@@ -476,7 +493,7 @@ public class AutoDscGenerator
 
     public static double calculatePolygonArea(Vec2 [] vertices){
         double sum = 0;
-        for (int i = 0; i < vertices.length ; i++)
+        for (int i = 0; i < vertices.length; i++)
         {
             if (i == 0)
             {
@@ -499,6 +516,38 @@ public class AutoDscGenerator
         return area;
     }
 
+    public static Vec2[] readVerticesFromFile(String filePath){
+        List<Vec2> vertices = new ArrayList<Vec2>();
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(filePath));
+
+            String line = lines.get(0); // (32.000000 96.000000)(17.000000 72.000000)
+            System.out.println("vertices: " + line);
+
+            var lineSplited = line.split("\\)"); // ["(32.000000 96.000000", "(17.000000 72.000000"]
+            System.out.println("vertices: " + lineSplited[0]);
+
+            for (int i = 0; i < lineSplited.length; i++) {
+                String onlyCoordinates = lineSplited[i].substring(1); // "32.000000 96.000000"
+                System.out.println("vertices: " + onlyCoordinates);
+
+                var coordinatesArray = onlyCoordinates.split(" "); // ["32.000000", "96.000000"]
+
+                double x = Double.parseDouble(coordinatesArray[0]);
+                double y = Double.parseDouble(coordinatesArray[1]);
+
+                vertices.add(new Vec2(x, y));
+            }
+        }
+        catch (IOException e){
+        }
+
+        Vec2[] verticesArray = new Vec2[vertices.size()];
+        vertices.toArray(verticesArray);
+
+        return verticesArray;
+    }
+
     public static void main(String[] args)
     {
         String filename = "containment2.dsc";
@@ -510,11 +559,13 @@ public class AutoDscGenerator
 
             Writer outputFile = new BufferedWriter(new FileWriter(filename, true));
 
-            Polygen gen = new Polygen(100);
-            gen.render();
-            int[][][] coordinates = gen.getCoordinates();
+//            Polygen gen = new Polygen(100);
+//            gen.render();
+//            int[][][] coordinates = gen.getCoordinates();
+//
+//            Vec2 [] polygonVertices = generatePolygonVertices(coordinates[0]);
 
-            Vec2 [] polygonVertices = generatePolygonVertices(coordinates[0]);
+            Vec2 [] polygonVertices = readVerticesFromFile("ContainmentDsc/vertices.txt");
             double polygonArea = calculatePolygonArea(polygonVertices);
 
             secRadius = SmallestEnclosingCircle.getSmallestEnclosingCircleRadius(polygonVertices);
@@ -539,40 +590,40 @@ public class AutoDscGenerator
             System.out.println(ex);
         }
 
-        try {
-            new File("ContainmentDsc/" + archiveDirNumber).mkdirs();
-
-            System.out.println("archiveFilePath: " + archiveDirNumber);
-            String dirPath = "ContainmentDsc/" + archiveDirNumber;
-            String filePath = dirPath + "/" + archiveDirNumber;
-
-            copyFileUsingChannel(new File(filename), new File(filePath));
-
-            try {
-                String upperBoundFilePath = dirPath + "/" + "upperBound.txt";
-                Writer upperBoundFile = new BufferedWriter(new FileWriter(upperBoundFilePath, true));
-
-                upperBoundFile.append("\n");
-                upperBoundFile.append("Upper Bound: ");
-
-                upperBoundFile.append(Double.toString(calculateRuntimeUpperBound(secRadius)));
-                upperBoundFile.append("\n");
-
-                upperBoundFile.append("Actual time: ");
-                upperBoundFile.append("\n");
-
-                upperBoundFile.append("Redundant robots per round: ");
-                upperBoundFile.append("\n");
-
-                upperBoundFile.close();
-            }
-            catch (Exception ex){
-                System.out.println(ex);
-            }
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
-        }
+//        try {
+//            new File("ContainmentDsc/" + archiveDirNumber).mkdirs();
+//
+//            System.out.println("archiveFilePath: " + archiveDirNumber);
+//            String dirPath = "ContainmentDsc/" + archiveDirNumber;
+//            String filePath = dirPath + "/" + archiveDirNumber;
+//
+//            copyFileUsingChannel(new File(filename), new File(filePath));
+//
+//            try {
+//                String upperBoundFilePath = dirPath + "/" + "upperBound.txt";
+//                Writer upperBoundFile = new BufferedWriter(new FileWriter(upperBoundFilePath, true));
+//
+//                upperBoundFile.append("\n");
+//                upperBoundFile.append("Upper Bound: ");
+//
+//                upperBoundFile.append(Double.toString(calculateRuntimeUpperBound(secRadius)));
+//                upperBoundFile.append("\n");
+//
+//                upperBoundFile.append("Actual time: ");
+//                upperBoundFile.append("\n");
+//
+//                upperBoundFile.append("Redundant robots per round: ");
+//                upperBoundFile.append("\n");
+//
+//                upperBoundFile.close();
+//            }
+//            catch (Exception ex){
+//                System.out.println(ex);
+//            }
+//        }
+//        catch (Exception ex) {
+//            System.out.println(ex);
+//        }
     }
 }
 
