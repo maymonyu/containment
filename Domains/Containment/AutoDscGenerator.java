@@ -257,7 +257,7 @@ public class AutoDscGenerator
 //        final double X = FOV_DISTANCE / 3;
 
         final double FOV_DISTANCE = 7;
-        final double X = 2;
+        final double X = 7;
 
         int numOfVertices = polygonVertices.length;
         List<RobotMetadata> robotsMetadatas = new ArrayList<RobotMetadata>();
@@ -465,7 +465,7 @@ public class AutoDscGenerator
                                               double secRadius, double polygonArea, int numberOfRobots){
         try {
             //            String filePath = "ContainmentDsc/simulationsMetadatas.csv";
-            String filePath = "ContainmentDsc/differentX.csv";
+            String filePath = "ContainmentDsc/differentX2.csv";
             File f = new File(filePath);
 
             PrintWriter out = null;
