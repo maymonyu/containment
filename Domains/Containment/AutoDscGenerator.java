@@ -257,7 +257,7 @@ public class AutoDscGenerator
 //        final double X = FOV_DISTANCE / 3;
 
         final double FOV_DISTANCE = 7;
-        final double X = 7;
+        final double X = 4;
 
         int numOfVertices = polygonVertices.length;
         List<RobotMetadata> robotsMetadatas = new ArrayList<RobotMetadata>();
@@ -582,8 +582,8 @@ public class AutoDscGenerator
 
             writeBounds(outputFile, bounds);
 
-            saveSimulationMetadata(archiveDirNumber, polygonVertices, runtimeUpperBound,
-                    secRadius, polygonArea, robots.size());
+//            saveSimulationMetadata(archiveDirNumber, polygonVertices, runtimeUpperBound,
+//                    secRadius, polygonArea, robots.size());
             outputFile.close();
         }
         catch (Exception ex) {
