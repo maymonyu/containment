@@ -126,13 +126,13 @@ background xFFFFFF
 // The visionclass indicates which color the robots see each other as.
 
 robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim 
-	forage 0 -1.5 0 x000000 xFF0000 2
+	forage 0 -1.5 0 x000000 xFF0000 2 3.4763294909066076 5 0
 
 robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim 
-	forage -2.5 0 1.57 x000000 xFF0000 2
+	forage -2.5 0 1.57 x000000 xFF0000 2 3.4763294909066076 5 0
 
-robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim 
-	forage 0  1.5 0 x000000 xFF0000 2
+robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
+	forage 0  1.5 0 x000000 xFF0000 2 3.4763294909066076 5 0
 
 
 //======
@@ -154,48 +154,48 @@ robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
 //object EDU.gatech.cc.is.simulation.ObstacleSim 0  0 0 0.10 xC0C0C0 x000000 4 
 
 // obstacles
-object EDU.gatech.cc.is.simulation.ObstacleSim -2.0 -1.0 0 0.30 xC0C0C0 x000000 2
-object EDU.gatech.cc.is.simulation.ObstacleSim 2.0 2.0 0 0.10 xC0C0C0 x000000 2
-object EDU.gatech.cc.is.simulation.ObstacleSim 2.3 1.8 0 0.30 xC0C0C0 x000000 2
-object EDU.gatech.cc.is.simulation.ObstacleSim -4  4 0 0.25 xC0C0C0 x000000 2
-object EDU.gatech.cc.is.simulation.ObstacleSim 4  -3.5 0 0.25 xC0C0C0 x000000 2
-object EDU.gatech.cc.is.simulation.ObstacleSim 3.5 -2 0 0.25 xC0C0C0 x000000 2
-object EDU.gatech.cc.is.simulation.ObstacleSim -3.5 -2 0 0.25 xC0C0C0 x000000 2
-object EDU.gatech.cc.is.simulation.ObstacleSim 3.5 -2 0 0.25 xC0C0C0 x000000 2
-object EDU.gatech.cc.is.simulation.ObstacleSim 4.0 4.0 0 0.25 xC0C0C0 x000000 2
+object EDU.gatech.cc.is.simulation.ObstacleSim -2.0 -1.0 0 0.30 xC0C0C0 x000000 2 3.4763294909066076 5 0
+object EDU.gatech.cc.is.simulation.ObstacleSim 2.0 2.0 0 0.10 xC0C0C0 x000000 2 3.4763294909066076 5 0
+object EDU.gatech.cc.is.simulation.ObstacleSim 2.3 1.8 0 0.30 xC0C0C0 x000000 2 3.4763294909066076 5 0
+object EDU.gatech.cc.is.simulation.ObstacleSim -4  4 0 0.25 xC0C0C0 x000000 2 3.4763294909066076 5 0
+object EDU.gatech.cc.is.simulation.ObstacleSim 4  -3.5 0 0.25 xC0C0C0 x000000 2 3.4763294909066076 5 0
+object EDU.gatech.cc.is.simulation.ObstacleSim 3.5 -2 0 0.25 xC0C0C0 x000000 2 3.4763294909066076 5 0
+object EDU.gatech.cc.is.simulation.ObstacleSim -3.5 -2 0 0.25 xC0C0C0 x000000 2 3.4763294909066076 5 0
+object EDU.gatech.cc.is.simulation.ObstacleSim 3.5 -2 0 0.25 xC0C0C0 x000000 2 3.4763294909066076 5 0
+object EDU.gatech.cc.is.simulation.ObstacleSim 4.0 4.0 0 0.25 xC0C0C0 x000000 2 3.4763294909066076 5 0
 
 // attractors
 object EDU.gatech.cc.is.simulation.AttractorSim 
-	4.5 1.00 0 0.0762 x0000FF x000000 0
+	4.5 1.00 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.AttractorSim 
-	3.0 -2.0 0 0.0762 x0000FF x000000 0 
+	3.0 -2.0 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.AttractorSim 
-	1.0 3.50 0 0.0762 x0000FF x000000 0 
+	1.0 3.50 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.AttractorSim 
-	0.5 -3.0 0 0.0762 x0000FF x000000 0 
+	0.5 -3.0 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.AttractorSim 
-	-4.5 -4.5 0 0.0762 x0000FF x000000 0 
+	-4.5 -4.5 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 
 object EDU.gatech.cc.is.simulation.AttractorSim 
-	0.7 1.00 0 0.0762 x0000FF x000000 0 
+	0.7 1.00 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.AttractorSim 
-	0.0 2.70 0 0.0762 x0000FF x000000 0 
+	0.0 2.70 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.AttractorSim 
-	2.7 0.00 0 0.0762 x0000FF x000000 0 
+	2.7 0.00 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.AttractorSim 
-	4.0 -4.0 0 0.0762 x0000FF x000000 0 
+	4.0 -4.0 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.AttractorSim 
-	-2 3.80 0 0.0762 x0000FF x000000 0 
+	-2 3.80 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 1.80 0 0.0762 xFFA000 x000000 0
+	0.9 1.80 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 1.60 0 0.0762 xFFA000 x000000 0
+	0.9 1.60 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 1.40 0 0.0762 xFFA000 x000000 0
+	0.9 1.40 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 1.20 0 0.0762 xFFA000 x000000 0
+	0.9 1.20 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 1.00 0 0.0762 xFFA000 x000000 0
+	0.9 1.00 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 0.80 0 0.0762 xFFA000 x000000 0
+	0.9 0.80 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0

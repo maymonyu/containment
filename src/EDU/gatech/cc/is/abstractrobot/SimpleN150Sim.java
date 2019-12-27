@@ -256,8 +256,26 @@ public class SimpleN150Sim extends Simple
 
 
     public int GetNumberOfRobots(){
-	    return all_objects.length;
-    }
+//	    return all_objects.length;
+		int base = -1;
+		int num_Teammates = 0;
+		int our_v_class = getVisionClass();
+
+		/*--- check all objects ---*/
+		for(int i = 0; i<all_objects.length; i++)
+		{
+			/*--- check if it's a teammate and a robot ---*/
+			if ((all_objects[i].getVisionClass()==our_v_class)&&
+					(all_objects[i] instanceof Simple))
+			// note: self included
+			{
+				num_Teammates++;
+				if (base == -1) base = i;
+			}
+		}
+
+		return  num_Teammates;
+	}
 
     public SimpleN150Sim GetRobot(int id){
 		for (int i=0; i<all_objects.length; i++){
