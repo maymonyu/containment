@@ -84,7 +84,13 @@ public class AttractorSim extends Object implements SimulatedObject
 
         @Override
         public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, int id, long s) {
-
+			position = new Vec2(x,y);
+			RADIUS = r;
+			foreground = fg;
+			background = bg;
+			visionclass = vc;
+			setID(id);
+			rando = new Random(s);
         }
 
         /**

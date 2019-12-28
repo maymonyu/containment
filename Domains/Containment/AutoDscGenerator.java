@@ -256,8 +256,8 @@ public class AutoDscGenerator
 //        final double FOV_DISTANCE = 3;
 //        final double X = FOV_DISTANCE / 3;
 
-        final double FOV_DISTANCE = 7;
-        final double X = 4;
+        final double FOV_DISTANCE = 3;
+        final double X = 1;
 
         int numOfVertices = polygonVertices.length;
         List<RobotMetadata> robotsMetadatas = new ArrayList<RobotMetadata>();
@@ -548,6 +548,34 @@ public class AutoDscGenerator
         return verticesArray;
     }
 
+    public static Vec2 calculateCentroid(Vec2 [] polygonVertices){
+        double centroidX = 0, centroidY = 0;
+
+        for(Vec2 vertex : polygonVertices) {
+            centroidX += vertex.x;
+            centroidY += vertex.y;
+        }
+
+        return new Vec2(centroidX / polygonVertices.length, centroidY / polygonVertices.length);
+    }
+
+    public static void addLocust(Writer outputFile, Vec2 [] polygonVertices){
+        String [] locustDefinitions = new String[10];
+        int locustSize = 1;
+
+        Vec2 centroid = calculateCentroid(polygonVertices);
+
+        String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
+                "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0", centroid.x, centroid.y, locustSize);
+
+        for(int i = 0; i<locustDefinitions.length; i++) {
+            locustDefinitions[i] = locustDefinition;
+        }
+
+        writeLinesToFile(outputFile, locustDefinitions);
+    }
+
+
     public static void main(String[] args)
     {
         String filename = "containment2.dsc";
@@ -577,6 +605,8 @@ public class AutoDscGenerator
             String [] robotsDefinitions = getRobotDefinitions(robots);
 
             writeLinesToFile(outputFile, robotsDefinitions);
+
+            addLocust(outputFile, polygonVertices);
 
             String [] bounds = getBounds(robots);
 

@@ -139,7 +139,7 @@ robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim
 // OBJECTS
 //======
 //
-// object objecttype x y theta radius forecolor backcolor visionclass
+// object objecttype x y theta forecolor backcolor visionclass
 //
 // Pbject statements instantiate things without control systems (like
 // balls, bins, obstacles, etc. Be sure to include the full class name for the
@@ -188,14 +188,14 @@ object EDU.gatech.cc.is.simulation.AttractorSim
 	-2 3.80 0 0.0762 x0000FF x000000 0 3.4763294909066076 5 0
 
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 1.80 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
+	0.9 1.80 0 5 xFFA000 x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 1.60 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
+	0.9 1.60 0 5 xFFA000 x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 1.40 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
+	0.9 1.40 0 5 xFFA000 x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 1.20 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
+	0.9 1.20 0 5 xFFA000 x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 1.00 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
+	0.9 1.00 0 5 xFFA000 x000000 0 3.4763294909066076 5 0
 object EDU.gatech.cc.is.simulation.SquiggleBallSim 
-	0.9 0.80 0 0.0762 xFFA000 x000000 0 3.4763294909066076 5 0
+	0.9 0.80 0 5 xFFA000 x000000 0 3.4763294909066076 5 0
