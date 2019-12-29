@@ -98,4 +98,6 @@ public interface MultiForageN150 extends SimpleN150,
         public Vec2 getPosition();
             public int CalculateRedundantRobots();
             public void SetBackground();
+            public SimulatedObject[] getLivingLocust();
+
 	}

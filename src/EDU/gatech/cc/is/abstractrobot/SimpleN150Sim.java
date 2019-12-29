@@ -255,6 +255,38 @@ public class SimpleN150Sim extends Simple
 		}
 
 
+	public SimulatedObject[] getLivingLocust(){
+		final int LOCUST_VISIONCLASS = 0;
+		int numberOfLivingLocust = 0;
+
+		for(int i = 0; i<all_objects.length; i++)
+		{
+			if (all_objects[i].getVisionClass() == LOCUST_VISIONCLASS) {
+				AttractorSim currLocust = (AttractorSim) all_objects[i];
+				if(currLocust.isLiving()) {
+					numberOfLivingLocust++;
+				}
+			}
+		}
+
+		SimulatedObject [] livingLocust = new SimulatedObject[numberOfLivingLocust];
+
+		int currIndex = 0;
+		for(int i = 0; i<all_objects.length; i++)
+		{
+			if (all_objects[i].getVisionClass() == LOCUST_VISIONCLASS) {
+				AttractorSim currLocust = (AttractorSim) all_objects[i];
+				if(currLocust.isLiving()) {
+					livingLocust[currIndex] = currLocust;
+					currIndex++;
+				}
+			}
+		}
+
+		return livingLocust;
+	}
+
+
     public int GetNumberOfRobots(){
 //	    return all_objects.length;
 		int base = -1;

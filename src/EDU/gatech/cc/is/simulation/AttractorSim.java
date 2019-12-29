@@ -326,4 +326,8 @@ public class AttractorSim extends Object implements SimulatedObject
                 position = old_pos;
 		picked_up = old_pu;
                 }
+
+        public boolean isLiving(){
+        	return !(picked_up || deposited);
+		}
 	}

@@ -447,6 +447,25 @@ public class containment extends ControlSystemMFN150 {
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 
+	private boolean isLocustInsideFov(Vec2 position){
+		Circle2 robotFOVCircle = abstract_robot.GetFOV(id);
+
+		return IsPointWithinCircle(position, robotFOVCircle);
+	}
+
+	private void EliminateLocust(){
+		SimulatedObject[] locust = abstract_robot.getLivingLocust();
+
+		for(int i = 0; i < locust.length; i++){
+			SimulatedObject currLocust = locust[i];
+			Vec2 currLocustPosition = currLocust.getPosition();
+
+			if(isLocustInsideFov(currLocustPosition)){
+				currLocust.putDown(currLocustPosition);
+			}
+		}
+	}
+
 	public int TakeStep() {
 		double result;
 		Message message;
@@ -457,6 +476,7 @@ public class containment extends ControlSystemMFN150 {
 		abstract_robot.setTurretHeading(curr_time, result);
 
 		CheckMessages();
+		EliminateLocust();
 
 		if(id == 0){
             System.out.println("time: " + curr_time);
