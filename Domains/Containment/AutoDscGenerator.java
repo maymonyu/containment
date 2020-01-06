@@ -256,8 +256,8 @@ public class AutoDscGenerator
 //        final double FOV_DISTANCE = 3;
 //        final double X = FOV_DISTANCE / 3;
 
-        final double FOV_DISTANCE = 3;
-        final double X = 1;
+        final double FOV_DISTANCE = 1;
+        final double X = 0.5;
 
         int numOfVertices = polygonVertices.length;
         List<RobotMetadata> robotsMetadatas = new ArrayList<RobotMetadata>();
@@ -560,15 +560,19 @@ public class AutoDscGenerator
     }
 
     public static void addLocust(Writer outputFile, Vec2 [] polygonVertices){
-        String [] locustDefinitions = new String[10];
-        int locustSize = 1;
+        int locustNumber = 100;
+        String [] locustDefinitions = new String[locustNumber];
+        double locustSize = 0.5;
 
         Vec2 centroid = calculateCentroid(polygonVertices);
 
-        String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
-                "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0", centroid.x, centroid.y, locustSize);
+        for(int i = 0; i < locustNumber; i++) {
+            double xCoordinate = Math.pow(-1, i) * (0.1 * i) + centroid.x;
+            double yCoordinate = Math.pow(-1, i) * (0.1 * i) + centroid.y;
 
-        for(int i = 0; i<locustDefinitions.length; i++) {
+            String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
+                    "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0", xCoordinate, yCoordinate, locustSize);
+
             locustDefinitions[i] = locustDefinition;
         }
 
