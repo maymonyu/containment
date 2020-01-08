@@ -580,7 +580,7 @@ public class AutoDscGenerator
     }
 
 
-    public static List<RobotMetadata> PeekRandomElementsFromList(List<RobotMetadata> list){
+    public static List<RobotMetadata> takeRandomElementsFromList(List<RobotMetadata> list){
         int numberOfElementsToPeek = list.size() / 5;
         List<RobotMetadata> randomList = new ArrayList<RobotMetadata>();
 
@@ -621,7 +621,7 @@ public class AutoDscGenerator
 
             List<RobotMetadata> robots = generateRobots(polygonVertices);
 
-            List<RobotMetadata> randomRobots = PeekRandomElementsFromList(robots);
+            List<RobotMetadata> randomRobots = takeRandomElementsFromList(robots);
             System.out.println("randomList length: " + randomRobots.size());
 
             String [] robotsDefinitions = getRobotDefinitions(randomRobots);
