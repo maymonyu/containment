@@ -580,6 +580,21 @@ public class AutoDscGenerator
     }
 
 
+    public static List<RobotMetadata> PeekRandomElementsFromList(List<RobotMetadata> list){
+        int numberOfElementsToPeek = list.size() / 5;
+        List<RobotMetadata> randomList = new ArrayList<RobotMetadata>();
+
+        Collections.shuffle(list);
+
+        for(int i = 0; i < numberOfElementsToPeek; i++) {
+            RobotMetadata randomElement = list.get(i);
+            randomList.add(randomElement);
+        }
+
+        return randomList;
+    }
+
+
     public static void main(String[] args)
     {
         String filename = "containment2.dsc";
@@ -606,13 +621,16 @@ public class AutoDscGenerator
 
             List<RobotMetadata> robots = generateRobots(polygonVertices);
 
-            String [] robotsDefinitions = getRobotDefinitions(robots);
+            List<RobotMetadata> randomRobots = PeekRandomElementsFromList(robots);
+            System.out.println("randomList length: " + randomRobots.size());
+
+            String [] robotsDefinitions = getRobotDefinitions(randomRobots);
 
             writeLinesToFile(outputFile, robotsDefinitions);
 
             addLocust(outputFile, polygonVertices);
 
-            String [] bounds = getBounds(robots);
+            String [] bounds = getBounds(randomRobots);
 
             writeBounds(outputFile, bounds);
 
