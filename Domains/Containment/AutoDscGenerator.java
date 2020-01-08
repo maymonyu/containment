@@ -252,12 +252,9 @@ public class AutoDscGenerator
 //        return GetPointByDistanceAndRadians(distanceFromLineStartToDestinationPoint, radians, lineStart);
     }
 
-    private static List<RobotMetadata> generateRobots(Vec2 [] polygonVertices){
-//        final double FOV_DISTANCE = 3;
-//        final double X = FOV_DISTANCE / 3;
-
-        final double FOV_DISTANCE = 1;
-        final double X = 0.5;
+    private static List<RobotMetadata> generateRobots(Vec2 [] polygonVertices, double FOV_RADIUS, double X){
+//        final double FOV_RADIUS = 3;
+//        final double X = FOV_RADIUS / 3;
 
         int numOfVertices = polygonVertices.length;
         List<RobotMetadata> robotsMetadatas = new ArrayList<RobotMetadata>();
@@ -284,11 +281,11 @@ public class AutoDscGenerator
 
 //            if(lastRobotLocationOnSegment != null){
 //                currVertex = getCircleLineIntersectionPoint(currVertex,
-//                        nextVertex, lastRobotLocationOnSegment, FOV_DISTANCE).get(1);
+//                        nextVertex, lastRobotLocationOnSegment, FOV_RADIUS).get(1);
 //            }
 
             double distance = calculateDistance(currVertex, nextVertex);
-            int numOfRobotsToCoverEdge = (int) Math.ceil(distance / (2 * FOV_DISTANCE));
+            int numOfRobotsToCoverEdge = (int) Math.ceil(distance / (2 * FOV_RADIUS));
 
             Vec2 currLocation = currVertex;
             int j = 0;
@@ -299,11 +296,11 @@ public class AutoDscGenerator
             while (!isLastOnEdge){
                 System.out.println("lastRobotLocationOnSegment: " + lastRobotLocationOnSegment);
 
-                double distanceBetweenRobots = 2 * FOV_DISTANCE - X;
-                if(i == 0 && j == 0) distanceBetweenRobots = FOV_DISTANCE;
+                double distanceBetweenRobots = 2 * FOV_RADIUS - X;
+                if(i == 0 && j == 0) distanceBetweenRobots = FOV_RADIUS;
 
 //                if(j == numOfRobotsToCoverEdge - 1){
-//                    distanceBetweenRobots = FOV_DISTANCE;
+//                    distanceBetweenRobots = FOV_RADIUS;
 //                    radianIncline = radianIncline - Math.PI;
 //                    currLocation = nextVertex;
 //                }
@@ -322,7 +319,7 @@ public class AutoDscGenerator
                 robotsMetadatas.add(robotMetadata);
 
                 currLocation = robotLocation;
-                isLastOnEdge = calculateDistance(currLocation, nextVertex) < FOV_DISTANCE;
+                isLastOnEdge = calculateDistance(currLocation, nextVertex) < FOV_RADIUS;
                 j++;
             }
 
@@ -362,16 +359,15 @@ public class AutoDscGenerator
         return robotsDefinitions;
     }
 
-    private static String [] getBounds(List<RobotMetadata> robots){
+    private static String [] getBounds(Vec2 [] polygonVertices){
         double minX = Double.POSITIVE_INFINITY;
         double minY = Double.POSITIVE_INFINITY;
         double maxX = Double.POSITIVE_INFINITY * -1;
         double maxY = Double.POSITIVE_INFINITY * -1;
 
-        for(int i=0; i<robots.size(); i++){
-            RobotMetadata robot = robots.get(i);
-            double x = robot.location.x;
-            double y = robot.location.y;
+        for(int i=0; i<polygonVertices.length; i++){
+            double x = polygonVertices[i].x;
+            double y = polygonVertices[i].y;
 
             if(x < minX) minX = x;
             if(y < minY) minY = y;
@@ -594,9 +590,64 @@ public class AutoDscGenerator
         return randomList;
     }
 
+    public static RobotMetadata getClosestRobotToPoint(List<RobotMetadata> robots, Vec2 Point){
+        RobotMetadata closestRobotToDestinationPoint = robots.get(0);
+        double minimalDistanceToDestinationPoint = Double.POSITIVE_INFINITY;
+
+        for(int i = 0; i < robots.size(); i++){
+            RobotMetadata currentRobot = robots.get(i);
+            Vec2 currentRobotLocation = currentRobot.location;
+
+            double distanceFromRobotToDestinationPoint = calculateDistance(currentRobotLocation, Point);
+
+            if(currentRobot.destinationPoint == null &&
+                    distanceFromRobotToDestinationPoint < minimalDistanceToDestinationPoint){
+
+                minimalDistanceToDestinationPoint = distanceFromRobotToDestinationPoint;
+                closestRobotToDestinationPoint = currentRobot;
+            }
+        }
+
+        return closestRobotToDestinationPoint;
+//        System.out.println(closestRobotToDestinationPoint.destinationPoint);
+    }
+
+    public static List<RobotMetadata> setRobotsDestinationPoints(List<RobotMetadata> robots,
+                                                                 double fovRadius, Vec2 centroid){
+        double perfectPolygonAngle = Math.PI / robots.size();
+        System.out.println(perfectPolygonAngle);
+
+        double anglesSumInTriangle = Math.PI / 2;
+        System.out.println(anglesSumInTriangle);
+
+        double isoscelesTriangleBaseAngle = (anglesSumInTriangle - perfectPolygonAngle) / 2;
+        System.out.println(isoscelesTriangleBaseAngle);
+
+        double distanceFromCentroid = fovRadius * Math.tan(isoscelesTriangleBaseAngle);
+        System.out.println(distanceFromCentroid);
+
+        for(int i = 0; i < robots.size(); i++){
+            double angleFromCentroid = i * perfectPolygonAngle;
+            Vec2 destinationPoint = GetPointByDistanceAndRadians(distanceFromCentroid, angleFromCentroid, centroid);
+
+            RobotMetadata closestRobotToPoint = getClosestRobotToPoint(robots, destinationPoint);
+            closestRobotToPoint.destinationPoint = destinationPoint;
+//            System.out.println(closestRobotToPoint.destinationPoint);
+        }
+
+        for(int i = 0; i < robots.size(); i++) {
+            robots.get(i).destinationPoint = robots.get(i).destinationPoint;
+        }
+
+        return robots;
+    }
+
 
     public static void main(String[] args)
     {
+        final double FOV_RADIUS = 1;
+        final double X = 0.5;
+
         String filename = "containment2.dsc";
         double secRadius = 0;
         String archiveDirNumber = getNextArchivedDirNumber();
@@ -614,15 +665,18 @@ public class AutoDscGenerator
 
             Vec2 [] polygonVertices = readVerticesFromFile("ContainmentDsc/vertices.txt");
             double polygonArea = calculatePolygonArea(polygonVertices);
+            Vec2 centroid = calculateCentroid(polygonVertices);
 
             secRadius = SmallestEnclosingCircle.getSmallestEnclosingCircleRadius(polygonVertices);
             double runtimeUpperBound = calculateRuntimeUpperBound(secRadius);
             System.out.println("UpperBound: " + runtimeUpperBound);
 
-            List<RobotMetadata> robots = generateRobots(polygonVertices);
+            List<RobotMetadata> robots = generateRobots(polygonVertices, FOV_RADIUS, X);
 
             List<RobotMetadata> randomRobots = takeRandomElementsFromList(robots);
             System.out.println("randomList length: " + randomRobots.size());
+
+            randomRobots = setRobotsDestinationPoints(randomRobots, FOV_RADIUS, centroid);
 
             String [] robotsDefinitions = getRobotDefinitions(randomRobots);
 
@@ -630,7 +684,7 @@ public class AutoDscGenerator
 
             addLocust(outputFile, polygonVertices);
 
-            String [] bounds = getBounds(randomRobots);
+            String [] bounds = getBounds(polygonVertices);
 
             writeBounds(outputFile, bounds);
 
