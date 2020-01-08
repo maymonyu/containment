@@ -614,17 +614,11 @@ public class AutoDscGenerator
 
     public static List<RobotMetadata> setRobotsDestinationPoints(List<RobotMetadata> robots,
                                                                  double fovRadius, Vec2 centroid){
-        double perfectPolygonAngle = Math.PI / robots.size();
-        System.out.println(perfectPolygonAngle);
-
-        double anglesSumInTriangle = Math.PI / 2;
-        System.out.println(anglesSumInTriangle);
-
+        double perfectPolygonAngle = 2 * Math.PI / robots.size();
+        double anglesSumInTriangle = Math.PI;
         double isoscelesTriangleBaseAngle = (anglesSumInTriangle - perfectPolygonAngle) / 2;
-        System.out.println(isoscelesTriangleBaseAngle);
 
         double distanceFromCentroid = fovRadius * Math.tan(isoscelesTriangleBaseAngle);
-        System.out.println(distanceFromCentroid);
 
         for(int i = 0; i < robots.size(); i++){
             double angleFromCentroid = i * perfectPolygonAngle;
@@ -635,9 +629,9 @@ public class AutoDscGenerator
 //            System.out.println(closestRobotToPoint.destinationPoint);
         }
 
-        for(int i = 0; i < robots.size(); i++) {
-            robots.get(i).destinationPoint = robots.get(i).destinationPoint;
-        }
+//        for(int i = 0; i < robots.size(); i++) {
+//            robots.get(i).location = robots.get(i).destinationPoint;
+//        }
 
         return robots;
     }
