@@ -566,7 +566,7 @@ public class AutoDscGenerator
 
         Vec2 centroid = calculateCentroid(polygonVertices);
 
-        for(int i = 0; i < locustNumber; i++) {
+        for(int i = 0; i<locustDefinitions.length; i++) {
             double xCoordinate = Math.pow(-1, i) * (0.1 * i) + centroid.x;
             double yCoordinate = Math.pow(-1, i) * (0.1 * i) + centroid.y;
 
