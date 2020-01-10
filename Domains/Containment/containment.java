@@ -84,6 +84,8 @@ public class containment extends ControlSystemMFN150 {
 	boolean isOdd;
 	boolean isFirstOnEdge;
 	boolean isLastOnEdge;
+	Vec2 destinationPoint;
+	double directionToDestinationPoint;
 
 	int numberOfRobots;
 	int indexOnEdge;
@@ -112,6 +114,7 @@ public class containment extends ControlSystemMFN150 {
 		isEven = indexOnEdge % 2 == 0;
 		isOdd = !isEven;
 		isLastOnEdge = abstract_robot.GetIsLastOnEdge();
+		destinationPoint = abstract_robot.GetDestinationPoint();
 
 		id = abstract_robot.getID();
 		leftNeighbourId = GetInitialLeftNeighbourId();
@@ -119,6 +122,8 @@ public class containment extends ControlSystemMFN150 {
 
 		lastPosition = abstract_robot.getPosition();
 		r_x = abstract_robot.Calculate_r_x();
+
+		directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 
 		savedTime = 0;
 	}
@@ -470,6 +475,7 @@ public class containment extends ControlSystemMFN150 {
 		double result;
 		Message message;
 		long curr_time = abstract_robot.getTime();
+        lastPosition = abstract_robot.getPosition();
 
 		// TURRET
 		result = abstract_robot.getTurretHeading(curr_time);
@@ -478,109 +484,113 @@ public class containment extends ControlSystemMFN150 {
 		CheckMessages();
 		EliminateLocust();
 
-		if(id == 0){
-            System.out.println("time: " + curr_time);
-        }
-
-		if(IsFirstToRun(curr_time)){
-			isMyTurn = true;
+		if(calculateDistance(lastPosition, destinationPoint) > 0.1){
 			StartMoving(curr_time);
-
-			savedTime = curr_time;
+			abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
 		}
 
-		else if(isMoving){
-			Vec2 currPosition = abstract_robot.getPosition();
-			if(calculateDistance(currPosition, lastPosition) >= r_x){
-				StopMoving(curr_time);
-				TellNeighbourstToStartMoving();
-
-				isMyTurn = false;
-				lastPosition = currPosition;
-
-//				if(id == 1){
-//					System.out.println("saved time: " + savedTime);
-//					System.out.println("r_x: " + r_x);
-//					System.out.println("time to pass r_x distance: " + (curr_time - savedTime));
-//				}
+		else {
+		    StopMoving(0L);
+			if (id == 0) {
+				System.out.println("time: " + curr_time);
 			}
+
+			if (IsFirstToRun(curr_time)) {
+				isMyTurn = true;
+				StartMoving(curr_time);
+
+				savedTime = curr_time;
+			} else if (isMoving) {
+				Vec2 currPosition = abstract_robot.getPosition();
+				if (calculateDistance(currPosition, lastPosition) >= r_x) {
+					StopMoving(curr_time);
+					TellNeighbourstToStartMoving();
+
+					isMyTurn = false;
+					lastPosition = currPosition;
+
+					//				if(id == 1){
+					//					System.out.println("saved time: " + savedTime);
+					//					System.out.println("r_x: " + r_x);
+					//					System.out.println("time to pass r_x distance: " + (curr_time - savedTime));
+					//				}
+				}
+			} else if (isMyTurn) {
+				StartMoving(curr_time);
+				savedTime = curr_time;
+			}
+
+
+			if (id == numberOfRobots - 1 && !isMoving) {
+				int numOfRedundants = abstract_robot.CalculateRedundantRobots();
+
+				//            try {
+				//                String dirPath = "ContainmentDsc/" + 7;
+				//                String upperBoundFilePath = dirPath + "/" + "upperBound.txt";
+				//                BufferedWriter upperBoundFile = new BufferedWriter(new FileWriter(upperBoundFilePath, true));
+				//
+				//                upperBoundFile.write("\n");
+				//                upperBoundFile.write(Integer.toString(numOfRedundants));
+				//
+				//                upperBoundFile.close();
+				//            }
+				//            catch (Exception e){
+				//                System.out.println(e);
+				//            }
+			}
+
+			//		else if(isEven){
+			//			StartMoving(curr_time);
+			//		}
+
+			//		if(waitingForSteerHeading){
+			//			if(IsSteerReady(curr_time)){
+			//				waitingForSteerHeading = false;
+			//				StartMoving(curr_time);
+			//			}
+			//
+			//			return CSSTAT_OK;
+			//		}
+
+			//		if(isMyTurn && isRedundant){
+			//			TellNextRobotToStartMoving();
+			//			return CSSTAT_OK;
+			//		}
+			//
+			//		if(isMyTurn && AreNeighboursCollide()){
+			//			abstract_robot.SetBackground();
+
+			//			isRedundant = true;
+			//			SendNewNeighboursMessages();
+			//			return CSSTAT_OK;
+			//		}
+			//
+			//		if (isReversing){
+			//			if (!IsOpenArea(curr_time)){
+			//				abstract_robot.ToggleReverse();
+			//
+			//				StopMoving(curr_time);
+			//				TellNextRobotToStartMoving();
+			//
+			//				isReversing = false;
+			//			}
+			//		}
+
+			//		else if (IsFirstToRun(curr_time)) {
+			//			isMyTurn = true;
+			//
+			//			StartMoving(curr_time);
+			//		}
+			//
+			//		else if (isMoving && IsOpenArea(curr_time)){
+			//			isReversing = true;
+			//			abstract_robot.ToggleReverse();
+			//		}
+			//
+			//		else if (isMyTurn) {
+			//			StartMoving(curr_time);
+			//		}
 		}
-
-		else if(isMyTurn){
-			StartMoving(curr_time);
-			savedTime = curr_time;
-		}
-
-
-		if(id == numberOfRobots - 1 && !isMoving){
-			int numOfRedundants = abstract_robot.CalculateRedundantRobots();
-
-//            try {
-//                String dirPath = "ContainmentDsc/" + 7;
-//                String upperBoundFilePath = dirPath + "/" + "upperBound.txt";
-//                BufferedWriter upperBoundFile = new BufferedWriter(new FileWriter(upperBoundFilePath, true));
-//
-//                upperBoundFile.write("\n");
-//                upperBoundFile.write(Integer.toString(numOfRedundants));
-//
-//                upperBoundFile.close();
-//            }
-//            catch (Exception e){
-//                System.out.println(e);
-//            }
-		}
-
-//		else if(isEven){
-//			StartMoving(curr_time);
-//		}
-
-//		if(waitingForSteerHeading){
-//			if(IsSteerReady(curr_time)){
-//				waitingForSteerHeading = false;
-//				StartMoving(curr_time);
-//			}
-//
-//			return CSSTAT_OK;
-//		}
-
-//		if(isMyTurn && isRedundant){
-//			TellNextRobotToStartMoving();
-//			return CSSTAT_OK;
-//		}
-//
-//		if(isMyTurn && AreNeighboursCollide()){
-//			abstract_robot.SetBackground();
-
-//			isRedundant = true;
-//			SendNewNeighboursMessages();
-//			return CSSTAT_OK;
-//		}
-//
-//		if (isReversing){
-//			if (!IsOpenArea(curr_time)){
-//				abstract_robot.ToggleReverse();
-//
-//				StopMoving(curr_time);
-//				TellNextRobotToStartMoving();
-//
-//				isReversing = false;
-//			}
-//		}
-
-//		else if (IsFirstToRun(curr_time)) {
-//			isMyTurn = true;
-//
-//			StartMoving(curr_time);
-//		}
-//
-//		else if (isMoving && IsOpenArea(curr_time)){
-//			isReversing = true;
-//			abstract_robot.ToggleReverse();
-//		}
-//
-//		else if (isMyTurn) {
-//			StartMoving(curr_time);
-//		}
 
 		return CSSTAT_OK;
 	}

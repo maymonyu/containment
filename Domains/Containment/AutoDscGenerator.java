@@ -352,8 +352,10 @@ public class AutoDscGenerator
             RobotMetadata currRobotMetadata = robotsMetadatas.get(i);
             robotsDefinitions[i] = String.format(
                     "robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim\n" +
-                    "\tcontainment %s %s %s x000000 xFF0000 2 %s %s %s",
-                    currRobotMetadata.location.x, currRobotMetadata.location.y, currRobotMetadata.heading, currRobotMetadata.steering, currRobotMetadata.indexOnEdge, currRobotMetadata.isLastOnEdge);
+                    "\tcontainment %s %s %s x000000 xFF0000 2 %s %s %s %s %s",
+                    currRobotMetadata.location.x, currRobotMetadata.location.y, currRobotMetadata.heading,
+                    currRobotMetadata.steering, currRobotMetadata.indexOnEdge, currRobotMetadata.isLastOnEdge,
+                    currRobotMetadata.destinationPoint.x, currRobotMetadata.destinationPoint.y);
         }
 
         return robotsDefinitions;
@@ -567,7 +569,8 @@ public class AutoDscGenerator
             double yCoordinate = Math.pow(-1, i) * (0.1 * i) + centroid.y;
 
             String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
-                    "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0", xCoordinate, yCoordinate, locustSize);
+                    "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 43.741505828413295 69.93354373216681",
+                    xCoordinate, yCoordinate, locustSize);
 
             locustDefinitions[i] = locustDefinition;
         }

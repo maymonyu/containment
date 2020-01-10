@@ -154,12 +154,12 @@ public class TerrainSim extends Object implements SimulatedLinearObject,
 		}
 
 
-        @Override
-        public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, int id, long s) {
+		@Override
+		public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, double xDestinationPoint, double yDestinationPoint, int id, long s) {
 
-        }
+		}
 
-        /**
+		/**
 	 * Take a simulated step;
 	 */
 	public void takeStep(long time_increment, SimulatedObject[] all_objs)
