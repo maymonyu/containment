@@ -33,10 +33,6 @@ public class SquiggleBallSim extends AttractorSim implements SimulatedObject
 
 	double	accumtime = 0;
 
-        @Override
-        public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, double xDestinationPoint, double yDestinationPoint, int id, long s) {
-
-        }
 
         /**
 	 * Take a simulated step;
