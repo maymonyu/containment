@@ -295,21 +295,22 @@ public class AttractorSim extends Object implements SimulatedObject
 		double t, double b, double l, double r)
 		{
 		top =t; bottom =b; left =l; right = r;
-		
-		if(picked_up != true)
-			{
-			double meterspp = (r - l) / (double)w;
-			if (DEBUG) System.out.println("meterspp "+meterspp);
-			int radius = (int)(RADIUS / meterspp);
-			int xpix = (int)((position.x - l) / meterspp);
-			int ypix = (int)((double)h - ((position.y - b) / meterspp));
-			if (DEBUG) System.out.println("robot at"+
-				" at "+xpix+","+ypix);
-	
-			/*--- draw the main body ---*/
-			g.setColor(foreground);
-			g.fillOval(xpix - radius, ypix - radius,
-				radius + radius, radius + radius);
+			if(isLiving()) {
+
+				if (picked_up != true) {
+					double meterspp = (r - l) / (double) w;
+					if (DEBUG) System.out.println("meterspp " + meterspp);
+					int radius = (int) (RADIUS / meterspp);
+					int xpix = (int) ((position.x - l) / meterspp);
+					int ypix = (int) ((double) h - ((position.y - b) / meterspp));
+					if (DEBUG) System.out.println("robot at" +
+							" at " + xpix + "," + ypix);
+
+					/*--- draw the main body ---*/
+					g.setColor(foreground);
+					g.fillOval(xpix - radius, ypix - radius,
+							radius + radius, radius + radius);
+				}
 			}
 		}
 
@@ -320,13 +321,14 @@ public class AttractorSim extends Object implements SimulatedObject
         public void draw(Vec2 pos, Graphics g, int w, int h,
                 double t, double b, double l, double r)
                 {
-		boolean old_pu = picked_up;
-		picked_up = false;
-                Vec2 old_pos = position;
-                position = pos;
-                draw(g,w,h,t,b,l,r);
-                position = old_pos;
-		picked_up = old_pu;
+						boolean old_pu = picked_up;
+						picked_up = false;
+						Vec2 old_pos = position;
+						position = pos;
+						draw(g, w, h, t, b, l, r);
+						position = old_pos;
+						picked_up = old_pu;
+
                 }
 
         public boolean isLiving(){
