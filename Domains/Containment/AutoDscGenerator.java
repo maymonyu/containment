@@ -558,21 +558,34 @@ public class AutoDscGenerator
     }
 
     public static void addLocust(Writer outputFile, Vec2 [] polygonVertices){
-        int locustNumber = 100;
+        int locustNumber = 99;
         String [] locustDefinitions = new String[locustNumber];
         double locustSize = 0.5;
+        double marginBetweenLocust = locustSize + 0.1;
+        int index = 0;
 
         Vec2 centroid = calculateCentroid(polygonVertices);
 
-        for(int i = 0; i<locustDefinitions.length; i++) {
-            double xCoordinate = Math.pow(-1, i) * (0.1 * i) + centroid.x;
-            double yCoordinate = Math.pow(-1, i) * (0.1 * i) + centroid.y;
+        for(int i = 0; i < locustDefinitions.length / 9; i++) {
+            for(int j = -1; j <= 1; j++) {
+                for(int k = -1; k <= 1; k++) {
+                    double xCoordinate = j * (marginBetweenLocust * i) + centroid.x;
+                    double yCoordinate = k * (marginBetweenLocust * i) + centroid.y;
 
-            String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
-                    "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 43.741505828413295 69.93354373216681",
-                    xCoordinate, yCoordinate, locustSize);
+                    System.out.println("xCoordinate, yCoordinate:" + xCoordinate +", " + yCoordinate);
 
-            locustDefinitions[i] = locustDefinition;
+                    String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
+                                    "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 43.741505828413295 69.93354373216681",
+                            xCoordinate, yCoordinate, locustSize);
+
+                    locustDefinitions[index] = locustDefinition;
+                    index++;
+                }
+            }
+        }
+
+        for(int i = 0; i < locustDefinitions.length; i++) {
+            System.out.println(locustDefinitions[i]);
         }
 
         writeLinesToFile(outputFile, locustDefinitions);
