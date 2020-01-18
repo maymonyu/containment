@@ -100,6 +100,8 @@ public class SimulationCanvas extends Canvas implements Runnable
 		boolean isLastOnEdgeAsBoolean;
 		double xDestinationPoint;
 		double yDestinationPoint;
+		double xEdgeStartVertex;
+		double yEdgeStartVertex;
 
 		idcounter = 0;
 		String	string1, string2;
@@ -599,6 +601,20 @@ public class SimulationCanvas extends Canvas implements Runnable
 						token = in.sval; // for error report
 						throw new IOException();
 					}
+					if (in.nextToken()==StreamTokenizer.TT_NUMBER)
+						xEdgeStartVertex = in.nval;
+					else
+					{
+						token = in.sval; // for error report
+						throw new IOException();
+					}
+					if (in.nextToken()==StreamTokenizer.TT_NUMBER)
+						yEdgeStartVertex = in.nval;
+					else
+					{
+						token = in.sval; // for error report
+						throw new IOException();
+					}
 					/*--- instantiate the obj ---*/
 					token = string1; // in case of error
                         		Class rclass = Class.forName(string1);
@@ -607,7 +623,7 @@ public class SimulationCanvas extends Canvas implements Runnable
 					obj.init(x, y, t, r, new Color(color1),
 						new Color(color2),vc, steer, indexOnEdge, isLastOnEdgeAsBoolean,
 							xDestinationPoint, yDestinationPoint,
-						idcounter++,seed++);
+							xEdgeStartVertex, yEdgeStartVertex, idcounter++,seed++);
 					temp_objs[temp_objs_count++] = obj;
 					}
 
@@ -826,6 +842,20 @@ public class SimulationCanvas extends Canvas implements Runnable
 						token = in.sval; // for error report
 						throw new IOException();
 					}
+					if (in.nextToken()==StreamTokenizer.TT_NUMBER)
+						xEdgeStartVertex = in.nval;
+					else
+					{
+						token = in.sval; // for error report
+						throw new IOException();
+					}
+					if (in.nextToken()==StreamTokenizer.TT_NUMBER)
+						yEdgeStartVertex = in.nval;
+					else
+					{
+						token = in.sval; // for error report
+						throw new IOException();
+					}
 					/*--- the robot ---*/
 					token = string1; // in case of error
                         		Class rclass = Class.forName(string1);
@@ -834,7 +864,7 @@ public class SimulationCanvas extends Canvas implements Runnable
 					obj.init(x, y, t, 0, new Color(color1),
 						new Color(color2),vc, steer, indexOnEdge, isLastOnEdgeAsBoolean,
 						xDestinationPoint, yDestinationPoint,
-						idcounter++,seed++);
+						xEdgeStartVertex, yEdgeStartVertex, idcounter++,seed++);
 					temp_objs[temp_objs_count++] = obj;
 					
 					/*--- set the dictionary ---*/

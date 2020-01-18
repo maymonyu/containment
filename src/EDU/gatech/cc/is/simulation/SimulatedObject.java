@@ -44,7 +44,8 @@ public interface SimulatedObject
          */
 	public abstract void init(double x, double y, double t, double r,
 			Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge,
-							  double xDestinationPoint, double yDestinationPoint, int id, long s);
+							  double xDestinationPoint, double yDestinationPoint,
+							  double xEdgeStartVertex, double yEdgeStartVertex, int id, long s);
 
 
         /**

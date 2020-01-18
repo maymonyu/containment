@@ -43,6 +43,8 @@ public class SimpleN150Sim extends Simple
 	private int indexOnEdge;
 	private boolean isLastOnEdge;
 	private Vec2 destinationPoint;
+	private Vec2 edgeStartVertex;
+
 	private	double	speed;
 	protected Color	foreground, background;
 	private long	time;
@@ -90,7 +92,8 @@ public class SimpleN150Sim extends Simple
          */
 	public void init(double xp, double yp, double tp, double ignore,
 		Color f, Color b, int v, double steerAngle, int indexOnEdge, boolean isLastOnEdge,
-					 double xDestinationPoint, double yDestinationPoint, int i, long s)
+					 double xDestinationPoint, double yDestinationPoint,
+					 double xEdgeStartVertex, double yEdgeStartVertex, int i, long s)
 		{
 		trail = new CircularBuffer(1000);
 		setID(i);
@@ -106,6 +109,7 @@ public class SimpleN150Sim extends Simple
 		this.indexOnEdge = indexOnEdge;
 		this.isLastOnEdge = isLastOnEdge;
 		this.destinationPoint = new Vec2(xDestinationPoint, yDestinationPoint);
+		this.edgeStartVertex = new Vec2(xEdgeStartVertex, yEdgeStartVertex);
 
 		turret = tp;
 		foreground = f;

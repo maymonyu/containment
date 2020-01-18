@@ -33,13 +33,16 @@ public class RobotMetadata {
     public int indexOnEdge;
     public int isLastOnEdge;
     public Vec2 destinationPoint;
+    public Vec2 edgeStartVertex;
 
-    public RobotMetadata(Vec2 location, double heading, double steering, int indexOnEdge, int isLastOnEdge) {
+    public RobotMetadata(Vec2 location, double heading, double steering, int indexOnEdge, int isLastOnEdge,
+                         Vec2 edgeStartVertex) {
         this.location = location;
         this.heading = heading;
         this.steering = steering;
         this.indexOnEdge = indexOnEdge;
         this.isLastOnEdge = isLastOnEdge;
+        this.edgeStartVertex = edgeStartVertex;
 
         destinationPoint = null;
     }

@@ -314,7 +314,8 @@ public class AutoDscGenerator
                     robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
                 }
 
-                RobotMetadata robotMetadata = new RobotMetadata(robotLocation, robotHeading, robotSteer, j+1, convertBooleanToInt(isLastOnEdge));
+                RobotMetadata robotMetadata = new RobotMetadata(robotLocation, robotHeading, robotSteer, j+1,
+                        convertBooleanToInt(isLastOnEdge), currVertex);
 
                 robotsMetadatas.add(robotMetadata);
 
@@ -352,10 +353,11 @@ public class AutoDscGenerator
             RobotMetadata currRobotMetadata = robotsMetadatas.get(i);
             robotsDefinitions[i] = String.format(
                     "robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim\n" +
-                    "\tcontainment %s %s %s x000000 xFF0000 2 %s %s %s %s %s",
+                    "\tcontainment %s %s %s x000000 xFF0000 2 %s %s %s %s %s %s %s",
                     currRobotMetadata.location.x, currRobotMetadata.location.y, currRobotMetadata.heading,
                     currRobotMetadata.steering, currRobotMetadata.indexOnEdge, currRobotMetadata.isLastOnEdge,
-                    currRobotMetadata.destinationPoint.x, currRobotMetadata.destinationPoint.y);
+                    currRobotMetadata.destinationPoint.x, currRobotMetadata.destinationPoint.y,
+                    currRobotMetadata.edgeStartVertex.x, currRobotMetadata.edgeStartVertex.y);
         }
 
         return robotsDefinitions;
@@ -601,7 +603,8 @@ public class AutoDscGenerator
             } while(!isPolygonContainsPoint(polygonVertices, point));
 
             String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
-                            "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 43.741505828413295 69.93354373216681",
+                            "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 " +
+                            "43.741505828413295 69.93354373216681 71.0 48.0",
                     x, y, locustSize);
 
             locustDefinitions[i] = locustDefinition;
