@@ -361,7 +361,16 @@ public class AutoDscGenerator
         return robotsDefinitions;
     }
 
-    private static String [] getBounds(Vec2 [] polygonVertices){
+    private static String [] getBoundsWithMargin(double [] bounds){
+        double minX = bounds[0] - 30;
+        double minY = bounds[1] - 30;
+        double maxX = bounds[2] + 30;
+        double maxY = bounds[3] + 40;
+
+        return new String[]{Double.toString(minX), Double.toString(maxX), Double.toString(minY), Double.toString(maxY)};
+    }
+
+    private static double [] getBounds(Vec2 [] polygonVertices){
         double minX = Double.POSITIVE_INFINITY;
         double minY = Double.POSITIVE_INFINITY;
         double maxX = Double.POSITIVE_INFINITY * -1;
@@ -378,12 +387,7 @@ public class AutoDscGenerator
             if(y > maxY) maxY = y;
         }
 
-        minX -= 30;
-        minY -= 30;
-        maxX += 30;
-        maxY += 40;
-
-        return new String[]{Double.toString(minX), Double.toString(maxX), Double.toString(minY), Double.toString(maxY)};
+        return new double[]{minX, minY, maxX, maxY};
     }
 
     private static void writeLinesToFile(Writer file, String[] lines){
@@ -557,31 +561,66 @@ public class AutoDscGenerator
         return new Vec2(centroidX / polygonVertices.length, centroidY / polygonVertices.length);
     }
 
-    public static void addLocust(Writer outputFile, Vec2 [] polygonVertices){
+    public static boolean isPolygonContainsPoint(Vec2 [] polygon, Vec2 point) {
+        int i;
+        int j;
+        boolean result = false;
+        for (i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+            if ((polygon[i].y > point.y) != (polygon[j].y > point.y) &&
+                    (point.x < (polygon[j].x - polygon[i].x) * (point.y - polygon[i].y) / (polygon[j].y-polygon[i].y) + polygon[i].x)) {
+                result = !result;
+            }
+        }
+        return result;
+    }
+
+    public static void addLocust(Writer outputFile, Vec2 [] polygonVertices, double [] bounds){
         int locustNumber = 99;
         String [] locustDefinitions = new String[locustNumber];
         double locustSize = 0.5;
         double marginBetweenLocust = locustSize + 0.1;
         int index = 0;
 
+        double minX = bounds[0];
+        double minY = bounds[1];
+        double maxX = bounds[2];
+        double maxY = bounds[3];
+
+        double boundsWidth = maxX - minX;
+        double boundsHeight = maxY - minY;
+
         Vec2 centroid = calculateCentroid(polygonVertices);
 
-        for(int i = 0; i < locustDefinitions.length / 9; i++) {
-            for(int j = -1; j <= 1; j++) {
-                for(int k = -1; k <= 1; k++) {
-                    double xCoordinate = j * (marginBetweenLocust * i) + centroid.x;
-                    double yCoordinate = k * (marginBetweenLocust * i) + centroid.y;
+        for(int i = 0; i < locustDefinitions.length; i++) {
+            double x, y;
+            Vec2 point;
+            do {
+                x = minX + boundsWidth * Math.random();
+                y = minY + boundsHeight * Math.random();
+                point = new Vec2(x, y);
+            } while(!isPolygonContainsPoint(polygonVertices, point));
 
-                    System.out.println("xCoordinate, yCoordinate:" + xCoordinate +", " + yCoordinate);
+            String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
+                            "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 43.741505828413295 69.93354373216681",
+                    x, y, locustSize);
 
-                    String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
-                                    "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 43.741505828413295 69.93354373216681",
-                            xCoordinate, yCoordinate, locustSize);
+            locustDefinitions[i] = locustDefinition;
 
-                    locustDefinitions[index] = locustDefinition;
-                    index++;
-                }
-            }
+//            for(int j = -1; j <= 1; j++) {
+//                for(int k = -1; k <= 1; k++) {
+//                    double xCoordinate = j * (marginBetweenLocust * i) + centroid.x;
+//                    double yCoordinate = k * (marginBetweenLocust * i) + centroid.y;
+//
+//                    System.out.println("xCoordinate, yCoordinate:" + xCoordinate +", " + yCoordinate);
+//
+//                    String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
+//                                    "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 43.741505828413295 69.93354373216681",
+//                            xCoordinate, yCoordinate, locustSize);
+//
+//                    locustDefinitions[index] = locustDefinition;
+//                    index++;
+//                }
+//            }
         }
 
         for(int i = 0; i < locustDefinitions.length; i++) {
@@ -692,11 +731,12 @@ public class AutoDscGenerator
 
             writeLinesToFile(outputFile, robotsDefinitions);
 
-            addLocust(outputFile, polygonVertices);
+            double [] bounds = getBounds(polygonVertices);
+            String [] boundsWithMargin = getBoundsWithMargin(bounds);
 
-            String [] bounds = getBounds(polygonVertices);
+            writeBounds(outputFile, boundsWithMargin);
 
-            writeBounds(outputFile, bounds);
+            addLocust(outputFile, polygonVertices, bounds);
 
 //            saveSimulationMetadata(archiveDirNumber, polygonVertices, runtimeUpperBound,
 //                    secRadius, polygonArea, robots.size());
