@@ -632,6 +632,20 @@ public class AutoDscGenerator
         return randomList;
     }
 
+
+    public static List<RobotMetadata> takeElementsFromList(List<RobotMetadata> list) {
+        int numberOfElementsToPeek = list.size() / 5;
+        List<RobotMetadata> reducedList = new ArrayList<RobotMetadata>();
+        int index = 0;
+
+        for(int i = 0; i < numberOfElementsToPeek; i++){
+            reducedList.add(list.get(index));
+            index += 5;
+        }
+
+        return reducedList;
+    }
+
     public static RobotMetadata getClosestRobotToPoint(List<RobotMetadata> robots, Vec2 Point){
         RobotMetadata closestRobotToDestinationPoint = robots.get(0);
         double minimalDistanceToDestinationPoint = Double.POSITIVE_INFINITY;
@@ -709,7 +723,8 @@ public class AutoDscGenerator
 
             List<RobotMetadata> robots = generateRobots(polygonVertices, FOV_RADIUS, X);
 
-            List<RobotMetadata> randomRobots = takeRandomElementsFromList(robots);
+//            List<RobotMetadata> randomRobots = takeRandomElementsFromList(robots);
+            List<RobotMetadata> randomRobots  = takeElementsFromList(robots);
             System.out.println("randomList length: " + randomRobots.size());
 
             randomRobots = setRobotsDestinationPoints(randomRobots, FOV_RADIUS, centroid);
