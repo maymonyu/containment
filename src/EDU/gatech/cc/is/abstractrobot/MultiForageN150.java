@@ -9,6 +9,8 @@ import EDU.gatech.cc.is.simulation.SimulatedObject;
 import EDU.gatech.cc.is.util.*;
 import EDU.cmu.cs.coral.util.Circle2;
 
+import java.util.List;
+
 
 /**
  * Provides an abstract interface to the hardware of
@@ -100,5 +102,7 @@ public interface MultiForageN150 extends SimpleN150,
             public void SetBackground();
             public SimulatedObject[] getLivingLocust();
             public Vec2 GetDestinationPoint();
+        public List<Vec2> CollectAllPolygonVertices();
 
-            }
+
+        }

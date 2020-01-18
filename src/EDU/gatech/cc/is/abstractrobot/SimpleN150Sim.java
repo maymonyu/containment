@@ -298,6 +298,38 @@ public class SimpleN150Sim extends Simple
 	}
 
 
+	public List<Vec2> CollectAllPolygonVertices(){
+		List<Vec2> polygonVertices = new ArrayList<>();
+		int numberOfRobots = GetNumberOfRobots();
+		int robotId = getID();
+
+		polygonVertices.add(edgeStartVertex);
+		int [] robotsOrderFromThisRobot = new int[numberOfRobots - 1];
+
+		for(int i = 0; i < robotsOrderFromThisRobot.length; i++){
+			int nextRobot = (robotId + i + 1) % numberOfRobots;
+
+			robotsOrderFromThisRobot[i] = nextRobot;
+		}
+
+		for(int j = 0; j < robotsOrderFromThisRobot.length; j++) {
+			for (int i = 0; i < all_objects.length; i++) {
+				if (all_objects[i].getID() == robotsOrderFromThisRobot[j]) {
+					SimpleN150Sim robotToCollect = (SimpleN150Sim) all_objects[i];
+
+					Vec2 lastVertex = polygonVertices.get(polygonVertices.size() - 1);
+					if (lastVertex.x != robotToCollect.edgeStartVertex.x &&
+							lastVertex.y != robotToCollect.edgeStartVertex.y ) {
+						polygonVertices.add(robotToCollect.edgeStartVertex);
+					}
+				}
+			}
+		}
+
+		return polygonVertices;
+	}
+
+
     public int GetNumberOfRobots(){
 //	    return all_objects.length;
 		int base = -1;

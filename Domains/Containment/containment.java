@@ -15,6 +15,9 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.Writer;
 
+import java.util.List;
+
+
 /**
  * A homogeneous robot soccer team.
  *
@@ -124,7 +127,12 @@ public class containment extends ControlSystemMFN150 {
 		r_x = abstract_robot.Calculate_r_x();
 
 		directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
-
+        List<Vec2> polygonVerticesByOrder = abstract_robot.CollectAllPolygonVertices();
+        if(id == 0) {
+            for (int i = 0; i < polygonVerticesByOrder.size(); i++) {
+                System.out.println(polygonVerticesByOrder.get(i));
+            }
+        }
 		savedTime = 0;
 	}
 
