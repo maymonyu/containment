@@ -605,22 +605,6 @@ public class AutoDscGenerator
                     x, y, locustSize);
 
             locustDefinitions[i] = locustDefinition;
-
-//            for(int j = -1; j <= 1; j++) {
-//                for(int k = -1; k <= 1; k++) {
-//                    double xCoordinate = j * (marginBetweenLocust * i) + centroid.x;
-//                    double yCoordinate = k * (marginBetweenLocust * i) + centroid.y;
-//
-//                    System.out.println("xCoordinate, yCoordinate:" + xCoordinate +", " + yCoordinate);
-//
-//                    String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
-//                                    "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 43.741505828413295 69.93354373216681",
-//                            xCoordinate, yCoordinate, locustSize);
-//
-//                    locustDefinitions[index] = locustDefinition;
-//                    index++;
-//                }
-//            }
         }
 
         for(int i = 0; i < locustDefinitions.length; i++) {
