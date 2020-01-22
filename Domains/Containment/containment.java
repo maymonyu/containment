@@ -89,8 +89,12 @@ public class containment extends ControlSystemMFN150 {
 	boolean isLastOnEdge;
 	Vec2 destinationPoint;
 	double directionToDestinationPoint;
+	Vec2 currentDestinationPoint;
+    double directionToCurrentDestinationPoint;
+    int currentVertexIndex;
+    List<Vec2> polygonVerticesByOrder;
 
-	int numberOfRobots;
+    int numberOfRobots;
 	int indexOnEdge;
 	double steerHeading;
 	private Enumeration messages;
@@ -126,13 +130,11 @@ public class containment extends ControlSystemMFN150 {
 		lastPosition = abstract_robot.getPosition();
 		r_x = abstract_robot.Calculate_r_x();
 
-		directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
-        List<Vec2> polygonVerticesByOrder = abstract_robot.CollectAllPolygonVertices();
-        if(id == 0) {
-            for (int i = 0; i < polygonVerticesByOrder.size(); i++) {
-                System.out.println(polygonVerticesByOrder.get(i));
-            }
-        }
+//		directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
+        polygonVerticesByOrder = abstract_robot.CollectAllPolygonVertices();
+        currentVertexIndex = 0;
+        SetCurrentDestinationPoint(currentVertexIndex);
+
 		savedTime = 0;
 	}
 
@@ -479,6 +481,12 @@ public class containment extends ControlSystemMFN150 {
 		}
 	}
 
+	private void SetCurrentDestinationPoint(int nextVertexIndex){
+	    currentVertexIndex = nextVertexIndex;
+        currentDestinationPoint = polygonVerticesByOrder.get(nextVertexIndex);
+        directionToCurrentDestinationPoint = getDirectionAngleOf2Points(lastPosition, currentDestinationPoint);
+    }
+
 	public int TakeStep() {
 		double result;
 		Message message;
@@ -492,10 +500,18 @@ public class containment extends ControlSystemMFN150 {
 		CheckMessages();
 		EliminateLocust();
 
-		if(calculateDistance(lastPosition, destinationPoint) > 0.1){
+		if(calculateDistance(lastPosition, currentDestinationPoint) < 0.1){
+            int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
+            SetCurrentDestinationPoint(nextVertexIndex);
+
+            abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
 			StartMoving(curr_time);
-			abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
 		}
+
+		else if(calculateDistance(lastPosition, currentDestinationPoint) >= 0.1){
+            abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+            StartMoving(curr_time);
+        }
 
 		else {
 		    StopMoving(0L);

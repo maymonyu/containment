@@ -315,7 +315,7 @@ public class AutoDscGenerator
                 }
 
                 RobotMetadata robotMetadata = new RobotMetadata(robotLocation, robotHeading, robotSteer, j+1,
-                        convertBooleanToInt(isLastOnEdge), currVertex);
+                        convertBooleanToInt(isLastOnEdge), nextVertex);
 
                 robotsMetadatas.add(robotMetadata);
 
