@@ -66,7 +66,7 @@ public class AutoDscGenerator
 //        return GetPointByDistanceAndRadians(radius, radAngle, robot.getPosition());
 //    }
 
-    private static Vec2 GetPointByDistanceAndRadians(double distance, double radians, Vec2 position){
+    public static Vec2 GetPointByDistanceAndRadians(double distance, double radians, Vec2 position){
         double x = distance * Math.cos(radians) + position.x;
         double y = distance * Math.sin(radians) + position.y;
 

@@ -298,19 +298,49 @@ public class SimpleN150Sim extends Simple
 	}
 
 
+	public int [] GetOrderOfRobotsFromId(int id, int numberOfRobots){
+		int [] robotsOrderFromThisRobot = new int[numberOfRobots - 1];
+
+		for(int i = 0; i < robotsOrderFromThisRobot.length; i++){
+			int nextRobot = (id + i + 1) % numberOfRobots;
+
+			robotsOrderFromThisRobot[i] = nextRobot;
+		}
+
+		return robotsOrderFromThisRobot;
+	}
+
+	public List<Double> CollectEdgesDirectionAngles(){
+		List<Double> directionAngles = new ArrayList<>();
+		int numberOfRobots = GetNumberOfRobots();
+		int robotId = getID();
+
+		directionAngles.add(steerAngle);
+		int [] robotsOrderFromThisRobot = GetOrderOfRobotsFromId(robotId, numberOfRobots);
+
+		for(int j = 0; j < robotsOrderFromThisRobot.length; j++) {
+			for (int i = 0; i < all_objects.length; i++) {
+				if (all_objects[i].getID() == robotsOrderFromThisRobot[j]) {
+					SimpleN150Sim robotToCollect = (SimpleN150Sim) all_objects[i];
+
+					double lastAngle = directionAngles.get(directionAngles.size() - 1);
+					if (lastAngle != robotToCollect.steerAngle) {
+						directionAngles.add(robotToCollect.steerAngle);
+					}
+				}
+			}
+		}
+
+		return directionAngles;
+	}
+
 	public List<Vec2> CollectAllPolygonVertices(){
 		List<Vec2> polygonVertices = new ArrayList<>();
 		int numberOfRobots = GetNumberOfRobots();
 		int robotId = getID();
 
 		polygonVertices.add(edgeStartVertex);
-		int [] robotsOrderFromThisRobot = new int[numberOfRobots - 1];
-
-		for(int i = 0; i < robotsOrderFromThisRobot.length; i++){
-			int nextRobot = (robotId + i + 1) % numberOfRobots;
-
-			robotsOrderFromThisRobot[i] = nextRobot;
-		}
+		int [] robotsOrderFromThisRobot = GetOrderOfRobotsFromId(robotId, numberOfRobots);
 
 		for(int j = 0; j < robotsOrderFromThisRobot.length; j++) {
 			for (int i = 0; i < all_objects.length; i++) {
@@ -1078,6 +1108,10 @@ public class SimpleN150Sim extends Simple
 	private boolean	in_reverse = false;
 	/**
 	*/
+
+	public double GetVisionRange(){
+		return MultiForageN150.VISION_RANGE;
+	}
 
 	public double Calculate_r_x(){
 		double d = MultiForageN150.VISION_RANGE ;

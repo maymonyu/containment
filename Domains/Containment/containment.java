@@ -16,6 +16,7 @@ import java.io.FileWriter;
 import java.io.Writer;
 
 import java.util.List;
+import java.util.ArrayList;
 
 
 /**
@@ -92,7 +93,13 @@ public class containment extends ControlSystemMFN150 {
 	Vec2 currentDestinationPoint;
     double directionToCurrentDestinationPoint;
     int currentVertexIndex;
+    List<Double> edgesDirectionAngles;
+    List<Double> anglesBetweenEdges;
     List<Vec2> polygonVerticesByOrder;
+    int round;
+    Vec2 roundStartingLocation;
+    double originalSteerHeading;
+    double visionRange;
 
     int numberOfRobots;
 	int indexOnEdge;
@@ -130,10 +137,18 @@ public class containment extends ControlSystemMFN150 {
 		lastPosition = abstract_robot.getPosition();
 		r_x = abstract_robot.Calculate_r_x();
 
+		visionRange = abstract_robot.GetVisionRange();
+
 //		directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
+        edgesDirectionAngles = abstract_robot.CollectEdgesDirectionAngles();
+        anglesBetweenEdges = CalculateAnglesBetweenEdges(edgesDirectionAngles);
+
         polygonVerticesByOrder = abstract_robot.CollectAllPolygonVertices();
         currentVertexIndex = 0;
         SetCurrentDestinationPoint(currentVertexIndex);
+        roundStartingLocation = abstract_robot.getPosition();
+
+        originalSteerHeading = abstract_robot.getSteerHeading(0);
 
 		savedTime = 0;
 	}
@@ -487,6 +502,45 @@ public class containment extends ControlSystemMFN150 {
         directionToCurrentDestinationPoint = getDirectionAngleOf2Points(lastPosition, currentDestinationPoint);
     }
 
+    private void MinimizePolygon(){
+	    List<Vec2> newVertices = new ArrayList<>();
+
+	    for(int i = 0; i < polygonVerticesByOrder.size(); i++) {
+            double angleDirection = anglesBetweenEdges.get(i);
+            Vec2 vertex = polygonVerticesByOrder.get(i);
+
+            Vec2 newVertex = AutoDscGenerator.GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
+            newVertices.add(newVertex);
+	    }
+
+	    polygonVerticesByOrder = newVertices;
+    }
+
+    private List<Double> CalculateAnglesBetweenEdges(List<Double> edgesDirectionAngles){
+	    List<Double> anglesBetweenEdges = new ArrayList<>();
+        int numberOfEdges = edgesDirectionAngles.size();
+
+	    for(int i = 0; i < numberOfEdges; i++){
+//	        int previousVertexIndex = (i + numberOfEdges - 1) % numberOfEdges;
+	        int nextVertexIndex = (i + 1) % numberOfEdges;
+
+	        double angleBetweenEdges = (edgesDirectionAngles.get(i) + edgesDirectionAngles.get(nextVertexIndex)) / 2;
+            anglesBetweenEdges.add(angleBetweenEdges);
+        }
+
+	    return anglesBetweenEdges;
+    }
+
+    private void HandleRoundEnd(){
+	    // update round stating location
+        // update polygon vertices
+        // set going to round
+
+        round ++;
+        MinimizePolygon();
+        roundStartingLocation = polygonVerticesByOrder.get(polygonVerticesByOrder.size() - 1);
+    }
+
 	public int TakeStep() {
 		double result;
 		Message message;
@@ -500,7 +554,11 @@ public class containment extends ControlSystemMFN150 {
 		CheckMessages();
 		EliminateLocust();
 
-		if(calculateDistance(lastPosition, currentDestinationPoint) < 0.1){
+		if(round != 0 && calculateDistance(lastPosition, roundStartingLocation) < 0.1){
+		    HandleRoundEnd();
+        }
+
+		else if(calculateDistance(lastPosition, currentDestinationPoint) < 0.1){
             int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
             SetCurrentDestinationPoint(nextVertexIndex);
 

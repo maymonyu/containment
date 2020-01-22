@@ -103,6 +103,7 @@ public interface MultiForageN150 extends SimpleN150,
             public SimulatedObject[] getLivingLocust();
             public Vec2 GetDestinationPoint();
         public List<Vec2> CollectAllPolygonVertices();
+            public List<Double> CollectEdgesDirectionAngles();
+            public double GetVisionRange();
 
-
-        }
+            }
