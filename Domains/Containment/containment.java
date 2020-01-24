@@ -532,10 +532,6 @@ public class containment extends ControlSystemMFN150 {
     }
 
     private void HandleRoundEnd(){
-	    // update round stating location
-        // update polygon vertices
-        // set going to round
-
         round ++;
         MinimizePolygon();
         roundStartingLocation = polygonVerticesByOrder.get(polygonVerticesByOrder.size() - 1);
@@ -554,11 +550,20 @@ public class containment extends ControlSystemMFN150 {
 		CheckMessages();
 		EliminateLocust();
 
-		if(round != 0 && calculateDistance(lastPosition, roundStartingLocation) < 0.1){
-		    HandleRoundEnd();
+//		if(calculateDistance(lastPosition, roundStartingLocation) < 0.1){
+//		    HandleRoundEnd();
+//		    if(id == 0){
+//		        System.out.println("HandleRoundEnd");
+//            }
+//        }
+
+        if(round == 0){
+            HandleRoundEnd();
         }
 
-		else if(calculateDistance(lastPosition, currentDestinationPoint) < 0.1){
+		if(calculateDistance(lastPosition, currentDestinationPoint) < 0.1){
+		    HandleRoundEnd();
+
             int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
             SetCurrentDestinationPoint(nextVertexIndex);
 
