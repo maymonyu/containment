@@ -100,6 +100,7 @@ public class containment extends ControlSystemMFN150 {
     Vec2 roundStartingLocation;
     double originalSteerHeading;
     double visionRange;
+    Vec2 centroid;
 
     int numberOfRobots;
 	int indexOnEdge;
@@ -147,6 +148,11 @@ public class containment extends ControlSystemMFN150 {
         currentVertexIndex = 0;
         SetCurrentDestinationPoint(currentVertexIndex);
         roundStartingLocation = abstract_robot.getPosition();
+
+        Vec2 [] polygonVerticesByOrderArray = new Vec2[polygonVerticesByOrder.size()];
+        polygonVerticesByOrderArray = polygonVerticesByOrder.toArray(polygonVerticesByOrderArray);
+
+        centroid = AutoDscGenerator.calculateCentroid(polygonVerticesByOrderArray);
 
         originalSteerHeading = abstract_robot.getSteerHeading(0);
 
@@ -506,9 +512,11 @@ public class containment extends ControlSystemMFN150 {
 	    List<Vec2> newVertices = new ArrayList<>();
 
 	    for(int i = 0; i < polygonVerticesByOrder.size(); i++) {
-            double angleDirection = anglesBetweenEdges.get(i);
+//            double angleDirection = anglesBetweenEdges.get(i);
             Vec2 vertex = polygonVerticesByOrder.get(i);
+            double angleDirection = AutoDscGenerator.calculateRadianIncline(vertex, centroid);
 
+//            Vec2 newVertex = AutoDscGenerator.GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
             Vec2 newVertex = AutoDscGenerator.GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
             newVertices.add(newVertex);
 	    }
@@ -534,7 +542,7 @@ public class containment extends ControlSystemMFN150 {
     private void HandleRoundEnd(){
         round ++;
         MinimizePolygon();
-        roundStartingLocation = polygonVerticesByOrder.get(polygonVerticesByOrder.size() - 1);
+//        roundStartingLocation = polygonVerticesByOrder.get(polygonVerticesByOrder.size() - 1);
     }
 
 	public int TakeStep() {
@@ -550,134 +558,78 @@ public class containment extends ControlSystemMFN150 {
 		CheckMessages();
 		EliminateLocust();
 
-//		if(calculateDistance(lastPosition, roundStartingLocation) < 0.1){
-//		    HandleRoundEnd();
-//		    if(id == 0){
-//		        System.out.println("HandleRoundEnd");
-//            }
-//        }
 
         if(round == 0){
             HandleRoundEnd();
         }
 
-		if(calculateDistance(lastPosition, currentDestinationPoint) < 0.1){
-		    HandleRoundEnd();
+        if(calculateDistance(lastPosition, destinationPoint) < 5){
+            isHeadingToFinalPoint = true;
+            directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 
-            int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
-            SetCurrentDestinationPoint(nextVertexIndex);
-
-            abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
-			StartMoving(curr_time);
-		}
-
-		else if(calculateDistance(lastPosition, currentDestinationPoint) >= 0.1){
-            abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+            abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
             StartMoving(curr_time);
         }
 
-		else {
-		    StopMoving(0L);
-			if (id == 0) {
-				System.out.println("time: " + curr_time);
-			}
+        if(isHeadingToFinalPoint) {
+            if (calculateDistance(lastPosition, destinationPoint) < 0.1) {
 
-			if (IsFirstToRun(curr_time)) {
-				isMyTurn = true;
-				StartMoving(curr_time);
+            }
+        }
 
-				savedTime = curr_time;
-			} else if (isMoving) {
-				Vec2 currPosition = abstract_robot.getPosition();
-				if (calculateDistance(currPosition, lastPosition) >= r_x) {
-					StopMoving(curr_time);
-					TellNeighbourstToStartMoving();
+        else {
+            if (calculateDistance(lastPosition, currentDestinationPoint) < 0.1) {
+                HandleRoundEnd();
 
-					isMyTurn = false;
-					lastPosition = currPosition;
+                int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
+                SetCurrentDestinationPoint(nextVertexIndex);
 
-					//				if(id == 1){
-					//					System.out.println("saved time: " + savedTime);
-					//					System.out.println("r_x: " + r_x);
-					//					System.out.println("time to pass r_x distance: " + (curr_time - savedTime));
-					//				}
-				}
-			} else if (isMyTurn) {
-				StartMoving(curr_time);
-				savedTime = curr_time;
-			}
+                abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+                StartMoving(curr_time);
+            }
+            else {
+                abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+                StartMoving(curr_time);
+            }
+        }
 
 
-			if (id == numberOfRobots - 1 && !isMoving) {
-				int numOfRedundants = abstract_robot.CalculateRedundantRobots();
-
-				//            try {
-				//                String dirPath = "ContainmentDsc/" + 7;
-				//                String upperBoundFilePath = dirPath + "/" + "upperBound.txt";
-				//                BufferedWriter upperBoundFile = new BufferedWriter(new FileWriter(upperBoundFilePath, true));
-				//
-				//                upperBoundFile.write("\n");
-				//                upperBoundFile.write(Integer.toString(numOfRedundants));
-				//
-				//                upperBoundFile.close();
-				//            }
-				//            catch (Exception e){
-				//                System.out.println(e);
-				//            }
-			}
-
-			//		else if(isEven){
-			//			StartMoving(curr_time);
-			//		}
-
-			//		if(waitingForSteerHeading){
-			//			if(IsSteerReady(curr_time)){
-			//				waitingForSteerHeading = false;
-			//				StartMoving(curr_time);
-			//			}
-			//
-			//			return CSSTAT_OK;
-			//		}
-
-			//		if(isMyTurn && isRedundant){
-			//			TellNextRobotToStartMoving();
-			//			return CSSTAT_OK;
-			//		}
-			//
-			//		if(isMyTurn && AreNeighboursCollide()){
-			//			abstract_robot.SetBackground();
-
-			//			isRedundant = true;
-			//			SendNewNeighboursMessages();
-			//			return CSSTAT_OK;
-			//		}
-			//
-			//		if (isReversing){
-			//			if (!IsOpenArea(curr_time)){
-			//				abstract_robot.ToggleReverse();
-			//
-			//				StopMoving(curr_time);
-			//				TellNextRobotToStartMoving();
-			//
-			//				isReversing = false;
-			//			}
-			//		}
-
-			//		else if (IsFirstToRun(curr_time)) {
-			//			isMyTurn = true;
-			//
-			//			StartMoving(curr_time);
-			//		}
-			//
-			//		else if (isMoving && IsOpenArea(curr_time)){
-			//			isReversing = true;
-			//			abstract_robot.ToggleReverse();
-			//		}
-			//
-			//		else if (isMyTurn) {
-			//			StartMoving(curr_time);
-			//		}
-		}
+//		else {
+//		    StopMoving(0L);
+//			if (id == 0) {
+//				System.out.println("time: " + curr_time);
+//			}
+//
+//			if (IsFirstToRun(curr_time)) {
+//				isMyTurn = true;
+//				StartMoving(curr_time);
+//
+//				savedTime = curr_time;
+//			} else if (isMoving) {
+//				Vec2 currPosition = abstract_robot.getPosition();
+//				if (calculateDistance(currPosition, lastPosition) >= r_x) {
+//					StopMoving(curr_time);
+//					TellNeighbourstToStartMoving();
+//
+//					isMyTurn = false;
+//					lastPosition = currPosition;
+//
+//					//				if(id == 1){
+//					//					System.out.println("saved time: " + savedTime);
+//					//					System.out.println("r_x: " + r_x);
+//					//					System.out.println("time to pass r_x distance: " + (curr_time - savedTime));
+//					//				}
+//				}
+//			} else if (isMyTurn) {
+//				StartMoving(curr_time);
+//				savedTime = curr_time;
+//			}
+//
+//
+//			if (id == numberOfRobots - 1 && !isMoving) {
+//				int numOfRedundants = abstract_robot.CalculateRedundantRobots();
+//			}
+//		}
 
 		return CSSTAT_OK;
 	}

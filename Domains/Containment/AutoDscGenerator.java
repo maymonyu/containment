@@ -75,7 +75,7 @@ public class AutoDscGenerator
         return new Vec2(x, y);
     }
 
-    private static double calculateRadianIncline(Vec2 position, Vec2 reachingPoint){
+    public static double calculateRadianIncline(Vec2 position, Vec2 reachingPoint){
         double incline = 0;
 
         if (position.x == reachingPoint.x){
