@@ -101,6 +101,7 @@ public class containment extends ControlSystemMFN150 {
     double originalSteerHeading;
     double visionRange;
     Vec2 centroid;
+    boolean isHeadingToFinalPoint;
 
     int numberOfRobots;
 	int indexOnEdge;
@@ -155,6 +156,8 @@ public class containment extends ControlSystemMFN150 {
         centroid = AutoDscGenerator.calculateCentroid(polygonVerticesByOrderArray);
 
         originalSteerHeading = abstract_robot.getSteerHeading(0);
+
+        isHeadingToFinalPoint = false;
 
 		savedTime = 0;
 	}
@@ -563,7 +566,7 @@ public class containment extends ControlSystemMFN150 {
             HandleRoundEnd();
         }
 
-        if(calculateDistance(lastPosition, destinationPoint) < 5){
+        if(calculateDistance(lastPosition, destinationPoint) < 7){
             isHeadingToFinalPoint = true;
             directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 
@@ -573,7 +576,7 @@ public class containment extends ControlSystemMFN150 {
 
         if(isHeadingToFinalPoint) {
             if (calculateDistance(lastPosition, destinationPoint) < 0.1) {
-
+                StopMoving(curr_time);
             }
         }
 
