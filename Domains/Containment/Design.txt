@@ -1,6 +1,24 @@
 
-Target:
-Check what is the upper bound of the runtime
+Choose algorithm:
+    Setting: 100 locust in random location
+        Define number of robots:
+            Define the velocity of the locust:
+                Output: csv file with 20-30 lines:
+                    each line is running output: Time reaching to MEP, Dead locust, Alive locust
 
-# Add the code of the smallest enclosing circle
-# Run SCE and print the diameter and the upper bound expected
+
+1. Add 3-for loop in SimulationCanvas:
+    a. first loop - run over the locust locations (e.g the settings)
+    b. second loop - run over the number of robots (10, 20, 30, 40, 50)
+    c. third loop - run over the locust's velocity
+
+
+- Set 10 Settings by manual - only locust locations
+- Create dsc including the number of robots and the locust locations
+- Set locust's velocity
+    - MAX_TRANSLATION is the velocity
+    - Add the velocity to dsc file
+    - attractorSim will get it, and SquiggleBallSim will get it from AttractorSim
+- Understand how to run simulation, stop it, and run it again
+- Run simulation and stop when all robots are near their destination point
+- Write results to file

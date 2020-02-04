@@ -21,7 +21,7 @@ import EDU.gatech.cc.is.util.Units;
 public class SquiggleBallSim extends AttractorSim implements SimulatedObject
 	{
 	private	static final double MAX_TRANSLATION = 0.61; // 2 feet/second
-	private	static final double TIMEOUT = 5; 
+	private	static final double TIMEOUT = 5;
 	private Vec2	velocity = new Vec2(0,MAX_TRANSLATION);
 	public	static final boolean DEBUG = false;
 
