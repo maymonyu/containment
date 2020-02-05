@@ -5,6 +5,7 @@
 package EDU.gatech.cc.is.abstractrobot;
 
 import java.util.Enumeration;
+import java.util.List;
 
 import EDU.cmu.cs.coral.util.Circle2;
 import EDU.gatech.cc.is.util.Vec2;
@@ -657,6 +658,31 @@ public class MultiForageN150Hard extends SimpleN150Hard
 		@Override
 		public void SetBackground() {
 
+		}
+
+		@Override
+		public SimulatedObject[] getLivingLocust() {
+			return new SimulatedObject[0];
+		}
+
+		@Override
+		public Vec2 GetDestinationPoint() {
+			return null;
+		}
+
+		@Override
+		public List<Vec2> CollectAllPolygonVertices() {
+			return null;
+		}
+
+		@Override
+		public List<Double> CollectEdgesDirectionAngles() {
+			return null;
+		}
+
+		@Override
+		public double GetVisionRange() {
+			return 0;
 		}
 
 		@Override

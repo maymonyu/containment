@@ -1067,7 +1067,7 @@ public class SimulationCanvas extends Canvas implements Runnable
 		}
 
 
-	private boolean keep_running = true;
+	public boolean keep_running = true;
 	/**
 	 * Run the simulation.
 	 */
@@ -1160,6 +1160,11 @@ public class SimulationCanvas extends Canvas implements Runnable
 
 			/*--- increment simulation time ---*/
 			sim_time += sim_timestep;
+
+			System.out.println(sim_time);
+			if(sim_time >= 10000){
+				keep_running = false;
+			}
 			}
 		}
 

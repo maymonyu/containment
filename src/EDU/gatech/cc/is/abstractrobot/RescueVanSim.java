@@ -98,7 +98,7 @@ public class RescueVanSim extends Simple
 	private double last_traversability = 1.0;
 
 		@Override
-		public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, int id, long s) {
+		public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, double xDestinationPoint, double yDestinationPoint, double xEdgeStartVertex, double yEdgeStartVertex, int id, long s) {
 
 		}
 

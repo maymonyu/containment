@@ -8,6 +8,8 @@ import java.io.*;
 import java.awt.*;
 import java.net.*;
 import java.awt.event.*;
+import java.util.concurrent.TimeUnit;
+
 import EDU.gatech.cc.is.abstractrobot.*;
 import EDU.gatech.cc.is.clay.*;
 import EDU.gatech.cc.is.util.*;
@@ -336,52 +338,64 @@ public class TBSim extends Frame
         /**
 	 * Main for TBSim.
          */
-	public static void main(String[] args)
-		{
-		  long runtime = 0;
-		  boolean gotSize = false;
-		  int width = -1;
-		  int height = -1;
-		  String dsc_file = null;
+	public static void main(String[] args) throws InterruptedException {
+        long runtime = 0;
+        boolean gotSize = false;
+        int width = -1;
+        int height = -1;
+        String dsc_file = null;
 
-		/*--- check the arguments ---*/
-		if (args.length >= 1)
-			{
-			if (args[0].equalsIgnoreCase("-version"))
-				{
-				System.out.println(
-					TBVersion.longReport());
-				System.exit(0);
-				}
-			else {
-				dsc_file=args[0];
-			
-			}
-			}
-		System.out.println(TBVersion.shortReport());
-		try
-			{
-			  if (args.length >= 3)
-			    {
-			      width = Integer.parseInt(args[1]);
-			      height = Integer.parseInt(args[2]);
-			      gotSize = true;
-			    }
-			}
-		catch (Exception e)
-			{
-			System.out.println(
-				"usage: java TBSim.TBSim [-version] [descriptionfile] [width height]");
-			}
-		/*--- make the window ---*/
-		
-		TBSim jbs = null;
-		if (gotSize)
-			jbs = new TBSim(dsc_file, width, height);
-		else if (dsc_file != null)
-			jbs = new TBSim(dsc_file);
-		else
-			jbs = new TBSim();
-		jbs.show();
-		}
+        /*--- check the arguments ---*/
+        if (args.length >= 1) {
+            if (args[0].equalsIgnoreCase("-version")) {
+                System.out.println(
+                        TBVersion.longReport());
+                System.exit(0);
+            } else {
+                dsc_file = args[0];
+
+            }
+        }
+        System.out.println(TBVersion.shortReport());
+        try {
+            if (args.length >= 3) {
+                width = Integer.parseInt(args[1]);
+                height = Integer.parseInt(args[2]);
+                gotSize = true;
+            }
+        } catch (Exception e) {
+            System.out.println(
+                    "usage: java TBSim.TBSim [-version] [descriptionfile] [width height]");
+        }
+        /*--- make the window ---*/
+
+        TBSim jbs = null;
+//        if (gotSize)
+//            jbs = new TBSim(dsc_file, width, height);
+//        else if (dsc_file != null)
+//            jbs = new TBSim(dsc_file);
+//        else
+//            jbs = new TBSim();
+//        jbs.show();
+
+//
+        for(int i=0; i<5; i++) {
+            jbs = new TBSim(dsc_file, width, height);
+            jbs.show();
+
+            // Stop after 10000 time
+            while (jbs.simulation.keep_running){
+            }
+
+            jbs.simulation.quit();
+        }
+
+//        jbs = new TBSim(dsc_file, width, height);
+//        jbs.show();
+//
+//        while (jbs.simulation.keep_running){
+//            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//        }
+    }
 	}
+
