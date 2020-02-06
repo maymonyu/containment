@@ -298,6 +298,33 @@ public class SimpleN150Sim extends Simple
 	}
 
 
+	public boolean AreAllRobotsNearDestinationPoint(){
+		int ROBOTS_VISION_CLASS = 0;
+
+		for(int i = 0; i < all_objects.length; i++)
+		{
+			/*--- check if it's a teammate and a robot ---*/
+			if ((all_objects[i] instanceof Simple))
+			// note: self included
+			{
+				SimpleN150Sim robot = (SimpleN150Sim) all_objects[i];
+				if(calculateDistance(robot.getPosition(), robot.destinationPoint) > 0.1){
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+
+	public double calculateDistance(Vec2 point1, Vec2 point2){
+		double dx = point1.x- point2.x;
+		double dy = point1.y - point2.y;
+
+		return Math.sqrt(dx * dx + dy * dy);
+	}
+
 	public int [] GetOrderOfRobotsFromId(int id, int numberOfRobots){
 		int [] robotsOrderFromThisRobot = new int[numberOfRobots - 1];
 

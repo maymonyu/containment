@@ -577,6 +577,7 @@ public class containment extends ControlSystemMFN150 {
         if(isHeadingToFinalPoint) {
             if (calculateDistance(lastPosition, destinationPoint) < 0.1) {
                 StopMoving(curr_time);
+                return CSSTAT_DONE;
             }
         }
 

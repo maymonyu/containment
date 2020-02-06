@@ -383,11 +383,12 @@ public class TBSim extends Frame
             jbs = new TBSim(dsc_file, width, height);
             jbs.show();
 
-            // Stop after 10000 time
             while (jbs.simulation.keep_running){
             }
 
-            jbs.simulation.quit();
+			System.out.println("&&&&&&&&&&&&&&&&7");
+
+			jbs.simulation.quit();
         }
 
 //        jbs = new TBSim(dsc_file, width, height);

@@ -1161,12 +1161,21 @@ public class SimulationCanvas extends Canvas implements Runnable
 			/*--- increment simulation time ---*/
 			sim_time += sim_timestep;
 
-			System.out.println(sim_time);
-			if(sim_time >= 10000){
+
+			SimpleN150Sim robot = null;
+			for(int i= 0; i<simulated_objects.length; i++) {
+				// if robot
+				if (simulated_objects[i] instanceof Simple) {
+					robot = (SimpleN150Sim) simulated_objects[i];
+					break;
+				}
+			}
+
+			if(robot.AreAllRobotsNearDestinationPoint()){
 				keep_running = false;
 			}
-			}
 		}
+	}
 
 
 	/**
