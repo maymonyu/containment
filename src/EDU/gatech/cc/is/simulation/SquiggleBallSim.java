@@ -20,15 +20,21 @@ import EDU.gatech.cc.is.util.Units;
 
 public class SquiggleBallSim extends AttractorSim implements SimulatedObject
 	{
-	private	static final double MAX_TRANSLATION = 0.61; // 2 feet/second
+	private	static double MAX_TRANSLATION = 0.61; // 2 feet/second
 	private	static final double TIMEOUT = 5;
 	private Vec2	velocity = new Vec2(0,MAX_TRANSLATION);
 	public	static final boolean DEBUG = false;
+	public boolean isVelocitySet = false;
 
 	public SquiggleBallSim()
 		{
-		super();
-		velocity.sett(Math.random()*Math.PI*2);
+			super();
+//
+//			MAX_TRANSLATION = locustVelocity;
+//			System.out.println("MAX_TRANSLATION: " + MAX_TRANSLATION);
+//			Vec2 velocity = new Vec2(0,MAX_TRANSLATION);
+
+			velocity.sett(Math.random()*Math.PI*2);
 		}
 
 	double	accumtime = 0;
@@ -39,6 +45,15 @@ public class SquiggleBallSim extends AttractorSim implements SimulatedObject
 	 */
 	public void takeStep(long time_increment, SimulatedObject[] all_objs)
 		{
+			if(!isVelocitySet){
+				MAX_TRANSLATION = locustVelocity;
+				Vec2 velocity = new Vec2(0,MAX_TRANSLATION);
+
+				velocity.sett(Math.random()*Math.PI*2);
+
+				isVelocitySet = true;
+			}
+
 		if ((picked_up != true)&&(deposited != true))
 			{
 			double time_incd = (double)time_increment / 1000;

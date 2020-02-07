@@ -576,8 +576,8 @@ public class AutoDscGenerator
         return result;
     }
 
-    public static void addLocust(Writer outputFile, Vec2 [] polygonVertices, double [] bounds){
-        int locustNumber = 99;
+    public static void addLocust(Writer outputFile, Vec2 [] polygonVertices, double [] bounds, double velocity){
+        int locustNumber = 100;
         String [] locustDefinitions = new String[locustNumber];
         double locustSize = 0.5;
         double marginBetweenLocust = locustSize + 0.1;
@@ -604,8 +604,8 @@ public class AutoDscGenerator
 
             String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
                             "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 " +
-                            "43.741505828413295 69.93354373216681 71.0 48.0",
-                    x, y, locustSize);
+                            "43.741505828413295 69.93354373216681 71.0 48.0 %s",
+                    x, y, locustSize, velocity);
 
             locustDefinitions[i] = locustDefinition;
         }
@@ -738,7 +738,8 @@ public class AutoDscGenerator
 
             writeBounds(outputFile, boundsWithMargin);
 
-            addLocust(outputFile, polygonVertices, bounds);
+            double locustVelocity = 1;
+            addLocust(outputFile, polygonVertices, bounds, locustVelocity);
 
 //            saveSimulationMetadata(archiveDirNumber, polygonVertices, runtimeUpperBound,
 //                    secRadius, polygonArea, robots.size());

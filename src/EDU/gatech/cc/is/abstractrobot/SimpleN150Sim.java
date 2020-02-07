@@ -121,8 +121,15 @@ public class SimpleN150Sim extends Simple
 			+" at "+xp+","+yp);	
 		}
 
+		@Override
+		public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer,
+						 int indexOnEdge, boolean isLastOnEdge, double xDestinationPoint, double yDestinationPoint,
+						 double xEdgeStartVertex, double yEdgeStartVertex, double locustVelocity, int id, long s) {
 
-	/**
+		}
+
+
+		/**
 	 * Take a simulated step;
 	 */
 	private double last_traversability = 1.0;

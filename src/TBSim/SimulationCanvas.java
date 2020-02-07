@@ -102,6 +102,7 @@ public class SimulationCanvas extends Canvas implements Runnable
 		double yDestinationPoint;
 		double xEdgeStartVertex;
 		double yEdgeStartVertex;
+		double locustVelocity;
 
 		idcounter = 0;
 		String	string1, string2;
@@ -615,6 +616,13 @@ public class SimulationCanvas extends Canvas implements Runnable
 						token = in.sval; // for error report
 						throw new IOException();
 					}
+					if (in.nextToken()==StreamTokenizer.TT_NUMBER)
+						locustVelocity = in.nval;
+					else
+					{
+						token = in.sval; // for error report
+						throw new IOException();
+					}
 					/*--- instantiate the obj ---*/
 					token = string1; // in case of error
                         		Class rclass = Class.forName(string1);
@@ -623,7 +631,7 @@ public class SimulationCanvas extends Canvas implements Runnable
 					obj.init(x, y, t, r, new Color(color1),
 						new Color(color2),vc, steer, indexOnEdge, isLastOnEdgeAsBoolean,
 							xDestinationPoint, yDestinationPoint,
-							xEdgeStartVertex, yEdgeStartVertex, idcounter++,seed++);
+							xEdgeStartVertex, yEdgeStartVertex, locustVelocity, idcounter++,seed++);
 					temp_objs[temp_objs_count++] = obj;
 					}
 

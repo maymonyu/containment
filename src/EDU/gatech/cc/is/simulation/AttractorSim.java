@@ -41,6 +41,7 @@ public class AttractorSim extends Object implements SimulatedObject
 	protected	long seed = 0;
 	protected	Random rando = null;
 	public		static final boolean DEBUG = false;
+	public double locustVelocity;
 
 
 	/**
@@ -82,10 +83,16 @@ public class AttractorSim extends Object implements SimulatedObject
 		}
 
 
-        @Override
+		@Override
+		public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, double xDestinationPoint, double yDestinationPoint, double xEdgeStartVertex, double yEdgeStartVertex, int id, long s) {
+
+		}
+
+		@Override
 		public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer,
 						 int indexOnEdge, boolean isLastOnEdge, double xDestinationPoint, double yDestinationPoint,
-						 double xEdgeStartVertex, double yEdgeStartVertex, int id, long s) {
+						 double xEdgeStartVertex, double yEdgeStartVertex,
+						 double locustVelocity, int id, long s) {
 			position = new Vec2(x,y);
 			RADIUS = r;
 			foreground = fg;
@@ -93,6 +100,8 @@ public class AttractorSim extends Object implements SimulatedObject
 			visionclass = vc;
 			setID(id);
 			rando = new Random(s);
+
+			this.locustVelocity = locustVelocity;
         }
 
         /**

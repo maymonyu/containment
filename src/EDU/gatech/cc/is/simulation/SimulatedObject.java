@@ -42,13 +42,18 @@ public interface SimulatedObject
 	 * @param id a unique ID number fore the object.
 	 * @param s  random number seed.
          */
-	public abstract void init(double x, double y, double t, double r,
-			Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge,
-							  double xDestinationPoint, double yDestinationPoint,
-							  double xEdgeStartVertex, double yEdgeStartVertex, int id, long s);
+		public abstract void init(double x, double y, double t, double r,
+								  Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge,
+								  double xDestinationPoint, double yDestinationPoint,
+								  double xEdgeStartVertex, double yEdgeStartVertex, int id, long s);
+
+		public abstract void init(double x, double y, double t, double r,
+								  Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge,
+								  double xDestinationPoint, double yDestinationPoint,
+								  double xEdgeStartVertex, double yEdgeStartVertex, double locustVelocity, int id, long s);
 
 
-        /**
+		/**
          * Take a simulated step.
 	 * @param time_increment how much time has elapsed since
 	 * the last call.

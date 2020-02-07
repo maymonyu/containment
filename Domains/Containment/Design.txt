@@ -20,5 +20,5 @@ Choose algorithm:
     - Add the velocity to dsc file
     - attractorSim will get it, and SquiggleBallSim will get it from AttractorSim
 - Understand how to run simulation, stop it, and run it again - DONE
-- Run simulation and stop when all robots are near their destination point
+- Run simulation and stop when all robots are near their destination point - DONE
 - Write results to file
