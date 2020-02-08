@@ -385,7 +385,7 @@ public class TBSim extends Frame
 
 //
         for(int i=0; i<5; i++) {
-//        	GenerateDscFile(2.0);
+        	GenerateDscFile(2.0);
 
             jbs = new TBSim(dsc_file, width, height);
             jbs.show();
@@ -406,46 +406,9 @@ public class TBSim extends Frame
 //        }
     }
 
-    	public static List<String> ReadLocustDefinitions(String locustDefinitionsFilePath) {
-			List<String> result = null;
-
-			try {
-				List<String> lines = Files.readAllLines(Paths.get(locustDefinitionsFilePath));
-				result = lines;
-			}
-			catch (IOException ex){
-				System.out.println(ex);
-			}
-
-			return result;
-		}
-
-		public static String[] AddVelocityToLocustDefinitions(double velocity, List<String> locustDefinitions){
-			String [] locustDefinitionsWithVelocities = new String[locustDefinitions.size()];
-
-			for(int i = 0; i < locustDefinitions.size() / 2; i+=2){
-				locustDefinitionsWithVelocities[i] = locustDefinitions.get(i);
-				locustDefinitionsWithVelocities[i+1] = locustDefinitions.get(i+1) + " " + Double.toString(velocity);
-			}
-
-			return locustDefinitionsWithVelocities;
-		}
-
-		public static String[] GetLocustDefinitionsWithVelocities(double velocity){
-			String locustDefinitionsFilePath =
-					"/home/maymonyu/IdeaProjects/tb/Domains/Containment/AutomationResults/setting1";
-
-			List<String> locustDefinitions = ReadLocustDefinitions(locustDefinitionsFilePath);
-			String[] locustDefinitionsWithVelocities = AddVelocityToLocustDefinitions(velocity, locustDefinitions);
-
-			return locustDefinitionsWithVelocities;
-		}
-
 		public static void GenerateDscFile(double velocity){
-			String[] locustDefinitionsWithVelocities = GetLocustDefinitionsWithVelocities(velocity);
-			Vec2[] array = new Vec2[1];
-			array[0] = new Vec2(2,4);
-//			AutoDscGenerator.calculateCentroid(array);
+//			String[] locustDefinitionsWithVelocities = GetLocustDefinitionsWithVelocities(velocity);
+			AutoDscGenerator.CreateAutomaticDsc();
 		}
 
 	}
