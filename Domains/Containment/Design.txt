@@ -15,7 +15,11 @@ Choose algorithm:
 
 - Set 10 Settings manually - only locust locations
 - Create dsc including the number of robots and the locust locations
-- Set locust's velocity
+    - Read locust locations from numbered file
+    - Call GenerateLocust from AutoDscGenerator with the locations and velocity
+    - Call GenerateRobots from AutoDscGenerator with the number of robots
+    - Generate .dsc file
+- Set locust's velocity - DONE
     - MAX_TRANSLATION is the velocity
     - Add the velocity to dsc file
     - attractorSim will get it, and SquiggleBallSim will get it from AttractorSim

@@ -1,3 +1,4 @@
+
 import java.util.Vector;
 import EDU.gatech.cc.is.util.Vec2;
 import java.io.*;
@@ -153,13 +154,24 @@ public class containment extends ControlSystemMFN150 {
         Vec2 [] polygonVerticesByOrderArray = new Vec2[polygonVerticesByOrder.size()];
         polygonVerticesByOrderArray = polygonVerticesByOrder.toArray(polygonVerticesByOrderArray);
 
-        centroid = AutoDscGenerator.calculateCentroid(polygonVerticesByOrderArray);
+        centroid = calculateCentroid(polygonVerticesByOrderArray);
 
         originalSteerHeading = abstract_robot.getSteerHeading(0);
 
         isHeadingToFinalPoint = false;
 
 		savedTime = 0;
+	}
+
+	public Vec2 calculateCentroid(Vec2 [] polygonVertices){
+		double centroidX = 0, centroidY = 0;
+
+		for(Vec2 vertex : polygonVertices) {
+			centroidX += vertex.x;
+			centroidY += vertex.y;
+		}
+
+		return new Vec2(centroidX / polygonVertices.length, centroidY / polygonVertices.length);
 	}
 
 	private void SetLeftNeighbourId(int leftNeighbourId){
@@ -511,16 +523,51 @@ public class containment extends ControlSystemMFN150 {
         directionToCurrentDestinationPoint = getDirectionAngleOf2Points(lastPosition, currentDestinationPoint);
     }
 
+	public static double calculateRadianIncline(Vec2 position, Vec2 reachingPoint){
+		double incline = 0;
+
+		if (position.x == reachingPoint.x){
+			if (position.y < reachingPoint.y){
+				return Math.PI / 2;
+			}
+			else{
+				return -Math.PI / 2;
+			}
+		}
+
+		incline = (reachingPoint.y - position.y) / (reachingPoint.x - position.x);
+//        System.out.println("incline: " + incline);
+
+		double angle = Math.atan(incline);
+
+		if(position.x > reachingPoint.x){
+			angle = angle + Math.PI;
+		}
+
+//		System.out.println("angle: " + angle);
+
+		return angle;
+	}
+
+	public static Vec2 GetPointByDistanceAndRadians(double distance, double radians, Vec2 position){
+		double x = distance * Math.cos(radians) + position.x;
+		double y = distance * Math.sin(radians) + position.y;
+
+//		System.out.println("x = " + x + ", y = " + y);
+
+		return new Vec2(x, y);
+	}
+
     private void MinimizePolygon(){
 	    List<Vec2> newVertices = new ArrayList<>();
 
 	    for(int i = 0; i < polygonVerticesByOrder.size(); i++) {
 //            double angleDirection = anglesBetweenEdges.get(i);
             Vec2 vertex = polygonVerticesByOrder.get(i);
-            double angleDirection = AutoDscGenerator.calculateRadianIncline(vertex, centroid);
+            double angleDirection = calculateRadianIncline(vertex, centroid);
 
-//            Vec2 newVertex = AutoDscGenerator.GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
-            Vec2 newVertex = AutoDscGenerator.GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
+//            Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
+            Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
             newVertices.add(newVertex);
 	    }
 
