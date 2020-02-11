@@ -384,8 +384,9 @@ public class TBSim extends Frame
 //        jbs.show();
 
 //
-        for(int i=0; i<5; i++) {
-        	GenerateDscFile(2.0);
+        for(int i=0; i<9; i++) {
+        	String settingFilename = "setting" + Integer.toString(i+1);
+        	GenerateDscFile(2.0, 40, settingFilename);
 
             jbs = new TBSim(dsc_file, width, height);
             jbs.show();
@@ -406,9 +407,9 @@ public class TBSim extends Frame
 //        }
     }
 
-		public static void GenerateDscFile(double velocity){
+		public static void GenerateDscFile(double velocity, int numberOfRobots, String settingFilename){
 //			String[] locustDefinitionsWithVelocities = GetLocustDefinitionsWithVelocities(velocity);
-			AutoDscGenerator.CreateAutomaticDsc();
+			AutoDscGenerator.CreateAutomaticDsc(velocity, numberOfRobots, settingFilename);
 		}
 
 	}

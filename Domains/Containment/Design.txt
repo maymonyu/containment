@@ -13,7 +13,7 @@ Choose algorithm:
     c. third loop - run over the locust's velocity
 
 
-- Set 10 Settings manually - only locust locations
+- Set 10 Settings manually - only locust locations - DONE
 - Create dsc including the number of robots and the locust locations
     - Read locust locations from numbered file
     - Call GenerateLocust from AutoDscGenerator with the locations and velocity

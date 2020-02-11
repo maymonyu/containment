@@ -636,14 +636,25 @@ public class AutoDscGenerator
     }
 
 
-    public static List<RobotMetadata> takeElementsFromList(List<RobotMetadata> list) {
-        int numberOfElementsToPeek = list.size() / 5;
+    public static List<RobotMetadata> takeElementsFromList(List<RobotMetadata> list, int numberOfRobots) {
+        int numberOfElementsToPeek = numberOfRobots;
+
+        if(numberOfRobots == -1){
+            numberOfElementsToPeek = list.size() / 5;
+        }
+
         List<RobotMetadata> reducedList = new ArrayList<RobotMetadata>();
         int index = 0;
 
+        double jumpBetweenRobots = (double)list.size() / numberOfElementsToPeek;
+
+        if(jumpBetweenRobots % 1 != 0.0){
+            numberOfElementsToPeek++;
+        }
+
         for(int i = 0; i < numberOfElementsToPeek; i++){
             reducedList.add(list.get(index));
-            index += 5;
+            index += jumpBetweenRobots;
         }
 
         return reducedList;
@@ -720,9 +731,9 @@ public class AutoDscGenerator
         return locustDefinitionsWithVelocities;
     }
 
-    public static String[] GetLocustDefinitionsWithVelocities(double velocity){
+    public static String[] GetLocustDefinitionsWithVelocities(double velocity, String settingFilename){
         String locustDefinitionsFilePath =
-                "/home/maymonyu/IdeaProjects/tb/Domains/Containment/AutomationResults/setting2";
+                "/home/maymonyu/IdeaProjects/tb/Domains/Containment/AutomationResults/" + settingFilename;
 
         List<String> locustDefinitions = ReadLocustDefinitions(locustDefinitionsFilePath);
         String[] locustDefinitionsWithVelocities = AddVelocityToLocustDefinitions(velocity, locustDefinitions);
@@ -731,7 +742,7 @@ public class AutoDscGenerator
     }
 
 
-    public static void CreateAutomaticDsc(){
+    public static void CreateAutomaticDsc(double locustVelocity, int numberOfRobots, String settingFilename){
         final double FOV_RADIUS = 1;
         final double X = 0.5;
 
@@ -761,7 +772,7 @@ public class AutoDscGenerator
             List<RobotMetadata> robots = generateRobots(polygonVertices, FOV_RADIUS, X);
 
 //            List<RobotMetadata> randomRobots = takeRandomElementsFromList(robots);
-            List<RobotMetadata> randomRobots  = takeElementsFromList(robots);
+            List<RobotMetadata> randomRobots  = takeElementsFromList(robots, numberOfRobots);
             System.out.println("randomList length: " + randomRobots.size());
 
             randomRobots = setRobotsDestinationPoints(randomRobots, FOV_RADIUS, centroid);
@@ -775,8 +786,7 @@ public class AutoDscGenerator
 
             writeBounds(outputFile, boundsWithMargin);
 
-            double locustVelocity = 1;
-            String[] locustDefinitionsWithVelocities = GetLocustDefinitionsWithVelocities(locustVelocity);
+            String[] locustDefinitionsWithVelocities = GetLocustDefinitionsWithVelocities(locustVelocity, settingFilename);
 
             writeLinesToFile(outputFile, locustDefinitionsWithVelocities);
 
@@ -822,7 +832,7 @@ public class AutoDscGenerator
             List<RobotMetadata> robots = generateRobots(polygonVertices, FOV_RADIUS, X);
 
 //            List<RobotMetadata> randomRobots = takeRandomElementsFromList(robots);
-            List<RobotMetadata> randomRobots  = takeElementsFromList(robots);
+            List<RobotMetadata> randomRobots  = takeElementsFromList(robots, 25);
             System.out.println("randomList length: " + randomRobots.size());
 
             randomRobots = setRobotsDestinationPoints(randomRobots, FOV_RADIUS, centroid);
