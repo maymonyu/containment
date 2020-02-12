@@ -40,7 +40,7 @@ public class RobotMetadata {
 
     public RobotMetadata(Vec2 location, double heading, double steering, int indexOnEdge, int isLastOnEdge,
                          Vec2 edgeStartVertex) {
-        this.location = location;
+        this.location = new Vec2(location);
         this.heading = heading;
         this.steering = steering;
         this.indexOnEdge = indexOnEdge;

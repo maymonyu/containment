@@ -200,6 +200,15 @@ public class AutoDscGenerator
                 (distanceSubtract + error >= totalDistance && distanceSubtract - error <= totalDistance);
     }
 
+    public static Vec2 GetPointOnLineByDistanceFromStart(Vec2 lineStart, Vec2 lineEnd, double distance){
+        double lineLength = calculateDistance(lineStart, lineEnd);
+
+        double x = lineStart.x + (distance / lineLength) * (lineEnd.x - lineStart.x);
+        double y = lineStart.y + (distance / lineLength) * (lineEnd.y - lineStart.y);
+
+        return new Vec2(x, y);
+    }
+
     private static Vec2 GetPointOnLineWithDistanceFromOtherPoint(Vec2 lineStart, Vec2 lineEnd,
                                                                  double distance, Vec2 point){
         double m = calculateIncline(lineStart, lineEnd);
@@ -330,6 +339,69 @@ public class AutoDscGenerator
             lastRobotLocationOnSegment = robotsMetadatas.get(robotsMetadatas.size() - 1).location;
         }
 
+        return robotsMetadatas;
+    }
+
+    private static List<RobotMetadata> generateRobotsByNumber(Vec2 [] polygonVertices, double FOV_RADIUS, double X,
+                                                              int numberOfRobots){
+        double circumferenceLength = 0;
+        int numOfVertices = polygonVertices.length;
+        List<RobotMetadata> robotsMetadatas = new ArrayList<RobotMetadata>();
+
+        for(int i = 0; i < polygonVertices.length; i++){
+            Vec2 currVertex = polygonVertices[i];
+            Vec2 nextVertex = polygonVertices[(i+1) % numOfVertices];
+
+            circumferenceLength += calculateDistance(currVertex, nextVertex);
+        }
+
+        double distanceBetweenRobots = circumferenceLength / numberOfRobots;
+
+        Vec2 lastPlacement = polygonVertices[0];
+        int currVertexIndex = 0;
+        Vec2 currVertex = null;
+        Vec2 nextVertex = null;
+        Vec2 robotPosition = null;
+
+        for(int i = 0; i < numberOfRobots; i++){
+            double reducedDistance = distanceBetweenRobots;
+            double lastReducedDistance = reducedDistance;
+
+            currVertex = polygonVertices[currVertexIndex];
+            nextVertex = polygonVertices[(currVertexIndex + 1) % numOfVertices];
+
+//            while (reducedDistance > 0){
+            System.out.println("distance&&&&&&&&&: " + calculateDistance(lastPlacement, nextVertex));
+            while (reducedDistance > calculateDistance(lastPlacement, nextVertex)){
+                lastReducedDistance = reducedDistance;
+                reducedDistance = reducedDistance - calculateDistance(nextVertex, lastPlacement);
+
+                lastPlacement = new Vec2(nextVertex);
+                currVertexIndex = (currVertexIndex + 1) % numOfVertices;
+                nextVertex = polygonVertices[(currVertexIndex + 1) % numOfVertices];
+            }
+
+//            nextVertex = polygonVertices[currVertexIndex % numOfVertices];
+
+            robotPosition = GetPointOnLineByDistanceFromStart(lastPlacement, nextVertex, lastReducedDistance);
+
+//            robotPosition = GetPointOnLineWithDistanceFromOtherPoint(currVertex, nextVertex, lastReducedDistance,
+//                lastPlacement);
+
+            System.out.println("@@@@@@@@@@@@@@@@@@@@ robotPosition: " + robotPosition);
+            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+
+            lastPlacement = new Vec2(robotPosition);
+
+            RobotMetadata robotMetadata = new RobotMetadata(robotPosition, 0, 0, 0,
+                    0, nextVertex);
+
+            robotsMetadatas.add(robotMetadata);
+        }
+
+
+        System.out.println("vertex: " + polygonVertices[0]);
+        System.out.println("robot: " + robotsMetadatas.get(0).location);
         return robotsMetadatas;
     }
 
@@ -769,15 +841,16 @@ public class AutoDscGenerator
             double runtimeUpperBound = calculateRuntimeUpperBound(secRadius);
             System.out.println("UpperBound: " + runtimeUpperBound);
 
-            List<RobotMetadata> robots = generateRobots(polygonVertices, FOV_RADIUS, X);
+//            List<RobotMetadata> robots = generateRobots(polygonVertices, FOV_RADIUS, X);
+//
+//            List<RobotMetadata> randomRobots  = takeElementsFromList(robots, numberOfRobots);
+//            System.out.println("randomList length: " + randomRobots.size());
 
-//            List<RobotMetadata> randomRobots = takeRandomElementsFromList(robots);
-            List<RobotMetadata> randomRobots  = takeElementsFromList(robots, numberOfRobots);
-            System.out.println("randomList length: " + randomRobots.size());
+            List<RobotMetadata> robots = generateRobotsByNumber(polygonVertices, FOV_RADIUS, X, numberOfRobots);
 
-            randomRobots = setRobotsDestinationPoints(randomRobots, FOV_RADIUS, centroid);
+            robots = setRobotsDestinationPoints(robots, FOV_RADIUS, centroid);
 
-            String [] robotsDefinitions = getRobotDefinitions(randomRobots);
+            String [] robotsDefinitions = getRobotDefinitions(robots);
 
             writeLinesToFile(outputFile, robotsDefinitions);
 
