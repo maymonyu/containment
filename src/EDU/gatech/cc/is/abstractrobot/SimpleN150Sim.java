@@ -334,7 +334,7 @@ public class SimpleN150Sim extends Simple
 			// note: self included
 			{
 				SimpleN150Sim robot = (SimpleN150Sim) all_objects[i];
-				if(calculateDistance(robot.getPosition(), robot.destinationPoint) > 0.1){
+				if(calculateDistance(robot.getPosition(), robot.destinationPoint) > 0.4){
 					return false;
 				}
 			}

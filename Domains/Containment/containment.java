@@ -622,14 +622,14 @@ public class containment extends ControlSystemMFN150 {
         }
 
         if(isHeadingToFinalPoint) {
-            if (calculateDistance(lastPosition, destinationPoint) < 0.1) {
+            if (calculateDistance(lastPosition, destinationPoint) < 0.4) {
                 StopMoving(curr_time);
-                return CSSTAT_DONE;
+                return CSSTAT_OK;
             }
         }
 
         else {
-            if (calculateDistance(lastPosition, currentDestinationPoint) < 0.1) {
+            if (calculateDistance(lastPosition, currentDestinationPoint) < 0.4) {
                 HandleRoundEnd();
 
                 int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
