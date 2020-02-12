@@ -1186,13 +1186,38 @@ public class SimulationCanvas extends Canvas implements Runnable
 			}
 
 			if(robot.AreAllRobotsNearDestinationPoint()){
+				final int LOCUST_NUMBER = 100;
+
+				SimulatedObject[] livingLocustsArray = robot.getLivingLocust();
+
 				timeReachingMEP = sim_time;
+				livingLocusts = livingLocustsArray.length;
+				deadLocusts = LOCUST_NUMBER - livingLocusts;
+
+				Vec2[] destinationPointsPolygon = robot.GetAllDestinationPoints();
+				inMEPLocusts = calculateLivingLocustsInMEP(livingLocustsArray, destinationPointsPolygon);
+				runAwayLocusts = livingLocusts - inMEPLocusts;
 
 				keep_running = false;
 			}
 		}
 	}
 
+
+	public int calculateLivingLocustsInMEP(SimulatedObject[] livingLocustsArray, Vec2[] destinationPointsPolygon){
+		int locustInMEP = 0;
+
+		for(int i = 0; i < livingLocustsArray.length; i++){
+			SimulatedObject currentLivingLocust = livingLocustsArray[i];
+			Vec2 currentLocustPosition = currentLivingLocust.getPosition();
+
+			if(AutoDscGenerator.isPolygonContainsPoint(destinationPointsPolygon, currentLocustPosition)){
+				locustInMEP++;
+			}
+		}
+
+		return locustInMEP;
+	}
 
 	/**
 	 * Handle a drawing request.

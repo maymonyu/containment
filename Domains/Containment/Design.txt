@@ -28,4 +28,6 @@ Choose algorithm:
 - Understand how to run simulation, stop it, and run it again - DONE
 - Run simulation and stop when all robots are near their destination point - DONE
 
-- Write results to file
+- Write results to file - DONE
+
+- Uniform distribution of initial locations

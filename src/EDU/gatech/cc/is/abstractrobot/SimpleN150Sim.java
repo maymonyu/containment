@@ -300,6 +300,25 @@ public class SimpleN150Sim extends Simple
 		return livingLocust;
 	}
 
+	public Vec2[] GetAllDestinationPoints(){
+		List<Vec2> destinationPoints = new ArrayList<>();
+
+		for(int i = 0; i < all_objects.length; i++)
+		{
+			/*--- check if it's a teammate and a robot ---*/
+			if ((all_objects[i] instanceof Simple))
+			{
+				SimpleN150Sim robot = (SimpleN150Sim) all_objects[i];
+				destinationPoints.add(robot.destinationPoint);
+			}
+		}
+
+		Vec2[] destinationPointsAsArray = new Vec2[destinationPoints.size()];
+		destinationPoints.toArray(destinationPointsAsArray);
+
+		return destinationPointsAsArray;
+	}
+
 	public Vec2 GetDestinationPoint(){
 		return destinationPoint;
 	}

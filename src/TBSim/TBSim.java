@@ -431,12 +431,12 @@ public class TBSim extends Frame
 				out = new PrintWriter(new FileOutputStream(new File(filePath), true));
 			} else {
 				out = new PrintWriter(filePath);
-				out.append("Setting number, Number of robots, Robots velocity, Locusts velocity, Algorithm, Reaching time to MEP, Dead locusts, Run away locusts, Living locusts, Living locusts in MEP");
+				out.append("Setting number, Number of robots, Robots velocity, Locusts velocity, Algorithm, Reaching time to MEP, Living locusts, Dead locusts, Run away locusts, Living locusts in MEP");
 				out.append("\n");
 			}
 
 			String simulationMetadata = String.format("%d,%d,%d,%.1f,%s,%d,%d,%d,%d,%d", settingNumber, numberOfRobots, robotsVelocity,
-					locustsVelocity, algorithmTitle, timeReachingMEP, deadLocusts, runAwayLocusts, livingLocusts, inMEPLocusts);
+					locustsVelocity, algorithmTitle, timeReachingMEP, livingLocusts, deadLocusts, runAwayLocusts, inMEPLocusts);
 
 			out.append(simulationMetadata);
 			out.append("\n");
