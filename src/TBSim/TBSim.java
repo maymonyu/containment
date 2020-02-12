@@ -390,11 +390,12 @@ public class TBSim extends Frame
 		int robotsVelocity = 2;
 
         for(int i=0; i<9; i++) {
-        	for(int numberOfRobots = 10; numberOfRobots <= 50; numberOfRobots += 10) {
         		for(double locustsVelocity = (double)robotsVelocity / 4; locustsVelocity <= robotsVelocity;
 					locustsVelocity += (double)robotsVelocity / 4) {
+					for(int numberOfRobots = 10; numberOfRobots <= 50; numberOfRobots += 10) {
 
-					String settingFilename = "setting" + Integer.toString(i + 1);
+
+						String settingFilename = "setting" + Integer.toString(i + 1);
 					GenerateDscFile(locustsVelocity, numberOfRobots, settingFilename);
 
 					jbs = new TBSim(dsc_file, width, height);

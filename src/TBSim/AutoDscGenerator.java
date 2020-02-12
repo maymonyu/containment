@@ -373,8 +373,8 @@ public class AutoDscGenerator
 //            while (reducedDistance > 0){
             System.out.println("distance&&&&&&&&&: " + calculateDistance(lastPlacement, nextVertex));
             while (reducedDistance > calculateDistance(lastPlacement, nextVertex)){
-                lastReducedDistance = reducedDistance;
                 reducedDistance = reducedDistance - calculateDistance(nextVertex, lastPlacement);
+                lastReducedDistance = reducedDistance;
 
                 lastPlacement = new Vec2(nextVertex);
                 currVertexIndex = (currVertexIndex + 1) % numOfVertices;
