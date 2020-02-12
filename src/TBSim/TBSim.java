@@ -11,8 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -336,10 +335,15 @@ public class TBSim extends Frame
 			}
 		}
 
-	  public void show() {
-	    simFrame.setVisible(true);
-	  }
-	  
+		public void show() {
+			simFrame.setVisible(true);
+		}
+
+		public void hide() {
+			simFrame.setVisible(false);
+		}
+
+
         /**
 	 * Main for TBSim.
          */
@@ -383,29 +387,65 @@ public class TBSim extends Frame
 //            jbs = new TBSim();
 //        jbs.show();
 
-//
+		int robotsVelocity = 2;
+
         for(int i=0; i<9; i++) {
-        	String settingFilename = "setting" + Integer.toString(i+1);
-        	GenerateDscFile(2.0, 40, settingFilename);
+        	for(int numberOfRobots = 10; numberOfRobots <= 50; numberOfRobots += 10) {
+        		for(double locustsVelocity = (double)robotsVelocity / 4; locustsVelocity <= robotsVelocity;
+					locustsVelocity += (double)robotsVelocity / 4) {
 
-            jbs = new TBSim(dsc_file, width, height);
-            jbs.show();
+					String settingFilename = "setting" + Integer.toString(i + 1);
+					GenerateDscFile(locustsVelocity, numberOfRobots, settingFilename);
 
-            while (jbs.simulation.keep_running){
-            }
+					jbs = new TBSim(dsc_file, width, height);
+					jbs.show();
 
-			System.out.println("&&&&&&&&&&&&&&&&7");
+					while (jbs.simulation.keep_running) {
+					}
 
-			jbs.simulation.quit();
+					int settingNumber = i + 1;
+					String algorithmTitle = "spiral";
+					WriteResultsToFile(settingNumber, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
+							jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
+							jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts);
+
+					System.out.println("&&&&&&&&&&&&&&&&7");
+
+					jbs.simulation.quit();
+					jbs.hide();
+				}
+			}
         }
-
-//        jbs = new TBSim(dsc_file, width, height);
-//        jbs.show();
-//
-//        while (jbs.simulation.keep_running){
-//            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-//        }
     }
+
+
+    public static void WriteResultsToFile(int settingNumber, int numberOfRobots, int robotsVelocity, double locustsVelocity,
+										  String algorithmTitle, long timeReachingMEP, int deadLocusts, int runAwayLocusts,
+										  int livingLocusts, int inMEPLocusts){
+		try {
+			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/results.csv";
+			File f = new File(filePath);
+
+			PrintWriter out = null;
+			if (f.exists() && !f.isDirectory()) {
+				out = new PrintWriter(new FileOutputStream(new File(filePath), true));
+			} else {
+				out = new PrintWriter(filePath);
+				out.append("Setting number, Number of robots, Robots velocity, Locusts velocity, Algorithm, Reaching time to MEP, Dead locusts, Run away locusts, Living locusts, Living locusts in MEP");
+				out.append("\n");
+			}
+
+			String simulationMetadata = String.format("%d,%d,%d,%.1f,%s,%d,%d,%d,%d,%d", settingNumber, numberOfRobots, robotsVelocity,
+					locustsVelocity, algorithmTitle, timeReachingMEP, deadLocusts, runAwayLocusts, livingLocusts, inMEPLocusts);
+
+			out.append(simulationMetadata);
+			out.append("\n");
+			out.close();
+		}
+		catch (Exception ex){
+			System.out.println("exception in writing to results.csv");
+		}
+	}
 
 		public static void GenerateDscFile(double velocity, int numberOfRobots, String settingFilename){
 //			String[] locustDefinitionsWithVelocities = GetLocustDefinitionsWithVelocities(velocity);

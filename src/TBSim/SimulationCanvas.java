@@ -72,6 +72,12 @@ public class SimulationCanvas extends Canvas implements Runnable
 	private long	startrun = 0;
 	private long	frames = 0;
 
+	public long timeReachingMEP = 0;
+	public int deadLocusts = 0;
+	public int livingLocusts = 0;
+	public int runAwayLocusts = 0;
+	public int inMEPLocusts = 0;
+
 	/**
 	 * The maximum number of objects in a simulation.
 	 */
@@ -1180,6 +1186,8 @@ public class SimulationCanvas extends Canvas implements Runnable
 			}
 
 			if(robot.AreAllRobotsNearDestinationPoint()){
+				timeReachingMEP = sim_time;
+
 				keep_running = false;
 			}
 		}
