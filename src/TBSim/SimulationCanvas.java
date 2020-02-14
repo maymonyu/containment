@@ -9,6 +9,8 @@ import java.awt.*;
 import java.lang.System;
 import java.lang.Class;
 import java.lang.reflect.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import EDU.gatech.cc.is.abstractrobot.*;
 import EDU.gatech.cc.is.simulation.*;
 import EDU.gatech.cc.is.util.*;
@@ -53,12 +55,15 @@ public class SimulationCanvas extends Canvas implements Runnable
 	private	long timeout=-1;
 	private	long seed=-1;
 	private	int trials=-1;
-	private	Thread run_sim_thread;
+	public	Thread run_sim_thread;
 	private String descriptionfile;
 	private	int	idcounter = 0;
 	private	boolean	to_draw = false;
-	
-	    /*make these package scope so TBSim can access for updating menu on startup*/
+
+	public static boolean isDone = false;
+
+
+		/*make these package scope so TBSim can access for updating menu on startup*/
 	    boolean	draw_ids = false; //don't draw robot ids
 	    boolean	draw_icons = false; //don't draw robot icons
 	    boolean	draw_robot_state = false; //don't draw robot state
@@ -1064,8 +1069,8 @@ public class SimulationCanvas extends Canvas implements Runnable
 
 
 		/*--- instantitate thread ---*/
-		run_sim_thread = new Thread(this);
-		run_sim_thread.start();
+//		run_sim_thread = new Thread(this);
+//		run_sim_thread.start();
 		}
 
 
@@ -1080,18 +1085,32 @@ public class SimulationCanvas extends Canvas implements Runnable
 		return (description_file_loaded);
 		}
 
+		public void setNewRun(String dscfile){
+			simulated_objects = new SimulatedObject[0];
+			control_systems = new ControlSystemS[0];
 
+			descriptionfile = dscfile;
+			run_sim_thread = new Thread(this);
+			run_sim_thread.start();
+		}
+
+	public AtomicBoolean running = new AtomicBoolean(true);
 	public boolean keep_running = true;
 	/**
 	 * Run the simulation.
 	 */
 	public void run()
 		{
+			sim_time = 0;
+			running.set(true);
+			isDone = false;
+			keep_running = true;
 		//pause = true;
 		long start_time = System.currentTimeMillis();
 		long sim_timestep = 0;
 		boolean robots_done = false;
-		while (keep_running)
+//		while (keep_running)
+		while (running.get())
 			{
 			while(pause||(description_file_loaded==false))
 				{
@@ -1199,9 +1218,14 @@ public class SimulationCanvas extends Canvas implements Runnable
 				runAwayLocusts = livingLocusts - inMEPLocusts;
 
 				keep_running = false;
+				isDone = true;
+				running.set(false);
 			}
 		}
-	}
+
+			System.out.println("URI *(@!#21#@!%!%$@#%$@%$#%#$%#%$#!#$#");
+		run_sim_thread.interrupt();
+		}
 
 
 	public int calculateLivingLocustsInMEP(SimulatedObject[] livingLocustsArray, Vec2[] destinationPointsPolygon){

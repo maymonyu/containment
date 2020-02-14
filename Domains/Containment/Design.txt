@@ -30,5 +30,5 @@ Choose algorithm:
 
 - Write results to file - DONE
 
-- Uniform distribution of initial locations
-- Add both algorithms
+- Uniform distribution of initial locations - DONE
+- Add both algorithms - DONE

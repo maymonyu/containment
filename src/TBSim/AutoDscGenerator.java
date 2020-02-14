@@ -421,14 +421,15 @@ public class AutoDscGenerator
         return verticesArray;
     }
 
-    private static String [] getRobotDefinitions(List<RobotMetadata> robotsMetadatas){
+    private static String [] getRobotDefinitions(List<RobotMetadata> robotsMetadatas, String algorithmName){
         String [] robotsDefinitions = new String[robotsMetadatas.size()];
 
         for (int i=0; i<robotsMetadatas.size(); i++){
             RobotMetadata currRobotMetadata = robotsMetadatas.get(i);
             robotsDefinitions[i] = String.format(
                     "robot EDU.gatech.cc.is.abstractrobot.MultiForageN150Sim\n" +
-                            "\tcontainment %s %s %s x000000 xFF0000 2 %s %s %s %s %s %s %s",
+                            "\t%s %s %s %s x000000 xFF0000 2 %s %s %s %s %s %s %s",
+                    algorithmName,
                     currRobotMetadata.location.x, currRobotMetadata.location.y, currRobotMetadata.heading,
                     currRobotMetadata.steering, currRobotMetadata.indexOnEdge, currRobotMetadata.isLastOnEdge,
                     currRobotMetadata.destinationPoint.x, currRobotMetadata.destinationPoint.y,
@@ -814,7 +815,8 @@ public class AutoDscGenerator
     }
 
 
-    public static void CreateAutomaticDsc(double locustVelocity, int numberOfRobots, String settingFilename){
+    public static void CreateAutomaticDsc(double locustVelocity, int numberOfRobots, String settingFilename,
+                                          String algorithmName){
         final double FOV_RADIUS = 1;
         final double X = 0.5;
 
@@ -850,7 +852,7 @@ public class AutoDscGenerator
 
             robots = setRobotsDestinationPoints(robots, FOV_RADIUS, centroid);
 
-            String [] robotsDefinitions = getRobotDefinitions(robots);
+            String [] robotsDefinitions = getRobotDefinitions(robots, algorithmName);
 
             writeLinesToFile(outputFile, robotsDefinitions);
 
@@ -910,7 +912,7 @@ public class AutoDscGenerator
 
             randomRobots = setRobotsDestinationPoints(randomRobots, FOV_RADIUS, centroid);
 
-            String [] robotsDefinitions = getRobotDefinitions(randomRobots);
+            String [] robotsDefinitions = getRobotDefinitions(randomRobots, "containmentSpiral");
 
             writeLinesToFile(outputFile, robotsDefinitions);
 

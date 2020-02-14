@@ -1,5 +1,5 @@
 /*
- * containment.java
+ * containmentSpiral.java
  */
 
 import	EDU.gatech.cc.is.util.Vec2;

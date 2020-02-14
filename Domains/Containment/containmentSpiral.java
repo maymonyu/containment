@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
  * @author H&aring;kan L. Younes
  */
-public class containment extends ControlSystemMFN150 {
+public class containmentSpiral extends ControlSystemMFN150 {
 
 
 	/**

@@ -87,26 +87,21 @@ public class TBSim extends Frame
 	  }
 
 
-
-	/**
-	 * Set up the frame and buttons.
-	 */
-	public TBSim(String file, int width, int height, 
-		     boolean preserveSize)
-		{
+	public void initSim(String file, int width, int height,
+						boolean preserveSize){
 		simFrame = new Frame("TBSim");
 
 		/*--- Set the title ---*/
 		// try to find our hostnam first
 		InetAddress this_host;
 		try
-			{
+		{
 			this_host = InetAddress.getLocalHost();
-			}
+		}
 		catch (Exception e)
-			{
+		{
 			this_host = null;
-			}
+		}
 		String host_name = "unknown host";
 		if (this_host != null)
 			host_name = this_host.getHostName();
@@ -146,8 +141,8 @@ public class TBSim extends Frame
 
 		Menu hm = mb.getHelpMenu();
 		if (hm == null) {
-		  hm = new Menu(helpMenuName);
-		  mb.setHelpMenu(hm);
+			hm = new Menu(helpMenuName);
+			mb.setHelpMenu(hm);
 		}
 		hm.add(statsCommandName);
 		hm.add(aboutCommandName);
@@ -174,8 +169,8 @@ public class TBSim extends Frame
 
 		dsc_file = file;
 
-		simulation = 
-			new SimulationCanvas(simFrame,width,height,dsc_file,preserveSize);
+		simulation =
+				new SimulationCanvas(simFrame,width,height,dsc_file,preserveSize);
 		playing_field_panel.add(simulation);
 		simFrame.add("South",playing_field_panel);
 
@@ -185,7 +180,7 @@ public class TBSim extends Frame
 
 		/*--- tell the simulation to load and run ---*/
 		if (dsc_file!=null) simulation.reset();
-	
+
 		/*--- set the menu options we learned from a dsc file ---*/
 		robot_ids.setState(simulation.draw_ids);
 		robot_trails.setState(simulation.draw_trails);
@@ -194,9 +189,19 @@ public class TBSim extends Frame
 		icons.setState(simulation.draw_icons);
 
 		if (simulation.descriptionLoaded())// only if loaded ok.
-			{
+		{
 			simulation.start();
-			}
+		}
+	}
+
+
+	/**
+	 * Set up the frame and buttons.
+	 */
+	public TBSim(String file, int width, int height, 
+		     boolean preserveSize)
+		{
+			initSim(file, width, height, preserveSize);
 		}
 
 	/**
@@ -379,6 +384,9 @@ public class TBSim extends Frame
         /*--- make the window ---*/
 
         TBSim jbs = null;
+		jbs = new TBSim(dsc_file, width, height);
+		jbs.show();
+
 //        if (gotSize)
 //            jbs = new TBSim(dsc_file, width, height);
 //        else if (dsc_file != null)
@@ -387,33 +395,83 @@ public class TBSim extends Frame
 //            jbs = new TBSim();
 //        jbs.show();
 
-		int robotsVelocity = 2;
+		int robotsVelocity = 8;
+		String[] algorithms = new String[2];
+		algorithms[0] = "Spiral";
+		algorithms[1] = "Straight";
 
-        for(int i=0; i<9; i++) {
-        		for(double locustsVelocity = (double)robotsVelocity / 4; locustsVelocity <= robotsVelocity;
+		int runCount = 0;
+		int dumcount = 0;
+
+        for(int i=1; i<=9; i++) {
+			for(int numberOfRobots = 10; numberOfRobots <= 50; numberOfRobots += 10) {
+				for(double locustsVelocity = (double)robotsVelocity / 4; locustsVelocity <= robotsVelocity;
 					locustsVelocity += (double)robotsVelocity / 4) {
-					for(int numberOfRobots = 10; numberOfRobots <= 50; numberOfRobots += 10) {
+					for(int algorithm = 0; algorithm < algorithms.length; algorithm++) {
+						for (int cycles = 0; cycles < 20; cycles++) {
 
+							String settingFilename = "setting" + Integer.toString(i + 1);
+							String algorithmName = "containment" + algorithms[algorithm];
+							GenerateDscFile(locustsVelocity, numberOfRobots, settingFilename, algorithmName);
 
-						String settingFilename = "setting" + Integer.toString(i + 1);
-					GenerateDscFile(locustsVelocity, numberOfRobots, settingFilename);
+//							jbs = new TBSim(dsc_file, width, height);
+//							jbs.show();
 
-					jbs = new TBSim(dsc_file, width, height);
-					jbs.show();
+							jbs.simulation.setNewRun("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
 
-					while (jbs.simulation.keep_running) {
+							jbs.simulation.pause();
+							jbs.simulation.load("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
+							jbs.simulation.reset();
+							jbs.simulation.start();
+
+//							jbs.simulation.run_sim_thread.start();
+//							jbs.simulation.run();
+
+//							jbs.simulation.run();
+
+							if (!jbs.simulation.descriptionLoaded())// only if loaded ok.
+							{
+								System.out.println("********** Description Didn't loaded correctly *********************");
+							}
+//							jbs = new TBSim(dsc_file, width, height);
+//							jbs.show();
+
+//							while (!jbs.simulation.isDone) {
+////								System.out.println(dumcount);
+////								dumcount++;
+//							}
+
+							while (jbs.simulation.running.get()) {
+//								System.out.println(dumcount);
+//								dumcount++;
+							}
+
+//							jbs.simulation.run_sim_thread.join();
+							jbs.simulation.pause();
+
+							int settingNumber = i + 1;
+							String algorithmTitle = algorithms[algorithm];
+							WriteResultsToFile(settingNumber, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
+									jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
+									jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts);
+
+							System.out.println("&&&&&&&&&&&&&&&&7");
+
+//							jbs.simulation.pause();
+//							jbs.simulation.quit();
+							jbs.hide();
+
+//							jbs.simulation = null;
+//							jbs = null;
+
+							runCount++;
+
+//							if(runCount % 10 == 0){
+//								System.gc();
+//								Thread.sleep(15000);
+//							}
+						}
 					}
-
-					int settingNumber = i + 1;
-					String algorithmTitle = "spiral";
-					WriteResultsToFile(settingNumber, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
-							jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
-							jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts);
-
-					System.out.println("&&&&&&&&&&&&&&&&7");
-
-					jbs.simulation.quit();
-					jbs.hide();
 				}
 			}
         }
@@ -448,9 +506,9 @@ public class TBSim extends Frame
 		}
 	}
 
-		public static void GenerateDscFile(double velocity, int numberOfRobots, String settingFilename){
-//			String[] locustDefinitionsWithVelocities = GetLocustDefinitionsWithVelocities(velocity);
-			AutoDscGenerator.CreateAutomaticDsc(velocity, numberOfRobots, settingFilename);
+		public static void GenerateDscFile(double velocity, int numberOfRobots, String settingFilename,
+										   String algorithmName){
+			AutoDscGenerator.CreateAutomaticDsc(velocity, numberOfRobots, settingFilename, algorithmName);
 		}
 
 	}
