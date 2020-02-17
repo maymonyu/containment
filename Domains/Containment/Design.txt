@@ -32,3 +32,12 @@ Choose algorithm:
 
 - Uniform distribution of initial locations - DONE
 - Add both algorithms - DONE
+
+-------------------------------------------------------------------
+
+- Set 4 settings (different polygons)
+    - Run AutoDscGenerator manually
+
+- Change directories
+    - Results file
+    - Settings file

@@ -680,8 +680,8 @@ public class AutoDscGenerator
 
             String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
                             "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 " +
-                            "43.741505828413295 69.93354373216681 71.0 48.0 %s",
-                    x, y, locustSize, velocity);
+                            "43.741505828413295 69.93354373216681 71.0 48.0",
+                    x, y, locustSize);
 
             locustDefinitions[i] = locustDefinition;
         }
