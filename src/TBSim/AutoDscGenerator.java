@@ -49,7 +49,7 @@ public class AutoDscGenerator
         }
     }
 
-    private static double calculateDistance(Vec2 point1, Vec2 point2){
+    public static double calculateDistance(Vec2 point1, Vec2 point2){
         double dx = point1.x- point2.x;
         double dy = point1.y - point2.y;
 
@@ -680,8 +680,8 @@ public class AutoDscGenerator
 
             String locustDefinition = String.format("object EDU.gatech.cc.is.simulation.SquiggleBallSim\n" +
                             "\t%s %s 0 %s xFFA000 x000000 0 3.4763294909066076 5 0 " +
-                            "43.741505828413295 69.93354373216681 71.0 48.0",
-                    x, y, locustSize);
+                            "43.741505828413295 69.93354373216681 71.0 48.0 %s",
+                    x, y, locustSize, velocity);
 
             locustDefinitions[i] = locustDefinition;
         }
@@ -861,9 +861,14 @@ public class AutoDscGenerator
 
             writeBounds(outputFile, boundsWithMargin);
 
-            String[] locustDefinitionsWithVelocities = GetLocustDefinitionsWithVelocities(locustVelocity, settingFilename);
+            if(settingFilename == null) {
+                addLocust(outputFile, polygonVertices, bounds, locustVelocity);
+            }
+            else {
+                String[] locustDefinitionsWithVelocities = GetLocustDefinitionsWithVelocities(locustVelocity, settingFilename);
 
-            writeLinesToFile(outputFile, locustDefinitionsWithVelocities);
+                writeLinesToFile(outputFile, locustDefinitionsWithVelocities);
+            }
 
 //            addLocust(outputFile, polygonVertices, bounds, locustVelocity);
 
