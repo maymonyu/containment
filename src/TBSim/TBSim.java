@@ -507,7 +507,7 @@ public class TBSim extends Frame
 				out.append("\n");
 			}
 
-			String simulationMetadata = String.format("%d,%d,%d,%.1f,%s,%d,%d,%d,%d,%d %.5f %.5f %.5f %.5f %.5f",
+			String simulationMetadata = String.format("%d,%d,%d,%.1f,%s,%d,%d,%d,%d,%d,%.5f,%.5f,%.5f,%.5f,%.5f",
 					settingNumber, numberOfRobots,
 					robotsVelocity, locustsVelocity, algorithmTitle, timeReachingMEP, livingLocusts, deadLocusts,
 					runAwayLocusts, inMEPLocusts, polygonStats.area, polygonStats.circumference,
