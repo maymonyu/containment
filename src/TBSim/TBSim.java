@@ -383,9 +383,6 @@ public class TBSim extends Frame
         }
         /*--- make the window ---*/
 
-//		GenerateDscFile(1, 30, null, "containmentSpiral");
-
-
 		TBSim jbs = null;
 		jbs = new TBSim(dsc_file, width, height);
 //		jbs.simulation.setNewRun("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
