@@ -622,14 +622,14 @@ public class containmentSpiral extends ControlSystemMFN150 {
         }
 
         if(isHeadingToFinalPoint) {
-            if (calculateDistance(lastPosition, destinationPoint) < 0.4) {
+            if (calculateDistance(lastPosition, destinationPoint) < 0.1) {
                 StopMoving(curr_time);
                 return CSSTAT_OK;
             }
         }
 
         else {
-            if (calculateDistance(lastPosition, currentDestinationPoint) < 0.4) {
+            if (calculateDistance(lastPosition, currentDestinationPoint) < 0.1) {
                 HandleRoundEnd();
 
                 int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();

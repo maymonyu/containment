@@ -1069,8 +1069,8 @@ public class SimulationCanvas extends Canvas implements Runnable
 
 
 		/*--- instantitate thread ---*/
-//		run_sim_thread = new Thread(this);
-//		run_sim_thread.start();
+		run_sim_thread = new Thread(this);
+		run_sim_thread.start();
 		}
 
 
