@@ -761,20 +761,41 @@ public class AutoDscGenerator
         double anglesSumInTriangle = Math.PI;
         double isoscelesTriangleBaseAngle = (anglesSumInTriangle - perfectPolygonAngle) / 2;
 
+        Vec2[] destinationPoints = new Vec2[robots.size()];
+
         double distanceFromCentroid = fovRadius * Math.tan(isoscelesTriangleBaseAngle);
 
         for(int i = 0; i < robots.size(); i++){
             double angleFromCentroid = i * perfectPolygonAngle;
             Vec2 destinationPoint = GetPointByDistanceAndRadians(distanceFromCentroid, angleFromCentroid, centroid);
 
-            RobotMetadata closestRobotToPoint = getClosestRobotToPoint(robots, destinationPoint);
-            closestRobotToPoint.destinationPoint = destinationPoint;
-//            System.out.println(closestRobotToPoint.destinationPoint);
+            destinationPoints[i] = destinationPoint;
+
+//            RobotMetadata closestRobotToPoint = getClosestRobotToPoint(robots, destinationPoint);
+//            closestRobotToPoint.destinationPoint = destinationPoint;
         }
 
-//        for(int i = 0; i < robots.size(); i++) {
-//            robots.get(i).location = robots.get(i).destinationPoint;
-//        }
+        int numberOfTasks = robots.size();
+        double[][] hungarianTasks = new double[numberOfTasks][numberOfTasks];
+
+        for(int i = 0; i < robots.size(); i++){
+            for(int j = 0; j < destinationPoints.length; j++){
+                RobotMetadata currRobot = robots.get(i);
+                Vec2 currDestinationPoint = destinationPoints[j];
+
+                double distanceBetweenRobotToDestinationPoint = calculateDistance(currRobot.location, currDestinationPoint);
+                hungarianTasks[i][j] = distanceBetweenRobotToDestinationPoint;
+            }
+        }
+
+        HungarianAlgorithm ha = new HungarianAlgorithm(hungarianTasks);
+        int[] assignment = ha.execute();
+
+        System.out.println("assignments: " + Arrays.toString(assignment));
+
+        for(int i = 0; i < robots.size(); i++) {
+            robots.get(i).destinationPoint = destinationPoints[i];
+        }
 
         return robots;
     }
