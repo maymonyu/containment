@@ -484,7 +484,7 @@ public class containmentStraight extends ControlSystemMFN150 {
         CheckMessages();
         EliminateLocust();
 
-        if(calculateDistance(lastPosition, destinationPoint) > 0.1){
+        if(calculateDistance(lastPosition, destinationPoint) > 0.4){
             StartMoving(curr_time);
             abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
         }
