@@ -92,19 +92,19 @@ public class containmentSpiral extends ControlSystemMFN150 {
 	Vec2 destinationPoint;
 	double directionToDestinationPoint;
 	Vec2 currentDestinationPoint;
-    double directionToCurrentDestinationPoint;
-    int currentVertexIndex;
-    List<Double> edgesDirectionAngles;
-    List<Double> anglesBetweenEdges;
-    List<Vec2> polygonVerticesByOrder;
-    int round;
-    Vec2 roundStartingLocation;
-    double originalSteerHeading;
-    double visionRange;
-    Vec2 centroid;
-    boolean isHeadingToFinalPoint;
+	double directionToCurrentDestinationPoint;
+	int currentVertexIndex;
+	List<Double> edgesDirectionAngles;
+	List<Double> anglesBetweenEdges;
+	List<Vec2> polygonVerticesByOrder;
+	int round;
+	Vec2 roundStartingLocation;
+	double originalSteerHeading;
+	double visionRange;
+	Vec2 centroid;
+	boolean isHeadingToFinalPoint;
 
-    int numberOfRobots;
+	int numberOfRobots;
 	int indexOnEdge;
 	double steerHeading;
 	private Enumeration messages;
@@ -143,22 +143,22 @@ public class containmentSpiral extends ControlSystemMFN150 {
 		visionRange = abstract_robot.GetVisionRange();
 
 //		directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
-        edgesDirectionAngles = abstract_robot.CollectEdgesDirectionAngles();
-        anglesBetweenEdges = CalculateAnglesBetweenEdges(edgesDirectionAngles);
+		edgesDirectionAngles = abstract_robot.CollectEdgesDirectionAngles();
+		anglesBetweenEdges = CalculateAnglesBetweenEdges(edgesDirectionAngles);
 
-        polygonVerticesByOrder = abstract_robot.CollectAllPolygonVertices();
-        currentVertexIndex = 0;
-        SetCurrentDestinationPoint(currentVertexIndex);
-        roundStartingLocation = abstract_robot.getPosition();
+		polygonVerticesByOrder = abstract_robot.CollectAllPolygonVertices();
+		currentVertexIndex = 0;
+		SetCurrentDestinationPoint(currentVertexIndex);
+		roundStartingLocation = abstract_robot.getPosition();
 
-        Vec2 [] polygonVerticesByOrderArray = new Vec2[polygonVerticesByOrder.size()];
-        polygonVerticesByOrderArray = polygonVerticesByOrder.toArray(polygonVerticesByOrderArray);
+		Vec2 [] polygonVerticesByOrderArray = new Vec2[polygonVerticesByOrder.size()];
+		polygonVerticesByOrderArray = polygonVerticesByOrder.toArray(polygonVerticesByOrderArray);
 
-        centroid = calculateCentroid(polygonVerticesByOrderArray);
+		centroid = calculateCentroid(polygonVerticesByOrderArray);
 
-        originalSteerHeading = abstract_robot.getSteerHeading(0);
+		originalSteerHeading = abstract_robot.getSteerHeading(0);
 
-        isHeadingToFinalPoint = false;
+		isHeadingToFinalPoint = false;
 
 		savedTime = 0;
 	}
@@ -306,8 +306,8 @@ public class containmentSpiral extends ControlSystemMFN150 {
 					|| directionFromFovToIntersectionPoint >= rightTurretAngle;
 		}
 
-		 return directionFromFovToIntersectionPoint <= leftTurretAngle
-				 && directionFromFovToIntersectionPoint >= rightTurretAngle;
+		return directionFromFovToIntersectionPoint <= leftTurretAngle
+				&& directionFromFovToIntersectionPoint >= rightTurretAngle;
 	}
 
 	private boolean isPointWithinFOVs(Vec2 intersectionPoint, FOV first, FOV second){
@@ -518,10 +518,10 @@ public class containmentSpiral extends ControlSystemMFN150 {
 	}
 
 	private void SetCurrentDestinationPoint(int nextVertexIndex){
-	    currentVertexIndex = nextVertexIndex;
-        currentDestinationPoint = polygonVerticesByOrder.get(nextVertexIndex);
-        directionToCurrentDestinationPoint = getDirectionAngleOf2Points(lastPosition, currentDestinationPoint);
-    }
+		currentVertexIndex = nextVertexIndex;
+		currentDestinationPoint = polygonVerticesByOrder.get(nextVertexIndex);
+		directionToCurrentDestinationPoint = getDirectionAngleOf2Points(lastPosition, currentDestinationPoint);
+	}
 
 	public static double calculateRadianIncline(Vec2 position, Vec2 reachingPoint){
 		double incline = 0;
@@ -558,48 +558,48 @@ public class containmentSpiral extends ControlSystemMFN150 {
 		return new Vec2(x, y);
 	}
 
-    private void MinimizePolygon(){
-	    List<Vec2> newVertices = new ArrayList<>();
+	private void MinimizePolygon(){
+		List<Vec2> newVertices = new ArrayList<>();
 
-	    for(int i = 0; i < polygonVerticesByOrder.size(); i++) {
+		for(int i = 0; i < polygonVerticesByOrder.size(); i++) {
 //            double angleDirection = anglesBetweenEdges.get(i);
-            Vec2 vertex = polygonVerticesByOrder.get(i);
-            double angleDirection = calculateRadianIncline(vertex, centroid);
+			Vec2 vertex = polygonVerticesByOrder.get(i);
+			double angleDirection = calculateRadianIncline(vertex, centroid);
 
 //            Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
-            Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
-            newVertices.add(newVertex);
-	    }
+			Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
+			newVertices.add(newVertex);
+		}
 
-	    polygonVerticesByOrder = newVertices;
-    }
+		polygonVerticesByOrder = newVertices;
+	}
 
-    private List<Double> CalculateAnglesBetweenEdges(List<Double> edgesDirectionAngles){
-	    List<Double> anglesBetweenEdges = new ArrayList<>();
-        int numberOfEdges = edgesDirectionAngles.size();
+	private List<Double> CalculateAnglesBetweenEdges(List<Double> edgesDirectionAngles){
+		List<Double> anglesBetweenEdges = new ArrayList<>();
+		int numberOfEdges = edgesDirectionAngles.size();
 
-	    for(int i = 0; i < numberOfEdges; i++){
+		for(int i = 0; i < numberOfEdges; i++){
 //	        int previousVertexIndex = (i + numberOfEdges - 1) % numberOfEdges;
-	        int nextVertexIndex = (i + 1) % numberOfEdges;
+			int nextVertexIndex = (i + 1) % numberOfEdges;
 
-	        double angleBetweenEdges = (edgesDirectionAngles.get(i) + edgesDirectionAngles.get(nextVertexIndex)) / 2;
-            anglesBetweenEdges.add(angleBetweenEdges);
-        }
+			double angleBetweenEdges = (edgesDirectionAngles.get(i) + edgesDirectionAngles.get(nextVertexIndex)) / 2;
+			anglesBetweenEdges.add(angleBetweenEdges);
+		}
 
-	    return anglesBetweenEdges;
-    }
+		return anglesBetweenEdges;
+	}
 
-    private void HandleRoundEnd(){
-        round ++;
-        MinimizePolygon();
+	private void HandleRoundEnd(){
+		round ++;
+		MinimizePolygon();
 //        roundStartingLocation = polygonVerticesByOrder.get(polygonVerticesByOrder.size() - 1);
-    }
+	}
 
 	public int TakeStep() {
 		double result;
 		Message message;
 		long curr_time = abstract_robot.getTime();
-        lastPosition = abstract_robot.getPosition();
+		lastPosition = abstract_robot.getPosition();
 
 		// TURRET
 		result = abstract_robot.getTurretHeading(curr_time);
@@ -609,40 +609,40 @@ public class containmentSpiral extends ControlSystemMFN150 {
 		EliminateLocust();
 
 
-        if(round == 0){
-            HandleRoundEnd();
-        }
+		if(round == 0){
+			HandleRoundEnd();
+		}
 
-        if(calculateDistance(lastPosition, destinationPoint) < 7){
-            isHeadingToFinalPoint = true;
-            directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
+		if(calculateDistance(lastPosition, destinationPoint) < 7){
+			isHeadingToFinalPoint = true;
+			directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 
-            abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
-            StartMoving(curr_time);
-        }
+			abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
+			StartMoving(curr_time);
+		}
 
-        if(isHeadingToFinalPoint) {
-            if (calculateDistance(lastPosition, destinationPoint) < 0.1) {
-                StopMoving(curr_time);
-                return CSSTAT_OK;
-            }
-        }
+		if(isHeadingToFinalPoint) {
+			if (calculateDistance(lastPosition, destinationPoint) < 0.4) {
+				StopMoving(curr_time);
+				return CSSTAT_OK;
+			}
+		}
 
-        else {
-            if (calculateDistance(lastPosition, currentDestinationPoint) < 0.1) {
-                HandleRoundEnd();
+		else {
+			if (calculateDistance(lastPosition, currentDestinationPoint) < 0.4) {
+				HandleRoundEnd();
 
-                int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
-                SetCurrentDestinationPoint(nextVertexIndex);
+				int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
+				SetCurrentDestinationPoint(nextVertexIndex);
 
-                abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
-                StartMoving(curr_time);
-            }
-            else {
-                abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
-                StartMoving(curr_time);
-            }
-        }
+				abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+				StartMoving(curr_time);
+			}
+			else {
+				abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+				StartMoving(curr_time);
+			}
+		}
 
 
 //		else {

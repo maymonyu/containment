@@ -383,7 +383,7 @@ public class TBSim extends Frame
         }
         /*--- make the window ---*/
 
-		GenerateDscFile(0.5, 40, null, "containmentZigZag");
+		GenerateDscFile(0.5, 30, null, "containmentZigZag");
 
 		TBSim jbs = null;
 		jbs = new TBSim(dsc_file, width, height);
@@ -401,7 +401,7 @@ public class TBSim extends Frame
 
 		int robotsVelocity = 8;
 		String[] algorithms = new String[2];
-//		algorithms[0] = "Spiral";
+		algorithms[0] = "Spiral";
 		algorithms[1] = "Straight";
 
 		int runCount = 0;

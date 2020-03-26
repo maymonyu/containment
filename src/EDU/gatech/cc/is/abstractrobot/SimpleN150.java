@@ -24,7 +24,7 @@ import EDU.gatech.cc.is.util.Vec2;
 public interface SimpleN150 extends SimpleInterface
 	{
 //		public final double MAX_TRANSLATION = 0.508;
-		public final double MAX_TRANSLATION = 8;
+		public final double MAX_TRANSLATION = 2;
 	public final double MAX_STEER = 0.7854;
 	public final double RADIUS = 0.2;
 

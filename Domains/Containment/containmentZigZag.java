@@ -1,24 +1,28 @@
-
 import java.util.Vector;
-import EDU.gatech.cc.is.util.Vec2;
-import java.io.*;
-import EDU.gatech.cc.is.util.*;
-import EDU.gatech.cc.is.abstractrobot.*;
-import EDU.gatech.cc.is.communication.*;
-import java.util.Enumeration;
-import EDU.cmu.cs.coral.simulation.*;
-import EDU.gatech.cc.is.simulation.*;
-import EDU.cmu.cs.coral.util.Circle2;
+        import EDU.gatech.cc.is.util.Vec2;
+        import java.io.*;
+        import EDU.gatech.cc.is.util.*;
+        import EDU.gatech.cc.is.abstractrobot.*;
+        import EDU.gatech.cc.is.communication.*;
+        import java.util.Enumeration;
+        import EDU.cmu.cs.coral.simulation.*;
+        import EDU.gatech.cc.is.simulation.*;
+        import EDU.cmu.cs.coral.util.Circle2;
 
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.Writer;
+        import java.io.FileReader;
+        import java.io.BufferedReader;
+        import java.io.BufferedWriter;
+        import java.io.FileWriter;
+        import java.io.Writer;
+
+        import java.util.List;
+        import java.util.ArrayList;
+
 
 /**
  * A homogeneous robot soccer team.
  *
+
  * @author H&aring;kan L. Younes
  */
 public class containmentZigZag extends ControlSystemMFN150 {
@@ -86,6 +90,22 @@ public class containmentZigZag extends ControlSystemMFN150 {
     boolean isLastOnEdge;
     Vec2 destinationPoint;
     double directionToDestinationPoint;
+    Vec2 currentDestinationPoint;
+    double directionToCurrentDestinationPoint;
+    int currentVertexIndex;
+    List<Double> edgesDirectionAngles;
+    List<Double> anglesBetweenEdges;
+    List<Vec2> polygonVerticesByOrder;
+    int round;
+    Vec2 roundStartingLocation;
+    double originalSteerHeading;
+    double visionRange;
+    Vec2 centroid;
+    boolean isHeadingToFinalPoint;
+    boolean isOnLineBetweenStartAndCentroid;
+    double directionFromStartToCentroid;
+
+    double distanceBetweenRobotsOnStartTime;
 
     int numberOfRobots;
     int indexOnEdge;
@@ -123,9 +143,59 @@ public class containmentZigZag extends ControlSystemMFN150 {
         lastPosition = abstract_robot.getPosition();
         r_x = abstract_robot.Calculate_r_x();
 
-        directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
+        visionRange = abstract_robot.GetVisionRange();
+
+		directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
+        edgesDirectionAngles = abstract_robot.CollectEdgesDirectionAngles();
+        anglesBetweenEdges = CalculateAnglesBetweenEdges(edgesDirectionAngles);
+
+        polygonVerticesByOrder = abstract_robot.CollectAllPolygonVertices();
+        currentVertexIndex = 0;
+//        SetCurrentDestinationPoint(currentVertexIndex);
+        roundStartingLocation = abstract_robot.getPosition();
+
+        Vec2 [] polygonVerticesByOrderArray = new Vec2[polygonVerticesByOrder.size()];
+        polygonVerticesByOrderArray = polygonVerticesByOrder.toArray(polygonVerticesByOrderArray);
+
+        centroid = calculateCentroid(polygonVerticesByOrderArray);
+
+        distanceBetweenRobotsOnStartTime = calculateDistanceBetweenRobotsOnStartTime(polygonVerticesByOrderArray);
+
+        originalSteerHeading = abstract_robot.getSteerHeading(0);
+
+        isHeadingToFinalPoint = false;
+
+        directionFromStartToCentroid = getDirectionAngleOf2Points(lastPosition, centroid);
+        isOnLineBetweenStartAndCentroid = true;
 
         savedTime = 0;
+    }
+
+    public double calculateDistanceBetweenRobotsOnStartTime(Vec2[] polygonVertices){
+        int numOfVertices = polygonVertices.length;
+        double circumferenceLength = 0;
+
+        for(int i = 0; i < numOfVertices; i++){
+            Vec2 currVertex = polygonVertices[i];
+            Vec2 nextVertex = polygonVertices[(i+1) % numOfVertices];
+
+            circumferenceLength += calculateDistance(currVertex, nextVertex);
+        }
+
+        double distanceBetweenRobots = circumferenceLength / numberOfRobots;
+
+        return distanceBetweenRobots;
+    }
+
+    public Vec2 calculateCentroid(Vec2 [] polygonVertices){
+        double centroidX = 0, centroidY = 0;
+
+        for(Vec2 vertex : polygonVertices) {
+            centroidX += vertex.x;
+            centroidY += vertex.y;
+        }
+
+        return new Vec2(centroidX / polygonVertices.length, centroidY / polygonVertices.length);
     }
 
     private void SetLeftNeighbourId(int leftNeighbourId){
@@ -471,6 +541,101 @@ public class containmentZigZag extends ControlSystemMFN150 {
         }
     }
 
+//	private void GetCurrentDestinationPointDirection(Vec2 destinationPoint){
+//	}
+
+    public static double calculateRadianIncline(Vec2 position, Vec2 reachingPoint){
+        double incline = 0;
+
+        if (position.x == reachingPoint.x){
+            if (position.y < reachingPoint.y){
+                return Math.PI / 2;
+            }
+            else{
+                return -Math.PI / 2;
+            }
+        }
+
+        incline = (reachingPoint.y - position.y) / (reachingPoint.x - position.x);
+//        System.out.println("incline: " + incline);
+
+        double angle = Math.atan(incline);
+
+        if(position.x > reachingPoint.x){
+            angle = angle + Math.PI;
+        }
+
+//		System.out.println("angle: " + angle);
+
+        return angle;
+    }
+
+    public static Vec2 GetPointByDistanceAndRadians(double distance, double radians, Vec2 position){
+        double x = distance * Math.cos(radians) + position.x;
+        double y = distance * Math.sin(radians) + position.y;
+
+//		System.out.println("x = " + x + ", y = " + y);
+
+        return new Vec2(x, y);
+    }
+
+    private void MinimizePolygon(){
+        List<Vec2> newVertices = new ArrayList<>();
+
+        for(int i = 0; i < polygonVerticesByOrder.size(); i++) {
+//            double angleDirection = anglesBetweenEdges.get(i);
+            Vec2 vertex = polygonVerticesByOrder.get(i);
+            double angleDirection = calculateRadianIncline(vertex, centroid);
+
+//            Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
+            Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
+            newVertices.add(newVertex);
+        }
+
+        polygonVerticesByOrder = newVertices;
+    }
+
+    private List<Double> CalculateAnglesBetweenEdges(List<Double> edgesDirectionAngles){
+        List<Double> anglesBetweenEdges = new ArrayList<>();
+        int numberOfEdges = edgesDirectionAngles.size();
+
+        for(int i = 0; i < numberOfEdges; i++){
+//	        int previousVertexIndex = (i + numberOfEdges - 1) % numberOfEdges;
+            int nextVertexIndex = (i + 1) % numberOfEdges;
+
+            double angleBetweenEdges = (edgesDirectionAngles.get(i) + edgesDirectionAngles.get(nextVertexIndex)) / 2;
+            anglesBetweenEdges.add(angleBetweenEdges);
+        }
+
+        return anglesBetweenEdges;
+    }
+
+    private void HandleRoundEnd(Vec2 lastPosition){
+        round++;
+
+        Vec2 nextZigZagPoint = calculateNextZigZagPoint(lastPosition);
+        currentDestinationPoint = nextZigZagPoint;
+
+        directionToCurrentDestinationPoint = getDirectionAngleOf2Points(lastPosition, currentDestinationPoint);
+
+        isOnLineBetweenStartAndCentroid = !isOnLineBetweenStartAndCentroid;
+    }
+
+    public Vec2 calculateNextZigZagPoint(Vec2 position){
+        double turnAngle = 2 * Math.PI / 5;
+//        double turnAngle = 0;
+
+
+        if(!isOnLineBetweenStartAndCentroid){
+//			walkingAngle = Math.PI - (2 * walkingAngle);
+            turnAngle = turnAngle * (-1);
+        }
+
+        double walkingAngle = directionToDestinationPoint + turnAngle;
+
+        return GetPointByDistanceAndRadians(distanceBetweenRobotsOnStartTime, walkingAngle, position);
+    }
+
     public int TakeStep() {
         double result;
         Message message;
@@ -484,61 +649,75 @@ public class containmentZigZag extends ControlSystemMFN150 {
         CheckMessages();
         EliminateLocust();
 
-        if(calculateDistance(lastPosition, destinationPoint) > 0.4){
-            StartMoving(curr_time);
+        if(round == 0){
+            HandleRoundEnd(lastPosition);
+        }
+
+        if(calculateDistance(lastPosition, destinationPoint) < 7){
+            isHeadingToFinalPoint = true;
+            directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
+
             abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
+            StartMoving(curr_time);
+        }
+
+        if(isHeadingToFinalPoint) {
+            if (calculateDistance(lastPosition, destinationPoint) < 0.4) {
+                StopMoving(curr_time);
+                return CSSTAT_OK;
+            }
         }
 
         else {
-            StopMoving(0L);
-            if (id == 0) {
-                System.out.println("time: " + curr_time);
-            }
+            if (calculateDistance(lastPosition, currentDestinationPoint) < 0.4) {
+                HandleRoundEnd(lastPosition);
 
-            if (IsFirstToRun(curr_time)) {
-                isMyTurn = true;
+                abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
                 StartMoving(curr_time);
-
-                savedTime = curr_time;
-            } else if (isMoving) {
-                Vec2 currPosition = abstract_robot.getPosition();
-                if (calculateDistance(currPosition, lastPosition) >= r_x) {
-                    StopMoving(curr_time);
-                    TellNeighbourstToStartMoving();
-
-                    isMyTurn = false;
-                    lastPosition = currPosition;
-
-                    //				if(id == 1){
-                    //					System.out.println("saved time: " + savedTime);
-                    //					System.out.println("r_x: " + r_x);
-                    //					System.out.println("time to pass r_x distance: " + (curr_time - savedTime));
-                    //				}
-                }
-            } else if (isMyTurn) {
-                StartMoving(curr_time);
-                savedTime = curr_time;
             }
-
-
-            if (id == numberOfRobots - 1 && !isMoving) {
-                int numOfRedundants = abstract_robot.CalculateRedundantRobots();
-
-                //            try {
-                //                String dirPath = "ContainmentDsc/" + 7;
-                //                String upperBoundFilePath = dirPath + "/" + "upperBound.txt";
-                //                BufferedWriter upperBoundFile = new BufferedWriter(new FileWriter(upperBoundFilePath, true));
-                //
-                //                upperBoundFile.write("\n");
-                //                upperBoundFile.write(Integer.toString(numOfRedundants));
-                //
-                //                upperBoundFile.close();
-                //            }
-                //            catch (Exception e){
-                //                System.out.println(e);
-                //            }
+            else {
+                abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+                StartMoving(curr_time);
             }
         }
+
+
+//		else {
+//		    StopMoving(0L);
+//			if (id == 0) {
+//				System.out.println("time: " + curr_time);
+//			}
+//
+//			if (IsFirstToRun(curr_time)) {
+//				isMyTurn = true;
+//				StartMoving(curr_time);
+//
+//				savedTime = curr_time;
+//			} else if (isMoving) {
+//				Vec2 currPosition = abstract_robot.getPosition();
+//				if (calculateDistance(currPosition, lastPosition) >= r_x) {
+//					StopMoving(curr_time);
+//					TellNeighbourstToStartMoving();
+//
+//					isMyTurn = false;
+//					lastPosition = currPosition;
+//
+//					//				if(id == 1){
+//					//					System.out.println("saved time: " + savedTime);
+//					//					System.out.println("r_x: " + r_x);
+//					//					System.out.println("time to pass r_x distance: " + (curr_time - savedTime));
+//					//				}
+//				}
+//			} else if (isMyTurn) {
+//				StartMoving(curr_time);
+//				savedTime = curr_time;
+//			}
+//
+//
+//			if (id == numberOfRobots - 1 && !isMoving) {
+//				int numOfRedundants = abstract_robot.CalculateRedundantRobots();
+//			}
+//		}
 
         return CSSTAT_OK;
     }
