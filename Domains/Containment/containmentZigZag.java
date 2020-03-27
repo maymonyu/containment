@@ -622,9 +622,8 @@ public class containmentZigZag extends ControlSystemMFN150 {
     }
 
     public Vec2 calculateNextZigZagPoint(Vec2 position){
-        double turnAngle = 2 * Math.PI / 5;
-//        double turnAngle = 0;
-
+//        double turnAngle = 2 * Math.PI / 5;
+        double turnAngle = Math.acos(visionRange / distanceBetweenRobotsOnStartTime);
 
         if(!isOnLineBetweenStartAndCentroid){
 //			walkingAngle = Math.PI - (2 * walkingAngle);

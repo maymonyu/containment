@@ -462,7 +462,7 @@ public class TBSim extends Frame
 //							int settingNumber = i + 1;
 							String algorithmTitle = algorithms[algorithm];
 
-							WriteResultsToFile(5, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
+							WriteResultsToFile(1, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
 									jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
 									jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats);
 
@@ -493,7 +493,7 @@ public class TBSim extends Frame
 										  String algorithmTitle, long timeReachingMEP, int deadLocusts, int runAwayLocusts,
 										  int livingLocusts, int inMEPLocusts, PolygonStats polygonStats){
 		try {
-			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Different Worlds - ZigZag Hungarian/results.csv";
+			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Different Worlds - ZigZag Hungarian/results-smaller angle.csv";
 			File f = new File(filePath);
 
 			PrintWriter out = null;
