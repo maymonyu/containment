@@ -106,6 +106,7 @@ public class containmentZigZag extends ControlSystemMFN150 {
     double directionFromStartToCentroid;
 
     double distanceBetweenRobotsOnStartTime;
+    double distanceFromCentroidToDestinationPoint;
 
     int numberOfRobots;
     int indexOnEdge;
@@ -167,6 +168,7 @@ public class containmentZigZag extends ControlSystemMFN150 {
 
         directionFromStartToCentroid = getDirectionAngleOf2Points(lastPosition, centroid);
         isOnLineBetweenStartAndCentroid = true;
+        distanceFromCentroidToDestinationPoint = calculateDistance(centroid, destinationPoint);
 
         savedTime = 0;
     }
@@ -630,7 +632,7 @@ public class containmentZigZag extends ControlSystemMFN150 {
             turnAngle = turnAngle * (-1);
         }
 
-        double walkingAngle = directionToDestinationPoint + turnAngle;
+        double walkingAngle = directionFromStartToCentroid + turnAngle;
 
         return GetPointByDistanceAndRadians(distanceBetweenRobotsOnStartTime, walkingAngle, position);
     }
@@ -652,7 +654,7 @@ public class containmentZigZag extends ControlSystemMFN150 {
             HandleRoundEnd(lastPosition);
         }
 
-        if(calculateDistance(lastPosition, destinationPoint) < 7){
+        if(calculateDistance(lastPosition, destinationPoint) < distanceFromCentroidToDestinationPoint + 1){
             isHeadingToFinalPoint = true;
             directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 
