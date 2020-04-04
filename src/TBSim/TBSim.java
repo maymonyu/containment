@@ -384,6 +384,10 @@ public class TBSim extends Frame
         /*--- make the window ---*/
 
 		GenerateDscFile(2, 20, null, "containmentFullRound");
+		Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
+		PolygonStats polygonStats = new PolygonStats(polygonVertices);
+		System.out.println(polygonStats.area);
+
 
 		TBSim jbs = null;
 		jbs = new TBSim(dsc_file, width, height);
@@ -403,7 +407,8 @@ public class TBSim extends Frame
 		String[] algorithms = new String[1];
 //		algorithms[0] = "Spiral";
 //		algorithms[1] = "Straight";
-		algorithms[0] = "ZigZag";
+//		algorithms[2] = "ZigZag";
+		algorithms[0] = "FullRound";
 
 		int runCount = 0;
 		int dumcount = 0;
@@ -493,7 +498,7 @@ public class TBSim extends Frame
 										  String algorithmTitle, long timeReachingMEP, int deadLocusts, int runAwayLocusts,
 										  int livingLocusts, int inMEPLocusts, PolygonStats polygonStats){
 		try {
-			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Different Worlds - ZigZag Hungarian/results-smaller angle-centroid.csv";
+			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Different Worlds - Full Round/results.csv";
 			File f = new File(filePath);
 
 			PrintWriter out = null;
