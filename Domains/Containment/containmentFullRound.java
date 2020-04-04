@@ -640,7 +640,7 @@ public class containmentFullRound extends ControlSystemMFN150 {
         long curr_time = abstract_robot.getTime();
 
         if(id==1) {
-            System.out.println(calculateDistance(lastPosition, roundStartingLocation));
+//            System.out.println(calculateDistance(lastPosition, roundStartingLocation));
 //            if(calculateDistance(lastPosition, roundStartingLocation) <= 0.7) {
 //                System.out.println("true !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
 //            }
