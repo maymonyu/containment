@@ -655,7 +655,7 @@ public class containmentFullRound extends ControlSystemMFN150 {
         CheckMessages();
         EliminateLocust();
 
-        if(calculateDistance(lastPosition, destinationPoint) < 7){
+        if(calculateDistance(lastPosition, destinationPoint) < distanceFromCentroidToDestinationPoint + 1){
             isHeadingToFinalPoint = true;
             directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 
