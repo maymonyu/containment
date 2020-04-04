@@ -1,43 +1,14 @@
 
-Choose algorithm:
-    Setting: 100 locust in random location
-        Define number of robots:
-            Define the velocity of the locust:
-                Output: csv file with 20-30 lines:
-                    each line is running output: Time reaching to MEP, Dead locust, Alive locust
 
+Full Round:
 
-1. Add 3-for loop in SimulationCanvas:
-    a. first loop - run over the locust locations (e.g the settings)
-    b. second loop - run over the number of robots (10, 20, 30, 40, 50)
-    c. third loop - run over the locust's velocity
+- Start at roundStartingPoint
+- Make a full round
+- When back to roundStartingPoint:
+    - Define nextStartingPoint
+    - Start walking to nextStartingPoint
 
-
-- Set 10 Settings manually - only locust locations - DONE
-
-- Create dsc including the number of robots and the locust locations - DONE
-    - Read locust locations from numbered file
-    - Call GenerateLocust from AutoDscGenerator with the locations and velocity
-    - Call GenerateRobots from AutoDscGenerator with the number of robots
-    - Generate .dsc file
-
-- Set locust's velocity - DONE
-    - MAX_TRANSLATION is the velocity
-    - Add the velocity to dsc file
-    - attractorSim will get it, and SquiggleBallSim will get it from AttractorSim
-- Understand how to run simulation, stop it, and run it again - DONE
-- Run simulation and stop when all robots are near their destination point - DONE
-
-- Write results to file - DONE
-
-- Uniform distribution of initial locations - DONE
-- Add both algorithms - DONE
-
--------------------------------------------------------------------
-
-- Set 4 settings (different polygons)
-    - Run AutoDscGenerator manually
-
-- Change directories
-    - Results file
-    - Settings file
+- When close enough to nextStartingPoint:
+    - Define roundStartingPoint to be nextStartingPoint
+    - Minimize Polygon
+    - Start walking to next vertex

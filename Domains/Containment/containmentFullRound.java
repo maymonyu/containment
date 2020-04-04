@@ -106,6 +106,9 @@ public class containmentFullRound extends ControlSystemMFN150 {
 
     double directionFromStartToCentroid;
     Vec2 nextStartingLocation;
+    boolean isGoingToNewStartingLocation;
+    double distanceFromCentroidToDestinationPoint;
+    int numberOfVertices;
 
     int numberOfRobots;
     int indexOnEdge;
@@ -150,12 +153,15 @@ public class containmentFullRound extends ControlSystemMFN150 {
         anglesBetweenEdges = CalculateAnglesBetweenEdges(edgesDirectionAngles);
 
         polygonVerticesByOrder = abstract_robot.CollectAllPolygonVertices();
+        polygonVerticesByOrder.add(polygonVerticesByOrder.size() - 1, lastPosition);
+
         currentVertexIndex = 0;
         SetCurrentDestinationPoint(currentVertexIndex);
         roundStartingLocation = abstract_robot.getPosition();
 
         Vec2 [] polygonVerticesByOrderArray = new Vec2[polygonVerticesByOrder.size()];
         polygonVerticesByOrderArray = polygonVerticesByOrder.toArray(polygonVerticesByOrderArray);
+        numberOfVertices = polygonVerticesByOrder.size();
 
         centroid = calculateCentroid(polygonVerticesByOrderArray);
 
@@ -165,6 +171,9 @@ public class containmentFullRound extends ControlSystemMFN150 {
 
         directionFromStartToCentroid = getDirectionAngleOf2Points(lastPosition, centroid);
         nextStartingLocation = null;
+        isGoingToNewStartingLocation = false;
+        distanceFromCentroidToDestinationPoint = calculateDistance(centroid, destinationPoint);
+
 
         savedTime = 0;
     }
@@ -567,14 +576,19 @@ public class containmentFullRound extends ControlSystemMFN150 {
     private void MinimizePolygon(){
         List<Vec2> newVertices = new ArrayList<>();
 
-        for(int i = 0; i < polygonVerticesByOrder.size(); i++) {
-//            double angleDirection = anglesBetweenEdges.get(i);
-            Vec2 vertex = polygonVerticesByOrder.get(i);
-            double angleDirection = calculateRadianIncline(vertex, centroid);
+        for(int i = 0; i < numberOfVertices; i++) {
+            if(i == numberOfVertices - 1){
+                newVertices.add(nextStartingLocation);
+            }
+
+            else {
+                Vec2 vertex = polygonVerticesByOrder.get(i);
+                double angleDirection = calculateRadianIncline(vertex, centroid);
 
 //            Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
-            Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
-            newVertices.add(newVertex);
+                Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
+                newVertices.add(newVertex);
+            }
         }
 
         polygonVerticesByOrder = newVertices;
@@ -595,9 +609,28 @@ public class containmentFullRound extends ControlSystemMFN150 {
         return anglesBetweenEdges;
     }
 
+    public void SetNewStartingLocation(){
+        isGoingToNewStartingLocation = true;
+
+        double directionToCentroid = getDirectionAngleOf2Points(lastPosition, centroid);
+//        nextStartingLocation = GetPointByDistanceAndRadians(
+//                2 * visionRange, directionToCentroid, lastPosition);
+
+        nextStartingLocation = GetPointByDistanceAndRadians(
+                2.4, directionToCentroid, lastPosition);
+    }
+
+    public void AddNextStartingLocationAsLastVertex(){
+        polygonVerticesByOrder.add(nextStartingLocation);
+    }
+
     private void HandleRoundEnd(){
         round ++;
+
+        SetNewStartingLocation();
+
         MinimizePolygon();
+
 //        roundStartingLocation = polygonVerticesByOrder.get(polygonVerticesByOrder.size() - 1);
     }
 
@@ -605,6 +638,14 @@ public class containmentFullRound extends ControlSystemMFN150 {
         double result;
         Message message;
         long curr_time = abstract_robot.getTime();
+
+        if(id==1) {
+            System.out.println(calculateDistance(lastPosition, roundStartingLocation));
+//            if(calculateDistance(lastPosition, roundStartingLocation) <= 0.7) {
+//                System.out.println("true !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+//            }
+
+        }
         lastPosition = abstract_robot.getPosition();
 
         // TURRET
@@ -613,11 +654,6 @@ public class containmentFullRound extends ControlSystemMFN150 {
 
         CheckMessages();
         EliminateLocust();
-
-
-        if(round == 0){
-            HandleRoundEnd();
-        }
 
         if(calculateDistance(lastPosition, destinationPoint) < 7){
             isHeadingToFinalPoint = true;
@@ -634,27 +670,54 @@ public class containmentFullRound extends ControlSystemMFN150 {
             }
         }
 
-        if(calculateDistance(lastPosition, roundStartingLocation) < 0.4){
-            HandleRoundEnd();
-            // ...
+        if(!isHeadingToFinalPoint && round != 0 && calculateDistance(lastPosition, roundStartingLocation) < 0.7){
+//            System.out.println(calculateDistance(lastPosition, roundStartingLocation));
+//            if(id==0) System.out.println(calculateDistance(lastPosition, roundStartingLocation));
 
-            nextStartingLocation = GetPointByDistanceAndRadians(
-                    visionRange * 2, directionFromStartToCentroid, roundStartingLocation);
+            HandleRoundEnd();
         }
 
-        else {
-            if (calculateDistance(lastPosition, currentDestinationPoint) < 0.4) {
-//                HandleRoundEnd();
+        if(!isHeadingToFinalPoint && isGoingToNewStartingLocation){
+//            if(id==0) System.out.println(calculateDistance(lastPosition, nextStartingLocation));
 
-                int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
+            if(calculateDistance(lastPosition, nextStartingLocation) < 0.4){
+                roundStartingLocation = nextStartingLocation;
+                isGoingToNewStartingLocation = false;
+
+                // Set walking to initial vertex
+                int nextVertexIndex = 0;
                 SetCurrentDestinationPoint(nextVertexIndex);
 
                 abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
                 StartMoving(curr_time);
             }
+
             else {
-                abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+                double directionToNextStartingLocation = getDirectionAngleOf2Points(
+                        lastPosition, nextStartingLocation);
+
+                abstract_robot.setSteerHeading(0L, directionToNextStartingLocation);
                 StartMoving(curr_time);
+            }
+        }
+
+        else {
+            if(!isHeadingToFinalPoint) {
+//            System.out.println(calculateDistance(lastPosition, roundStartingLocation) <= 0.5);
+                round = Math.max(1, round); // Declare that we started running
+
+                if (calculateDistance(lastPosition, currentDestinationPoint) < 1) {
+//                HandleRoundEnd();
+
+                    int nextVertexIndex = (currentVertexIndex + 1) % (numberOfVertices);
+                    SetCurrentDestinationPoint(nextVertexIndex);
+
+                    abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+                    StartMoving(curr_time);
+                } else {
+                    abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+                    StartMoving(curr_time);
+                }
             }
         }
 

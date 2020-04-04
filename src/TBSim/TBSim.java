@@ -383,7 +383,7 @@ public class TBSim extends Frame
         }
         /*--- make the window ---*/
 
-		GenerateDscFile(2, 30, null, "containmentFullRound");
+		GenerateDscFile(2, 20, null, "containmentFullRound");
 
 		TBSim jbs = null;
 		jbs = new TBSim(dsc_file, width, height);
