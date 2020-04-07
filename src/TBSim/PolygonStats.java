@@ -10,6 +10,7 @@ public class PolygonStats {
     public double longEdgeLength;
     public double shortEdgeLength;
     public double ratioBetweenLongEdgeToShortEdge;
+    public double minimalDisctanceFromCentroidToEdge;
 
     public PolygonStats(Vec2[] polygonVertices){
         this.polygonVertices = polygonVertices;
@@ -19,6 +20,22 @@ public class PolygonStats {
         longEdgeLength = GetLongEdgeLength();
         shortEdgeLength = GetShortEdgeLength();
         ratioBetweenLongEdgeToShortEdge = longEdgeLength / shortEdgeLength;
+        minimalDisctanceFromCentroidToEdge = GetMinimalDistanceFromCentroidToEdge();
+    }
+
+    public double GetMinimalDistanceFromCentroidToEdge(){
+        double min = Double.POSITIVE_INFINITY;
+        Vec2 centroid = AutoDscGenerator.calculateCentroid(polygonVertices);
+
+        for(int i = 0; i < polygonVertices.length; i++){
+            Vec2 currVertex = polygonVertices[i];
+            Vec2 nextVertex = polygonVertices[(i+1) % polygonVertices.length];
+
+            double length =AutoDscGenerator.calculateDistanceFromPointToLine(centroid, currVertex, nextVertex);
+            min = Math.min(min, length);
+        }
+
+        return min;
     }
 
     public double CalculateCircumference(){

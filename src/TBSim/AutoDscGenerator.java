@@ -149,7 +149,7 @@ public class AutoDscGenerator
         return (lineStart.y - lineEnd.y) / (lineStart.x - lineEnd.x);
     }
 
-    private static double calculateDistanceFromPointToLine(Vec2 point, Vec2 lineStart, Vec2 lineEnd){
+    public static double calculateDistanceFromPointToLine(Vec2 point, Vec2 lineStart, Vec2 lineEnd){
         double incline = calculateIncline(lineStart, lineEnd);
 
         //A = m, B = -1, C = y1 - mx1
@@ -869,7 +869,13 @@ public class AutoDscGenerator
 //            List<RobotMetadata> randomRobots  = takeElementsFromList(robots, numberOfRobots);
 //            System.out.println("randomList length: " + randomRobots.size());
 
-            List<RobotMetadata> robots = generateRobotsByNumber(polygonVertices, FOV_RADIUS, X, numberOfRobots);
+            List<RobotMetadata> robots = null;
+            if(numberOfRobots != 0) {
+                robots = generateRobotsByNumber(polygonVertices, FOV_RADIUS, X, numberOfRobots);
+            }
+            else {
+                robots = generateRobots(polygonVertices, FOV_RADIUS, X);
+            }
 
             robots = setRobotsDestinationPoints(robots, FOV_RADIUS, centroid);
 
