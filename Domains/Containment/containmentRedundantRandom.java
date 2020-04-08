@@ -513,6 +513,8 @@ public class containmentRedundantRandom extends ControlSystemMFN150 {
         else if(isRedundant){
             abstract_robot.setSteerHeading(0L, directionFromStartToCentroid);
             StartMoving(curr_time);
+
+//            StopMoving(curr_time);
         }
 
         else if(isMoving){
@@ -538,8 +540,15 @@ public class containmentRedundantRandom extends ControlSystemMFN150 {
         }
 
 
-        if(id == numberOfRobots - 1 && !isMoving){
-            int numOfRedundants = abstract_robot.CalculateRedundantRobots();
+        if(!isRedundant && isMyTurn && AreNeighboursCollide()){
+            isRedundant = true;
+            SendNewNeighboursMessages();
+
+            return CSSTAT_OK;
+        }
+
+//        if(id == numberOfRobots - 1 && !isMoving){
+//            int numOfRedundants = abstract_robot.CalculateRedundantRobots();
 
 //            try {
 //                String dirPath = "ContainmentDsc/" + 7;
@@ -554,7 +563,7 @@ public class containmentRedundantRandom extends ControlSystemMFN150 {
 //            catch (Exception e){
 //                System.out.println(e);
 //            }
-        }
+//        }
 
 //		else if(isEven){
 //			StartMoving(curr_time);
@@ -574,12 +583,7 @@ public class containmentRedundantRandom extends ControlSystemMFN150 {
 //			return CSSTAT_OK;
 //		}
 //
-		if(isMyTurn && AreNeighboursCollide()){
-			isRedundant = true;
-			SendNewNeighboursMessages();
 
-			return CSSTAT_OK;
-		}
 //
 //		if (isReversing){
 //			if (!IsOpenArea(curr_time)){
