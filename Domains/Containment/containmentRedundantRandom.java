@@ -15,12 +15,15 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.Writer;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * A homogeneous robot soccer team.
  *
  * @author H&aring;kan L. Younes
  */
-public class containment extends ControlSystemMFN150 {
+public class containmentRedundantRandom extends ControlSystemMFN150 {
 
 
     /**
@@ -94,6 +97,10 @@ public class containment extends ControlSystemMFN150 {
     Vec2 lastPosition;
     double r_x;
 
+    public double directionFromStartToCentroid;
+    public Vec2 centroid;
+    public List<Vec2> polygonVerticesByOrder;
+
     public void Configure() {
         isRedundant = false;
         isMyTurn = false;
@@ -119,7 +126,26 @@ public class containment extends ControlSystemMFN150 {
         lastPosition = abstract_robot.getPosition();
         r_x = abstract_robot.Calculate_r_x();
 
+        polygonVerticesByOrder = abstract_robot.CollectAllPolygonVertices();
+
+        Vec2 [] polygonVerticesByOrderArray = new Vec2[polygonVerticesByOrder.size()];
+        polygonVerticesByOrderArray = polygonVerticesByOrder.toArray(polygonVerticesByOrderArray);
+        centroid = calculateCentroid(polygonVerticesByOrderArray);
+
+        directionFromStartToCentroid = getDirectionAngleOf2Points(lastPosition, centroid);
+
         savedTime = 0;
+    }
+
+    public Vec2 calculateCentroid(Vec2 [] polygonVertices){
+        double centroidX = 0, centroidY = 0;
+
+        for(Vec2 vertex : polygonVertices) {
+            centroidX += vertex.x;
+            centroidY += vertex.y;
+        }
+
+        return new Vec2(centroidX / polygonVertices.length, centroidY / polygonVertices.length);
     }
 
     private void SetLeftNeighbourId(int leftNeighbourId){
@@ -484,6 +510,11 @@ public class containment extends ControlSystemMFN150 {
             savedTime = curr_time;
         }
 
+        else if(isRedundant){
+            abstract_robot.setSteerHeading(0L, directionFromStartToCentroid);
+            StartMoving(curr_time);
+        }
+
         else if(isMoving){
             Vec2 currPosition = abstract_robot.getPosition();
             if(calculateDistance(currPosition, lastPosition) >= r_x){
@@ -543,13 +574,12 @@ public class containment extends ControlSystemMFN150 {
 //			return CSSTAT_OK;
 //		}
 //
-//		if(isMyTurn && AreNeighboursCollide()){
-//			abstract_robot.SetBackground();
+		if(isMyTurn && AreNeighboursCollide()){
+			isRedundant = true;
+			SendNewNeighboursMessages();
 
-//			isRedundant = true;
-//			SendNewNeighboursMessages();
-//			return CSSTAT_OK;
-//		}
+			return CSSTAT_OK;
+		}
 //
 //		if (isReversing){
 //			if (!IsOpenArea(curr_time)){

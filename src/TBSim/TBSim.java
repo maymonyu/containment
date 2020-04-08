@@ -75,20 +75,20 @@ public class TBSim extends Frame
 	private	CheckboxMenuItem icons;
 
 	  public TBSim() {
-	    this(null, 200, 100, false);
+	    this(null, 200, 100, false, true);
 	  }
 	  
 	  public TBSim(String file) {
-	    this(file, 500, 500, false);
+	    this(file, 500, 500, false, true);
 	  }
 	  
 	  public TBSim(String file, int width, int height) {
-	    this(file, width, height, true);
+	    this(file, width, height, true, true);
 	  }
 
 
 	public void initSim(String file, int width, int height,
-						boolean preserveSize){
+						boolean preserveSize, boolean isStopWhenLocustAreDead){
 		simFrame = new Frame("TBSim");
 
 		/*--- Set the title ---*/
@@ -170,7 +170,7 @@ public class TBSim extends Frame
 		dsc_file = file;
 
 		simulation =
-				new SimulationCanvas(simFrame,width,height,dsc_file,preserveSize);
+				new SimulationCanvas(simFrame,width,height,dsc_file,preserveSize, isStopWhenLocustAreDead);
 		playing_field_panel.add(simulation);
 		simFrame.add("South",playing_field_panel);
 
@@ -199,9 +199,9 @@ public class TBSim extends Frame
 	 * Set up the frame and buttons.
 	 */
 	public TBSim(String file, int width, int height, 
-		     boolean preserveSize)
+		     boolean preserveSize, boolean isStopWhenLocustAreDead)
 		{
-			initSim(file, width, height, preserveSize);
+			initSim(file, width, height, preserveSize, isStopWhenLocustAreDead);
 		}
 
 	/**
@@ -383,8 +383,8 @@ public class TBSim extends Frame
         }
         /*--- make the window ---*/
 
-		GenerateDscFile(2, 0, null, "containment");
-
+		GenerateDscFile(2, 0, null, "containmentRedundantRandom");
+		boolean isStopWhenLocustAreDead = true;
 
 //		Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
 //		PolygonStats polygonStats = new PolygonStats(polygonVertices);
@@ -392,7 +392,7 @@ public class TBSim extends Frame
 //		System.out.println(polygonStats.area);
 
 		TBSim jbs = null;
-		jbs = new TBSim(dsc_file, width, height, true);
+		jbs = new TBSim(dsc_file, width, height, true, isStopWhenLocustAreDead);
 		jbs.simulation.pause();
 //		jbs.simulation.setNewRun("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
 		jbs.show();
