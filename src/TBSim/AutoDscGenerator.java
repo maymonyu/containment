@@ -655,7 +655,7 @@ public class AutoDscGenerator
     public static void addLocust(Writer outputFile, Vec2 [] polygonVertices, double [] bounds, double velocity){
         int locustNumber = 100;
         String [] locustDefinitions = new String[locustNumber];
-        double locustSize = 0.5;
+        double locustSize = 0.25;
         double marginBetweenLocust = locustSize + 0.1;
         int index = 0;
 
@@ -838,8 +838,10 @@ public class AutoDscGenerator
 
     public static void CreateAutomaticDsc(double locustVelocity, int numberOfRobots, String settingFilename,
                                           String algorithmName){
-        final double FOV_RADIUS = 1;
-        final double X = 0.5;
+        final double FOV_RADIUS = 0.75;
+//        final double FOV_RADIUS = 1;
+        final double X = 0.25;
+//        final double X = 0.5;
 
         String filename = "/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc";
         double secRadius = 0;
@@ -910,8 +912,10 @@ public class AutoDscGenerator
 
     public static void main(String[] args)
     {
-        final double FOV_RADIUS = 1;
-        final double X = 0.5;
+//        final double FOV_RADIUS = 1;
+        final double FOV_RADIUS = 0.5;
+        final double X = 0.25;
+//        final double X = 0.5;
 
         String filename = "containment2.dsc";
         double secRadius = 0;

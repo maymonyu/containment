@@ -78,7 +78,8 @@ public interface MultiForageN150 extends SimpleN150,
 	VisualObjectSensor, GripperActuator, KinSensor, Transceiver
 	{
 	// some useful numbers
-        public  static final double  VISION_RANGE = 1;
+        public  static final double  VISION_RANGE = 0.75;
+//        public  static final double  VISION_RANGE = 1;
         public  static final int     VISION_FOV_DEG = 360;
         public  static final double  VISION_FOV_RAD = Units.DegToRad(360);
         //public  static final double  GRIPPER_CAPTURE_RADIUS = 0.10; //10 cm
