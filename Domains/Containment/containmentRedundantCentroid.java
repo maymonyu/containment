@@ -452,6 +452,16 @@ public class containmentRedundantCentroid extends ControlSystemMFN150 {
         return intersectionPointsCount > 0;
     }
 
+    public boolean AreCirclesCollide(Circle first, Circle second){
+        first.r += 0.1;
+        second.r += 0.1;
+
+        CircleCircleIntersection circleCircleIntersection = new CircleCircleIntersection(first, second);
+        int intersectionPointsCount = circleCircleIntersection.type.getIntersectionPointCount();
+
+        return intersectionPointsCount > 0;
+    }
+
     private void CheckMessages(){
         while (messages.hasMoreElements()) {
             Message message = (Message) messages.nextElement();
@@ -579,6 +589,17 @@ public class containmentRedundantCentroid extends ControlSystemMFN150 {
         return result;
     }
 
+    public boolean CheckIfRobotIsRedundant(){
+        Circle robotCircle = GetRobotCircle(id);
+        Circle leftNeighbourCircle = GetRobotCircle(leftNeighbourId);
+        Circle rightNeighbourCircle = GetRobotCircle(rightNeighbourId);
+
+        boolean isOverlapWithLeftNeighbour = AreCirclesCollide(robotCircle, leftNeighbourCircle);
+        boolean isOverlapWithRightNeighbour = AreCirclesCollide(robotCircle, rightNeighbourCircle);
+
+        return AreNeighboursCollide() || !isOverlapWithLeftNeighbour || !isOverlapWithRightNeighbour;
+    }
+
     public int TakeStep() {
         double result;
         Message message;
@@ -635,7 +656,7 @@ public class containmentRedundantCentroid extends ControlSystemMFN150 {
 //            return CSSTAT_OK;
 //        }
 
-        if(!isRedundant && isMyTurn && AreNeighboursCollide()){
+        if(!isRedundant && isMyTurn && CheckIfRobotIsRedundant()){
             isRedundant = true;
             SendNewNeighboursMessages();
 
