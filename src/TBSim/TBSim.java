@@ -383,7 +383,7 @@ public class TBSim extends Frame
         }
         /*--- make the window ---*/
 
-		GenerateDscFile(2, 0, null, "containmentRedundantRandom");
+//		GenerateDscFile(2, 0, null, "containmentRedundantCentroid");
 		boolean isStopWhenLocustAreDead = true;
 
 //		Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
@@ -417,8 +417,8 @@ public class TBSim extends Frame
 
 		String [] perfectAlgorithms = new String[2];
 		perfectAlgorithms[0] = "";
-		perfectAlgorithms[1] = "RedundantRandom";
-//		RunPerfectEnclosure(perfectAlgorithms, jbs);
+		perfectAlgorithms[1] = "RedundantCentroid";
+		RunPerfectEnclosure(perfectAlgorithms, jbs);
 
 ////        for(int i=1; i<=9; i++) {
 //			for(int numberOfRobots = 20; numberOfRobots <= 30; numberOfRobots += 10) {
@@ -505,7 +505,7 @@ public class TBSim extends Frame
 //			for(double locustsVelocity = (double)robotsVelocity / 4; locustsVelocity <= robotsVelocity;
 //				locustsVelocity += (double)robotsVelocity / 2) {
 
-		int locustsVelocity = 6;
+		int locustsVelocity = 2;
 		int numberOfRobots = 0;
 		int robotsVelocity = 2;
 
@@ -558,9 +558,10 @@ public class TBSim extends Frame
 
 				//							int settingNumber = i + 1;
 				String algorithmTitle = algorithms[algorithm];
+				if (algorithmTitle == "") algorithmTitle = "PerfectEnclosure";
 
-				WriteResultsToFile(1, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
-						jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
+				WriteResultsToFile(5, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
+						jbs.simulation.runningTime, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
 						jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats);
 
 				System.out.println("&&&&&&&&&&&&&&&&7");

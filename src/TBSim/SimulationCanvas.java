@@ -77,6 +77,7 @@ public class SimulationCanvas extends Canvas implements Runnable
 	private long	startrun = 0;
 	private long	frames = 0;
 
+	public long runningTime = 0;
 	public long timeReachingMEP = 0;
 	public int deadLocusts = 0;
 	public int livingLocusts = 0;
@@ -1211,6 +1212,14 @@ public class SimulationCanvas extends Canvas implements Runnable
                     keep_running = false;
                     isDone = true;
                     running.set(false);
+
+					final int LOCUST_NUMBER = 100;
+
+					runningTime = sim_time;
+					livingLocusts = livingLocustsArray.length;
+					deadLocusts = LOCUST_NUMBER - livingLocusts;
+
+					sim_time = 0;
                 }
             }
 

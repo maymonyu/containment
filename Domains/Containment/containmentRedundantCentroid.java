@@ -23,7 +23,7 @@ import java.util.ArrayList;
  *
  * @author H&aring;kan L. Younes
  */
-public class containmentRedundantRandom extends ControlSystemMFN150 {
+public class containmentRedundantCentroid extends ControlSystemMFN150 {
 
 
     /**
@@ -100,6 +100,10 @@ public class containmentRedundantRandom extends ControlSystemMFN150 {
     public double directionFromStartToCentroid;
     public Vec2 centroid;
     public List<Vec2> polygonVerticesByOrder;
+    Vec2 [] polygonVerticesByOrderArray;
+
+    double steer;
+    double visionRange;
 
     public void Configure() {
         isRedundant = false;
@@ -128,11 +132,14 @@ public class containmentRedundantRandom extends ControlSystemMFN150 {
 
         polygonVerticesByOrder = abstract_robot.CollectAllPolygonVertices();
 
-        Vec2 [] polygonVerticesByOrderArray = new Vec2[polygonVerticesByOrder.size()];
+        polygonVerticesByOrderArray = new Vec2[polygonVerticesByOrder.size()];
         polygonVerticesByOrderArray = polygonVerticesByOrder.toArray(polygonVerticesByOrderArray);
         centroid = calculateCentroid(polygonVerticesByOrderArray);
 
         directionFromStartToCentroid = getDirectionAngleOf2Points(lastPosition, centroid);
+
+        steer = abstract_robot.GetRobotSteer(id);
+        visionRange = abstract_robot.GetVisionRange();
 
         savedTime = 0;
     }
@@ -491,6 +498,87 @@ public class containmentRedundantRandom extends ControlSystemMFN150 {
         }
     }
 
+
+    public Vec2 calculateIntersectionPoint(
+            double m1,
+            double b1,
+            double m2,
+            double b2) {
+
+        double x = (b2 - b1) / (m1 - m2);
+        double y = m1 * x + b1;
+
+        Vec2 point = new Vec2(x, y);
+        return point;
+    }
+
+
+    public Vec2 lineFromPoints(Vec2 P, Vec2 Q)
+    {
+        double a = Q.y - P.y;
+        double b = P.x - Q.x;
+        double c = a*(P.x) + b*(P.y);
+
+        double m = (-1) * a / b;
+        c = c / b;
+
+        return new Vec2(m, c);
+    }
+
+    public static Vec2 GetPointByDistanceAndRadians(double distance, double radians, Vec2 position){
+        double x = distance * Math.cos(radians) + position.x;
+        double y = distance * Math.sin(radians) + position.y;
+
+//		System.out.println("x = " + x + ", y = " + y);
+
+        return new Vec2(x, y);
+    }
+
+
+    private void MinimizePolygon(){
+        List<Vec2> newVertices = new ArrayList<>();
+
+        for(int i = 0; i < polygonVerticesByOrderArray.length; i++) {
+            Vec2 currVertex = polygonVerticesByOrder.get(i);
+            Vec2 nextVertex = polygonVerticesByOrder.get((i+1) % polygonVerticesByOrderArray.length);
+            Vec2 nextNextVertex = polygonVerticesByOrder.get((i+2) % polygonVerticesByOrderArray.length);
+
+//            double angleDirection = calculateRadianIncline(vertex, centroid);
+            double currEdgeSteer = getDirectionAngleOf2Points(currVertex, nextVertex) + (Math.PI / 2);
+            double nextEdgeSteer = getDirectionAngleOf2Points(nextVertex, nextNextVertex) + (Math.PI / 2);
+
+//            Vec2 newVertex = GetPointByDistanceAndRadians(visionRange * 2, angleDirection, vertex);
+            Vec2 newCurrVertex = GetPointByDistanceAndRadians(r_x, currEdgeSteer, currVertex);
+            Vec2 newFirstNextVertex = GetPointByDistanceAndRadians(r_x, currEdgeSteer, nextVertex);
+            Vec2 newSecondNextVertex = GetPointByDistanceAndRadians(r_x, nextEdgeSteer, nextVertex);
+            Vec2 newNextNextVertex = GetPointByDistanceAndRadians(r_x, nextEdgeSteer, nextNextVertex);
+
+            Vec2 currEdgeMandB = lineFromPoints(newCurrVertex, newFirstNextVertex);
+            Vec2 nextEdgeMandB = lineFromPoints(newSecondNextVertex, newNextNextVertex);
+
+            Vec2 intersection = calculateIntersectionPoint(currEdgeMandB.x, currEdgeMandB.y,
+                    nextEdgeMandB.x, nextEdgeMandB.y);
+
+            newVertices.add(intersection);
+        }
+
+        polygonVerticesByOrder = newVertices;
+        polygonVerticesByOrderArray = polygonVerticesByOrder.toArray(polygonVerticesByOrderArray);
+    }
+
+    public static boolean isPolygonContainsPoint(Vec2 [] polygon, Vec2 point) {
+        int i;
+        int j;
+        boolean result = false;
+        for (i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+            if ((polygon[i].y > point.y) != (polygon[j].y > point.y) &&
+                    (point.x < (polygon[j].x - polygon[i].x) * (point.y - polygon[i].y) / (polygon[j].y-polygon[i].y) + polygon[i].x)) {
+                result = !result;
+            }
+        }
+        return result;
+    }
+
     public int TakeStep() {
         double result;
         Message message;
@@ -526,6 +614,8 @@ public class containmentRedundantRandom extends ControlSystemMFN150 {
                 isMyTurn = false;
                 lastPosition = currPosition;
 
+//                MinimizePolygon();
+
 //				if(id == 1){
 //					System.out.println("saved time: " + savedTime);
 //					System.out.println("r_x: " + r_x);
@@ -539,6 +629,11 @@ public class containmentRedundantRandom extends ControlSystemMFN150 {
             savedTime = curr_time;
         }
 
+//        Vec2 edgeOfFov = GetPointByDistanceAndRadians(2 * visionRange, steer, lastPosition);
+//        if(!isRedundant && isMyTurn && !isPolygonContainsPoint(polygonVerticesByOrderArray, edgeOfFov)) {
+//            isRedundant = true;
+//            return CSSTAT_OK;
+//        }
 
         if(!isRedundant && isMyTurn && AreNeighboursCollide()){
             isRedundant = true;

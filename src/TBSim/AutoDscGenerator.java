@@ -655,7 +655,7 @@ public class AutoDscGenerator
     public static void addLocust(Writer outputFile, Vec2 [] polygonVertices, double [] bounds, double velocity){
         int locustNumber = 100;
         String [] locustDefinitions = new String[locustNumber];
-        double locustSize = 0.25;
+        double locustSize = 0.5;
         double marginBetweenLocust = locustSize + 0.1;
         int index = 0;
 
