@@ -386,8 +386,9 @@ public class TBSim extends Frame
 		GenerateDscFile(2, 0, null, "containmentRedundantCentroid");
 		boolean isStopWhenLocustAreDead = true;
 
-//		Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
-//		PolygonStats polygonStats = new PolygonStats(polygonVertices);
+		Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
+		PolygonStats polygonStats = new PolygonStats(polygonVertices);
+		System.out.println(polygonStats.meanPolygonAngle);
 //		System.out.println(polygonStats.minimalDisctanceFromCentroidToEdge);
 //		System.out.println(polygonStats.area);
 
