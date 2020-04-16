@@ -639,7 +639,7 @@ public class containmentFullRound extends ControlSystemMFN150 {
         Message message;
         long curr_time = abstract_robot.getTime();
 
-        if(id==1) {
+        if(id==18) {
 //            System.out.println(calculateDistance(lastPosition, roundStartingLocation));
 //            if(calculateDistance(lastPosition, roundStartingLocation) <= 0.7) {
 //                System.out.println("true !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
@@ -655,7 +655,7 @@ public class containmentFullRound extends ControlSystemMFN150 {
         CheckMessages();
         EliminateLocust();
 
-        if(calculateDistance(lastPosition, destinationPoint) < distanceFromCentroidToDestinationPoint + 1){
+        if(calculateDistance(lastPosition, centroid) < 1){
             isHeadingToFinalPoint = true;
             directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 

@@ -383,7 +383,7 @@ public class TBSim extends Frame
         }
         /*--- make the window ---*/
 
-//		GenerateDscFile(2, 20, null, "containmentFullRound");
+//		GenerateDscFile(1, 30, null, "containmentFullRound");
 
 		TBSim jbs = null;
 		jbs = new TBSim(dsc_file, width, height);
@@ -494,7 +494,7 @@ public class TBSim extends Frame
 										  String algorithmTitle, long timeReachingMEP, int deadLocusts, int runAwayLocusts,
 										  int livingLocusts, int inMEPLocusts, PolygonStats polygonStats){
 		try {
-			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Different Worlds - Full Round/results.csv";
+			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Different Worlds - Full Round/results-2.csv";
 			File f = new File(filePath);
 
 			PrintWriter out = null;
