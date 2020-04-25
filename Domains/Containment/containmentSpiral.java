@@ -629,7 +629,7 @@ public class containmentSpiral extends ControlSystemMFN150 {
 		}
 
 		else {
-			if (calculateDistance(lastPosition, currentDestinationPoint) < 0.4) {
+			if (calculateDistance(lastPosition, currentDestinationPoint) < 0.7) {
 				HandleRoundEnd();
 
 				int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
