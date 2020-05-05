@@ -383,7 +383,7 @@ public class TBSim extends Frame
         }
         /*--- make the window ---*/
 
-//		GenerateDscFile(1, 30, null, "containmentSpiral");
+//		GenerateDscFile(1, 40, null, "containmentFullRound");
 
 		TBSim jbs = null;
 		jbs = new TBSim(dsc_file, width, height);
@@ -410,7 +410,7 @@ public class TBSim extends Frame
 		int dumcount = 0;
 
 //        for(int i=1; i<=9; i++) {
-			for(int numberOfRobots = 50; numberOfRobots <= 50; numberOfRobots += 10) {
+			for(int numberOfRobots = 10; numberOfRobots <= 50; numberOfRobots += 10) {
 				for(double locustsVelocity = (double)robotsVelocity / 4; locustsVelocity <= robotsVelocity;
 					locustsVelocity += (double)robotsVelocity / 4) {
 					for(int algorithm = 0; algorithm < algorithms.length; algorithm++) {
@@ -421,7 +421,7 @@ public class TBSim extends Frame
 						Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
 						PolygonStats polygonStats = new PolygonStats(polygonVertices);
 
-						for (int cycles = 0; cycles < 50; cycles++) {
+						for (int cycles = 0; cycles < 20; cycles++) {
 
 //							String settingFilename = "setting" + Integer.toString(i + 1);
 
@@ -463,7 +463,7 @@ public class TBSim extends Frame
 //							int settingNumber = i + 1;
 							String algorithmTitle = algorithms[algorithm];
 
-							WriteResultsToFile(2, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
+							WriteResultsToFile(5, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
 									jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
 									jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats);
 

@@ -137,6 +137,8 @@ public class SimpleN150Sim extends Simple
 		{
 		if (DEBUG) System.out.println("SimpleN150Sim.TakeStep()");
 
+//		if(getID() == 0) return;
+
 		/*--- keep pointer to the other objects ---*/
 		all_objects = all_objs;
 

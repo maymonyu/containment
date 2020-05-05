@@ -1270,9 +1270,10 @@ public class SimulationCanvas extends Canvas implements Runnable
 					// draw trail
 					if (draw_trails)
 						{
-					simulated_objects[i].drawTrail(bufferg,
-						width,height,
-						top, bottom,left,right);
+								simulated_objects[i].drawTrail(bufferg,
+										width, height,
+										top, bottom, left, right);
+
 						}
 					}
 				}

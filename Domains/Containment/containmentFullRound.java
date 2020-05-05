@@ -448,19 +448,19 @@ public class containmentFullRound extends ControlSystemMFN150 {
     }
 
 
-    private void TellNeighbourstToStartMoving(){
-        isMyTurn = false;
-
-        int nextNeighbour = GetInitialRightNeighbourId();
-        int previousNeighbour = GetInitialLeftNeighbourId();
-
-        try{
-            abstract_robot.unicast(nextNeighbour, new ChangeTurnMessage());
-            abstract_robot.unicast(previousNeighbour, new ChangeTurnMessage());
-        }
-        catch (CommunicationException ex){
-        }
-    }
+//    private void TellNeighbourstToStartMoving(){
+//        isMyTurn = false;
+//
+//        int nextNeighbour = GetInitialRightNeighbourId();
+//        int previousNeighbour = GetInitialLeftNeighbourId();
+//
+//        try{
+//            abstract_robot.unicast(nextNeighbour, new ChangeTurnMessage());
+//            abstract_robot.unicast(previousNeighbour, new ChangeTurnMessage());
+//        }
+//        catch (CommunicationException ex){
+//        }
+//    }
 
     private void SendNewNeighboursMessages(){
         try{
