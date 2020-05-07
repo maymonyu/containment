@@ -16,6 +16,8 @@ import EDU.cmu.cs.coral.simulation.*;
 import EDU.cmu.cs.coral.util.Polygon2;
 import EDU.cmu.cs.coral.util.Circle2;
 
+import java.util.stream.IntStream;
+
 
 /**
  * SimpleN150Sim implements SimpleN150 for simulation.
@@ -58,6 +60,12 @@ public class SimpleN150Sim extends Simple
 		private boolean firstTimeToRun;
 		private List<RobotNode> list;
 		private int countOfRedundant;
+
+
+//	int[] deadRobotsIds = {11, 7, 25, 39};
+//	int[] deadRobotsIds = {11, 7, 25, 39, 2, 14, 37, 1};
+	int[] deadRobotsIds = {11, 7, 25, 39, 2, 14, 37, 1, 35, 30, 20, 15};
+
 	 
 	/**
 	 * Instantiate a <B>SimpleN150Sim</B> object.  Be sure
@@ -270,6 +278,11 @@ public class SimpleN150Sim extends Simple
 			setGripperFingers(-1,-1);
 		}
 
+
+		public boolean isDead(){
+			int id = getID();
+			return IntStream.of(deadRobotsIds).anyMatch(x -> x == id);
+		}
 
 	public SimulatedObject[] getLivingLocust(){
 		final int LOCUST_VISIONCLASS = 0;

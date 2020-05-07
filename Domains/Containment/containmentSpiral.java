@@ -18,7 +18,7 @@ import java.io.Writer;
 
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.stream.IntStream;
 
 /**
  * A homogeneous robot soccer team.
@@ -114,6 +114,8 @@ public class containmentSpiral extends ControlSystemMFN150 {
 	Vec2 lastPosition;
 	double r_x;
 
+	boolean isDead;
+
 	public void Configure() {
 		isRedundant = false;
 		isMyTurn = false;
@@ -161,6 +163,8 @@ public class containmentSpiral extends ControlSystemMFN150 {
 		isHeadingToFinalPoint = false;
 
 		savedTime = 0;
+
+		isDead = abstract_robot.isDead();
 	}
 
 	public Vec2 calculateCentroid(Vec2 [] polygonVertices){
@@ -608,6 +612,7 @@ public class containmentSpiral extends ControlSystemMFN150 {
 		CheckMessages();
 		EliminateLocust();
 
+		if(isDead) return CSSTAT_OK;
 
 		if(round == 0){
 			HandleRoundEnd();
