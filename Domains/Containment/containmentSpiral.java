@@ -613,7 +613,7 @@ public class containmentSpiral extends ControlSystemMFN150 {
 			HandleRoundEnd();
 		}
 
-		if(calculateDistance(lastPosition, destinationPoint) < 10){
+		if(calculateDistance(lastPosition, centroid) < 5){
 			isHeadingToFinalPoint = true;
 			directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 
