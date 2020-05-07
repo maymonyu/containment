@@ -1204,6 +1204,14 @@ public class SimulationCanvas extends Canvas implements Runnable
 				}
 			}
 
+			if(robot.AreAllLivingRobotsNearDestinationPoint()){
+				System.out.println("DONEEEEEEEEEEEEEEEEEEEEEEEEEE");
+
+				keep_running = false;
+				isDone = true;
+				running.set(false);
+			}
+
 			if(robot.AreAllRobotsNearDestinationPoint()){
 				final int LOCUST_NUMBER = 100;
 
