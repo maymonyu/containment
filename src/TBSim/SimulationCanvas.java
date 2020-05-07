@@ -9,6 +9,8 @@ import java.awt.*;
 import java.lang.System;
 import java.lang.Class;
 import java.lang.reflect.*;
+import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import EDU.gatech.cc.is.abstractrobot.*;
@@ -83,12 +85,14 @@ public class SimulationCanvas extends Canvas implements Runnable
 	public int runAwayLocusts = 0;
 	public int inMEPLocusts = 0;
 
-	/**
+	public boolean areSettedNewDestinationsPoints = false;
+
+		/**
 	 * The maximum number of objects in a simulation.
 	 */
 	public	static final int MAX_SIM_OBJS = 1000;
 
-	/**
+		/**
 	 * Read the description of the world from a file.
 	 */
 	private	void loadEnvironmentDescription() throws IOException
@@ -1207,34 +1211,81 @@ public class SimulationCanvas extends Canvas implements Runnable
 			if(robot.AreAllLivingRobotsNearDestinationPoint()){
 				System.out.println("DONEEEEEEEEEEEEEEEEEEEEEEEEEE");
 
-				keep_running = false;
-				isDone = true;
-				running.set(false);
+				if(areSettedNewDestinationsPoints){
+					final int LOCUST_NUMBER = 100;
+
+					SimulatedObject[] livingLocustsArray = robot.getLivingLocust();
+
+					timeReachingMEP = sim_time;
+					livingLocusts = livingLocustsArray.length;
+					deadLocusts = LOCUST_NUMBER - livingLocusts;
+
+					Vec2[] destinationPointsPolygon = robot.GetAllDestinationPoints();
+					inMEPLocusts = calculateLivingLocustsInMEP(livingLocustsArray, destinationPointsPolygon);
+					runAwayLocusts = livingLocusts - inMEPLocusts;
+
+					keep_running = false;
+					isDone = true;
+					running.set(false);
+				}
+
+				else {
+					List<SimpleN150Sim> livingRobots = robot.getLivingRobots();
+
+					// Set new destinationPoints
+					List<RobotMetadata> robots = generateRobotMetadata(livingRobots);
+					double radius = robot.GetVisionRange();
+					Vec2 centroid = robot.calculateCentroid();
+					robots = AutoDscGenerator.setRobotsDestinationPoints(robots, radius, centroid);
+
+					// Update real destinationPoints
+					for(int i=0; i<livingRobots.size(); i++){
+						livingRobots.get(i).destinationPoint = robots.get(i).destinationPoint;
+						livingRobots.get(i).isSettedNewDestinaionPoint = true;
+					}
+
+					areSettedNewDestinationsPoints = true;
+				}
 			}
 
-			if(robot.AreAllRobotsNearDestinationPoint()){
-				final int LOCUST_NUMBER = 100;
-
-				SimulatedObject[] livingLocustsArray = robot.getLivingLocust();
-
-				timeReachingMEP = sim_time;
-				livingLocusts = livingLocustsArray.length;
-				deadLocusts = LOCUST_NUMBER - livingLocusts;
-
-				Vec2[] destinationPointsPolygon = robot.GetAllDestinationPoints();
-				inMEPLocusts = calculateLivingLocustsInMEP(livingLocustsArray, destinationPointsPolygon);
-				runAwayLocusts = livingLocusts - inMEPLocusts;
-
-				keep_running = false;
-				isDone = true;
-				running.set(false);
-			}
+//			if(robot.AreAllRobotsNearDestinationPoint()){
+//				final int LOCUST_NUMBER = 100;
+//
+//				SimulatedObject[] livingLocustsArray = robot.getLivingLocust();
+//
+//				timeReachingMEP = sim_time;
+//				livingLocusts = livingLocustsArray.length;
+//				deadLocusts = LOCUST_NUMBER - livingLocusts;
+//
+//				Vec2[] destinationPointsPolygon = robot.GetAllDestinationPoints();
+//				inMEPLocusts = calculateLivingLocustsInMEP(livingLocustsArray, destinationPointsPolygon);
+//				runAwayLocusts = livingLocusts - inMEPLocusts;
+//
+//				keep_running = false;
+//				isDone = true;
+//				running.set(false);
+//			}
 		}
 
 			System.out.println("URI *(@!#21#@!%!%$@#%$@%$#%#$%#%$#!#$#");
 		run_sim_thread.interrupt();
 		}
 
+
+	public List<RobotMetadata> generateRobotMetadata(List<SimpleN150Sim> livingRobots){
+		List<RobotMetadata> robotsMetadata = new ArrayList<RobotMetadata>();
+
+		for(int i=0; i < livingRobots.size(); i++){
+			SimpleN150Sim livingRobot = livingRobots.get(i);
+
+			Vec2 location = livingRobot.getPosition();
+			RobotMetadata robotMetadata = new RobotMetadata(location);
+
+			robotsMetadata.add(robotMetadata);
+		}
+
+		return robotsMetadata;
+	}
 
 	public int calculateLivingLocustsInMEP(SimulatedObject[] livingLocustsArray, Vec2[] destinationPointsPolygon){
 		int locustInMEP = 0;

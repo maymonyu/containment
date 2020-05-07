@@ -44,7 +44,7 @@ public class SimpleN150Sim extends Simple
 	private	double	turret;
 	private int indexOnEdge;
 	private boolean isLastOnEdge;
-	private Vec2 destinationPoint;
+	public Vec2 destinationPoint;
 	private Vec2 edgeStartVertex;
 
 	private	double	speed;
@@ -65,9 +65,9 @@ public class SimpleN150Sim extends Simple
 //	int[] deadRobotsIds = {11, 7, 25, 39};
 //	int[] deadRobotsIds = {11, 7, 25, 39, 2, 14, 37, 1};
 	int[] deadRobotsIds = {11, 7, 25, 39, 2, 14, 37, 1, 35, 30, 20, 15};
+	public boolean isSettedNewDestinaionPoint = false;
 
-	 
-	/**
+		/**
 	 * Instantiate a <B>SimpleN150Sim</B> object.  Be sure
 	 * to also call init with proper values.
 	 * @see SimpleN150Sim#init
@@ -279,6 +279,10 @@ public class SimpleN150Sim extends Simple
 		}
 
 
+		public boolean GetIsSettedNewDestinaionPoint(){
+		return isSettedNewDestinaionPoint;
+		}
+
 		public boolean isDead(){
 			int id = getID();
 			return IntStream.of(deadRobotsIds).anyMatch(x -> x == id);
@@ -357,6 +361,25 @@ public class SimpleN150Sim extends Simple
 		}
 
 		return true;
+	}
+
+	public List<SimpleN150Sim> getLivingRobots(){
+		List<SimpleN150Sim> livingRobots = new ArrayList<>();
+
+		for(int i = 0; i < all_objects.length; i++)
+		{
+			/*--- check if it's a teammate and a robot ---*/
+			if ((all_objects[i] instanceof Simple))
+			// note: self included
+			{
+				SimpleN150Sim robot = (SimpleN150Sim) all_objects[i];
+				if(!robot.isDead()) {
+					livingRobots.add(robot);
+				}
+			}
+		}
+
+		return livingRobots;
 	}
 
 	public boolean AreAllRobotsNearDestinationPoint(){
@@ -447,6 +470,18 @@ public class SimpleN150Sim extends Simple
 		return polygonVertices;
 	}
 
+	public Vec2 calculateCentroid(){
+		List<Vec2> polygonVerticesByOrder = CollectAllPolygonVertices();
+		Vec2 [] polygonVerticesByOrderArray = new Vec2[polygonVerticesByOrder.size()];
+		polygonVerticesByOrderArray = polygonVerticesByOrder.toArray(polygonVerticesByOrderArray);		double centroidX = 0, centroidY = 0;
+
+		for(Vec2 vertex : polygonVerticesByOrderArray) {
+			centroidX += vertex.x;
+			centroidY += vertex.y;
+		}
+
+		return new Vec2(centroidX / polygonVerticesByOrderArray.length, centroidY / polygonVerticesByOrderArray.length);
+	}
 
     public int GetNumberOfRobots(){
 //	    return all_objects.length;

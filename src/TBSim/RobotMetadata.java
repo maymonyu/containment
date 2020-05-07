@@ -49,4 +49,16 @@ public class RobotMetadata {
 
         destinationPoint = null;
     }
+
+    public RobotMetadata(Vec2 location) {
+        this.location = new Vec2(location);
+
+        this.heading = 0;
+        this.steering = 0;
+        this.indexOnEdge = 0;
+        this.isLastOnEdge = 0;
+        this.edgeStartVertex = null;
+
+        destinationPoint = null;
+    }
 }

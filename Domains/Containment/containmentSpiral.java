@@ -612,21 +612,26 @@ public class containmentSpiral extends ControlSystemMFN150 {
 		CheckMessages();
 		EliminateLocust();
 
+		boolean isSettedNewDestinaionPoint = abstract_robot.GetIsSettedNewDestinaionPoint();
+
 		if(isDead) return CSSTAT_OK;
 
 		if(round == 0){
 			HandleRoundEnd();
 		}
 
-		if(calculateDistance(lastPosition, centroid) < 5){
-			isHeadingToFinalPoint = true;
+		if(id==0) {
+//			System.out.println("isSettedNewDestinaionPoint: " + isSettedNewDestinaionPoint);
+			System.out.println("destinationPoint: " + destinationPoint);
+		}
+
+		if(isSettedNewDestinaionPoint){
+			destinationPoint = abstract_robot.GetDestinationPoint();
 			directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 
 			abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
 			StartMoving(curr_time);
-		}
 
-		if(isHeadingToFinalPoint) {
 			if (calculateDistance(lastPosition, destinationPoint) < 0.4) {
 				StopMoving(curr_time);
 				return CSSTAT_OK;
@@ -634,21 +639,34 @@ public class containmentSpiral extends ControlSystemMFN150 {
 		}
 
 		else {
-			if (calculateDistance(lastPosition, currentDestinationPoint) < 0.7) {
-				HandleRoundEnd();
+			if (calculateDistance(lastPosition, centroid) < 5) {
+				isHeadingToFinalPoint = true;
+				directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 
-				int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
-				SetCurrentDestinationPoint(nextVertexIndex);
-
-				abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+				abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
 				StartMoving(curr_time);
 			}
-			else {
-				abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
-				StartMoving(curr_time);
+
+			if (isHeadingToFinalPoint) {
+				if (calculateDistance(lastPosition, destinationPoint) < 0.4) {
+					StopMoving(curr_time);
+					return CSSTAT_OK;
+				}
+			} else {
+				if (calculateDistance(lastPosition, currentDestinationPoint) < 0.7) {
+					HandleRoundEnd();
+
+					int nextVertexIndex = (currentVertexIndex + 1) % polygonVerticesByOrder.size();
+					SetCurrentDestinationPoint(nextVertexIndex);
+
+					abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+					StartMoving(curr_time);
+				} else {
+					abstract_robot.setSteerHeading(0L, directionToCurrentDestinationPoint);
+					StartMoving(curr_time);
+				}
 			}
 		}
-
 
 //		else {
 //		    StopMoving(0L);

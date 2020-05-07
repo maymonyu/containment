@@ -106,5 +106,5 @@ public interface MultiForageN150 extends SimpleN150,
             public List<Double> CollectEdgesDirectionAngles();
         public double GetVisionRange();
         public boolean isDead();
-
+        public boolean GetIsSettedNewDestinaionPoint();
             }
