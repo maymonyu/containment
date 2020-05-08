@@ -120,6 +120,8 @@ public class containmentFullRound extends ControlSystemMFN150 {
     Vec2 lastPosition;
     double r_x;
 
+    boolean isDead;
+
     public void Configure() {
         isRedundant = false;
         isMyTurn = false;
@@ -176,6 +178,8 @@ public class containmentFullRound extends ControlSystemMFN150 {
 
 
         savedTime = 0;
+
+        isDead = abstract_robot.isDead();
     }
 
     public Vec2 calculateCentroid(Vec2 [] polygonVertices){
@@ -639,6 +643,10 @@ public class containmentFullRound extends ControlSystemMFN150 {
         Message message;
         long curr_time = abstract_robot.getTime();
 
+        boolean isSettedNewDestinaionPoint = abstract_robot.GetIsSettedNewDestinaionPoint();
+
+        if(isDead) return CSSTAT_OK;
+
         if(id==18) {
 //            System.out.println(calculateDistance(lastPosition, roundStartingLocation));
 //            if(calculateDistance(lastPosition, roundStartingLocation) <= 0.7) {
@@ -654,6 +662,19 @@ public class containmentFullRound extends ControlSystemMFN150 {
 
         CheckMessages();
         EliminateLocust();
+
+        if(isSettedNewDestinaionPoint){
+            destinationPoint = abstract_robot.GetDestinationPoint();
+            directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
+
+            abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
+            StartMoving(curr_time);
+
+            if (calculateDistance(lastPosition, destinationPoint) < 0.4) {
+                StopMoving(curr_time);
+                return CSSTAT_OK;
+            }
+        }
 
         if(calculateDistance(lastPosition, centroid) < 1){
             isHeadingToFinalPoint = true;

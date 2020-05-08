@@ -620,10 +620,10 @@ public class containmentSpiral extends ControlSystemMFN150 {
 			HandleRoundEnd();
 		}
 
-		if(id==0) {
+//		if(id==0) {
 //			System.out.println("isSettedNewDestinaionPoint: " + isSettedNewDestinaionPoint);
-			System.out.println("destinationPoint: " + destinationPoint);
-		}
+//			System.out.println("destinationPoint: " + destinationPoint);
+//		}
 
 		if(isSettedNewDestinaionPoint){
 			destinationPoint = abstract_robot.GetDestinationPoint();

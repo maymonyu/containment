@@ -97,6 +97,8 @@ public class containmentStraight extends ControlSystemMFN150 {
     Vec2 lastPosition;
     double r_x;
 
+    boolean isDead;
+
     public void Configure() {
         isRedundant = false;
         isMyTurn = false;
@@ -126,6 +128,8 @@ public class containmentStraight extends ControlSystemMFN150 {
         directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 
         savedTime = 0;
+
+        isDead = abstract_robot.isDead();
     }
 
     private void SetLeftNeighbourId(int leftNeighbourId){
@@ -477,12 +481,29 @@ public class containmentStraight extends ControlSystemMFN150 {
         long curr_time = abstract_robot.getTime();
         lastPosition = abstract_robot.getPosition();
 
+        boolean isSettedNewDestinaionPoint = abstract_robot.GetIsSettedNewDestinaionPoint();
+
+        if(isDead) return CSSTAT_OK;
+
         // TURRET
         result = abstract_robot.getTurretHeading(curr_time);
         abstract_robot.setTurretHeading(curr_time, result);
 
         CheckMessages();
         EliminateLocust();
+
+        if(isSettedNewDestinaionPoint){
+            destinationPoint = abstract_robot.GetDestinationPoint();
+            directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
+
+            abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
+            StartMoving(curr_time);
+
+            if (calculateDistance(lastPosition, destinationPoint) < 0.4) {
+                StopMoving(curr_time);
+                return CSSTAT_OK;
+            }
+        }
 
         if(calculateDistance(lastPosition, destinationPoint) > 0.4){
             StartMoving(curr_time);
