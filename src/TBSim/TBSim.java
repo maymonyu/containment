@@ -400,11 +400,11 @@ public class TBSim extends Frame
 //        jbs.show();
 
 		int robotsVelocity = 8;
-		String[] algorithms = new String[1];
-		algorithms[0] = "Spiral";
-//		algorithms[1] = "Straight";
-//		algorithms[2] = "ZigZag";
-//		algorithms[0] = "FullRound";
+		String[] algorithms = new String[3];
+//		algorithms[0] = "Spiral";
+		algorithms[0] = "FullRound";
+		algorithms[1] = "Straight";
+		algorithms[2] = "ZigZag";
 
 		int runCount = 0;
 		int dumcount = 0;
@@ -421,7 +421,7 @@ public class TBSim extends Frame
 						Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
 						PolygonStats polygonStats = new PolygonStats(polygonVertices);
 
-						for (int cycles = 0; cycles < 50; cycles++) {
+						for (int cycles = 0; cycles < 20; cycles++) {
 
 //							String settingFilename = "setting" + Integer.toString(i + 1);
 
@@ -463,7 +463,7 @@ public class TBSim extends Frame
 //							int settingNumber = i + 1;
 							String algorithmTitle = algorithms[algorithm];
 
-							WriteResultsToFile(2, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
+							WriteResultsToFile(1, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
 									jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
 									jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats);
 
@@ -494,7 +494,7 @@ public class TBSim extends Frame
 										  String algorithmTitle, long timeReachingMEP, int deadLocusts, int runAwayLocusts,
 										  int livingLocusts, int inMEPLocusts, PolygonStats polygonStats){
 		try {
-			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Different Worlds - Spiral/results-all_params_50_times.csv";
+			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Different Worlds/results-all_params_without_spiral.csv";
 			File f = new File(filePath);
 
 			PrintWriter out = null;

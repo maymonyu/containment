@@ -680,7 +680,7 @@ public class containmentFullRound extends ControlSystemMFN150 {
         if(!isHeadingToFinalPoint && isGoingToNewStartingLocation){
 //            if(id==0) System.out.println(calculateDistance(lastPosition, nextStartingLocation));
 
-            if(calculateDistance(lastPosition, nextStartingLocation) < 0.4){
+            if(calculateDistance(lastPosition, nextStartingLocation) < 0.5){
                 roundStartingLocation = nextStartingLocation;
                 isGoingToNewStartingLocation = false;
 
@@ -706,7 +706,7 @@ public class containmentFullRound extends ControlSystemMFN150 {
 //            System.out.println(calculateDistance(lastPosition, roundStartingLocation) <= 0.5);
                 round = Math.max(1, round); // Declare that we started running
 
-                if (calculateDistance(lastPosition, currentDestinationPoint) < 1) {
+                if (calculateDistance(lastPosition, currentDestinationPoint) < 0.8) {
 //                HandleRoundEnd();
 
                     int nextVertexIndex = (currentVertexIndex + 1) % (numberOfVertices);
