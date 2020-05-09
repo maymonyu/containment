@@ -686,6 +686,16 @@ public class MultiForageN150Hard extends SimpleN150Hard
 		}
 
 		@Override
+		public boolean isDead() {
+			return false;
+		}
+
+		@Override
+		public boolean GetIsSettedNewDestinaionPoint() {
+			return false;
+		}
+
+		@Override
 		public int CalculateRedundantRobots(){
         	return 0;
 		}
