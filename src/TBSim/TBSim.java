@@ -409,7 +409,7 @@ public class TBSim extends Frame
 		int runCount = 0;
 		int dumcount = 0;
 
-		int numberOfDeadRobots = 12;
+		int numberOfDeadRobots = 25;
 
 //        for(int i=1; i<=9; i++) {
 			for(int numberOfRobots = 40; numberOfRobots <= 40; numberOfRobots += 10) {

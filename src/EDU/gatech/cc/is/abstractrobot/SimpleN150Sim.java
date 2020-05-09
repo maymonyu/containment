@@ -64,7 +64,8 @@ public class SimpleN150Sim extends Simple
 
 //	int[] deadRobotsIds = {11, 7, 25, 39};
 //	int[] deadRobotsIds = {11, 7, 25, 39, 2, 14, 37, 1};
-	int[] deadRobotsIds = {11, 7, 25, 39, 2, 14, 37, 1, 35, 30, 20, 15};
+//	int[] deadRobotsIds = {11, 7, 25, 39, 2, 14, 37, 1, 35, 30, 20, 15};
+	int[] deadRobotsIds = {11, 7, 25, 39, 2, 14, 37, 1, 35, 30, 20, 15, 16, 6, 13,26,29,9,38, 12, 36,28,5,24,21};
 	public boolean isSettedNewDestinaionPoint = false;
 
 		/**
