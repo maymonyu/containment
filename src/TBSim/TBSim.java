@@ -410,7 +410,7 @@ public class TBSim extends Frame
 		int dumcount = 0;
 
 //        for(int i=1; i<=9; i++) {
-			for(int numberOfRobots = 50; numberOfRobots <= 50; numberOfRobots += 10) {
+			for(int numberOfRobots = 10; numberOfRobots <= 50; numberOfRobots += 10) {
 				for(double locustsVelocity = (double)robotsVelocity / 4; locustsVelocity <= robotsVelocity;
 					locustsVelocity += (double)robotsVelocity / 4) {
 					for(int algorithm = 0; algorithm < algorithms.length; algorithm++) {
@@ -463,7 +463,7 @@ public class TBSim extends Frame
 //							int settingNumber = i + 1;
 							String algorithmTitle = algorithms[algorithm];
 
-							WriteResultsToFile(1, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
+							WriteResultsToFile(3, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
 									jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
 									jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats);
 
