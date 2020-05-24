@@ -463,7 +463,7 @@ public class TBSim extends Frame
 //							int settingNumber = i + 1;
 							String algorithmTitle = algorithms[algorithm];
 
-							WriteResultsToFile(3, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
+							WriteResultsToFile(5, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
 									jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
 									jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats);
 
