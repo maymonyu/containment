@@ -421,7 +421,7 @@ public class TBSim extends Frame
 						Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
 						PolygonStats polygonStats = new PolygonStats(polygonVertices);
 
-						for (int cycles = 0; cycles < 20; cycles++) {
+						for (int cycles = 0; cycles < 30; cycles++) {
 
 //							String settingFilename = "setting" + Integer.toString(i + 1);
 
