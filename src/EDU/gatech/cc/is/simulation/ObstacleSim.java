@@ -74,12 +74,17 @@ public class ObstacleSim extends Object implements SimulatedObject
 		}
 
 
-        @Override
-        public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, int id, long s) {
+		@Override
+		public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, double xDestinationPoint, double yDestinationPoint, double xEdgeStartVertex, double yEdgeStartVertex, int id, long s) {
 
-        }
+		}
 
-        /**
+		@Override
+		public void init(double x, double y, double t, double r, Color fg, Color bg, int vc, double steer, int indexOnEdge, boolean isLastOnEdge, double xDestinationPoint, double yDestinationPoint, double xEdgeStartVertex, double yEdgeStartVertex, double locustVelocity, int id, long s) {
+
+		}
+
+		/**
 	 * Take a simulated step;
 	 */
 	public void takeStep(long time_increment, SimulatedObject[] all_objs)

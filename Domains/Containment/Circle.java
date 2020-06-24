@@ -6,8 +6,8 @@ public final class Circle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public final Vector2 c;
-	public final double r;
+	public Vector2 c;
+	public double r;
 
 	public Circle(Vector2 c, double r) {
 		if (!(r > 0)) throw new IllegalArgumentException("Radius must be positive");

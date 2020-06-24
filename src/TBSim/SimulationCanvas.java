@@ -61,7 +61,7 @@ public class SimulationCanvas extends Canvas implements Runnable
 	private	boolean	to_draw = false;
 
 	public static boolean isDone = false;
-
+    public boolean isStopRunningWhenLocustAreDead;
 
 		/*make these package scope so TBSim can access for updating menu on startup*/
 	    boolean	draw_ids = false; //don't draw robot ids
@@ -77,6 +77,8 @@ public class SimulationCanvas extends Canvas implements Runnable
 	private long	startrun = 0;
 	private long	frames = 0;
 
+	public long runningTime = 0;
+	public long runningTimeOfDisablingAllLocust = 0;
 	public long timeReachingMEP = 0;
 	public int deadLocusts = 0;
 	public int livingLocusts = 0;
@@ -1031,8 +1033,8 @@ public class SimulationCanvas extends Canvas implements Runnable
 		}
 	  
 	  public SimulationCanvas(Frame p, int w, int h,
-				  String dscfile) {
-	    this(p, w, h, dscfile, true);
+				  String dscfile, boolean isStopRunningWhenLocustAreDead) {
+	    this(p, w, h, dscfile, true, isStopRunningWhenLocustAreDead);
 
 	    visionNoiseStddev = 0.0; //default is no noise
 	    visionNoiseSeed = 31337; //default noise seed
@@ -1042,7 +1044,7 @@ public class SimulationCanvas extends Canvas implements Runnable
 	Set up the SimulationCanvas.
 	*/
 	public SimulationCanvas(Frame p, int w, int h,
-		String dscfile, boolean preserveSize)
+		String dscfile, boolean preserveSize, boolean isStopRunningWhenLocustAreDead)
 		{
 		if (p == null) 
 			{
@@ -1058,7 +1060,8 @@ public class SimulationCanvas extends Canvas implements Runnable
 		simulated_objects = new SimulatedObject[0];
 		control_systems = new ControlSystemS[0];
 		this.preserveSize = preserveSize;
-	
+	    this.isStopRunningWhenLocustAreDead = isStopRunningWhenLocustAreDead;
+
 		descriptionfile = dscfile;
 
 		if (graphics_on)
@@ -1204,23 +1207,46 @@ public class SimulationCanvas extends Canvas implements Runnable
 				}
 			}
 
-			if(robot.AreAllRobotsNearDestinationPoint()){
-				final int LOCUST_NUMBER = 100;
+			if(isStopRunningWhenLocustAreDead){
+                SimulatedObject[] livingLocustsArray = robot.getLivingLocust();
+                if(livingLocustsArray.length == 0){
+                    keep_running = false;
+                    isDone = true;
+                    running.set(false);
 
-				SimulatedObject[] livingLocustsArray = robot.getLivingLocust();
+					final int LOCUST_NUMBER = 100;
+                    double numberOfMessagingRounds = robot.rounds;
+                    double messagingTime = 1000;
 
-				timeReachingMEP = sim_time;
-				livingLocusts = livingLocustsArray.length;
-				deadLocusts = LOCUST_NUMBER - livingLocusts;
+					runningTime = sim_time;
+					runningTimeOfDisablingAllLocust = sim_time + (long)(numberOfMessagingRounds * messagingTime);
 
-				Vec2[] destinationPointsPolygon = robot.GetAllDestinationPoints();
-				inMEPLocusts = calculateLivingLocustsInMEP(livingLocustsArray, destinationPointsPolygon);
-				runAwayLocusts = livingLocusts - inMEPLocusts;
+					livingLocusts = livingLocustsArray.length;
+					deadLocusts = LOCUST_NUMBER - livingLocusts;
 
-				keep_running = false;
-				isDone = true;
-				running.set(false);
-			}
+					sim_time = 0;
+                }
+            }
+
+			else {
+                if (robot.AreAllRobotsNearDestinationPoint()) {
+                    final int LOCUST_NUMBER = 100;
+
+                    SimulatedObject[] livingLocustsArray = robot.getLivingLocust();
+
+                    timeReachingMEP = sim_time;
+                    livingLocusts = livingLocustsArray.length;
+                    deadLocusts = LOCUST_NUMBER - livingLocusts;
+
+                    Vec2[] destinationPointsPolygon = robot.GetAllDestinationPoints();
+                    inMEPLocusts = calculateLivingLocustsInMEP(livingLocustsArray, destinationPointsPolygon);
+                    runAwayLocusts = livingLocusts - inMEPLocusts;
+
+                    keep_running = false;
+                    isDone = true;
+                    running.set(false);
+                }
+            }
 		}
 
 			System.out.println("URI *(@!#21#@!%!%$@#%$@%$#%#$%#%$#!#$#");

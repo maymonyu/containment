@@ -75,20 +75,20 @@ public class TBSim extends Frame
 	private	CheckboxMenuItem icons;
 
 	  public TBSim() {
-	    this(null, 200, 100, false);
+	    this(null, 200, 100, false, true);
 	  }
 	  
 	  public TBSim(String file) {
-	    this(file, 500, 500, false);
+	    this(file, 500, 500, false, true);
 	  }
 	  
 	  public TBSim(String file, int width, int height) {
-	    this(file, width, height, true);
+	    this(file, width, height, true, true);
 	  }
 
 
 	public void initSim(String file, int width, int height,
-						boolean preserveSize){
+						boolean preserveSize, boolean isStopWhenLocustAreDead){
 		simFrame = new Frame("TBSim");
 
 		/*--- Set the title ---*/
@@ -170,7 +170,7 @@ public class TBSim extends Frame
 		dsc_file = file;
 
 		simulation =
-				new SimulationCanvas(simFrame,width,height,dsc_file,preserveSize);
+				new SimulationCanvas(simFrame,width,height,dsc_file,preserveSize, isStopWhenLocustAreDead);
 		playing_field_panel.add(simulation);
 		simFrame.add("South",playing_field_panel);
 
@@ -199,9 +199,9 @@ public class TBSim extends Frame
 	 * Set up the frame and buttons.
 	 */
 	public TBSim(String file, int width, int height, 
-		     boolean preserveSize)
+		     boolean preserveSize, boolean isStopWhenLocustAreDead)
 		{
-			initSim(file, width, height, preserveSize);
+			initSim(file, width, height, preserveSize, isStopWhenLocustAreDead);
 		}
 
 	/**
@@ -383,10 +383,18 @@ public class TBSim extends Frame
         }
         /*--- make the window ---*/
 
-//		GenerateDscFile(1, 30, null, "containmentSpiral");
+//		GenerateDscFile(2, 0, null, "containment");
+		boolean isStopWhenLocustAreDead = true;
+//		boolean isStopWhenLocustAreDead = false;
+
+		Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
+		PolygonStats polygonStats = new PolygonStats(polygonVertices);
+		System.out.println(polygonStats.meanPolygonAngle);
+//		System.out.println(polygonStats.minimalDisctanceFromCentroidToEdge);
+//		System.out.println(polygonStats.area);
 
 		TBSim jbs = null;
-		jbs = new TBSim(dsc_file, width, height);
+		jbs = new TBSim(dsc_file, width, height, true, isStopWhenLocustAreDead);
 		jbs.simulation.pause();
 //		jbs.simulation.setNewRun("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
 		jbs.show();
@@ -409,92 +417,189 @@ public class TBSim extends Frame
 		int runCount = 0;
 		int dumcount = 0;
 
-//        for(int i=1; i<=9; i++) {
-			for(int numberOfRobots = 10; numberOfRobots <= 50; numberOfRobots += 10) {
-				for(double locustsVelocity = (double)robotsVelocity / 4; locustsVelocity <= robotsVelocity;
-					locustsVelocity += (double)robotsVelocity / 4) {
-					for(int algorithm = 0; algorithm < algorithms.length; algorithm++) {
+		String [] perfectAlgorithms = new String[1];
+		perfectAlgorithms[0] = "";
+//		perfectAlgorithms[1] = "RedundantCentroid";
+		RunPerfectEnclosure(perfectAlgorithms, jbs);
 
-						String algorithmName = "containment" + algorithms[algorithm];
-						GenerateDscFile(locustsVelocity, numberOfRobots, null, algorithmName);
-
-						Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
-						PolygonStats polygonStats = new PolygonStats(polygonVertices);
-
-						for (int cycles = 0; cycles < 50; cycles++) {
-
-//							String settingFilename = "setting" + Integer.toString(i + 1);
-
-//							jbs = new TBSim(dsc_file, width, height);
-//							jbs.show();
-
-							jbs.simulation.setNewRun("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
-
-							jbs.simulation.pause();
-							jbs.simulation.load("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
-							jbs.simulation.reset();
-							jbs.simulation.start();
-
-//							jbs.simulation.run_sim_thread.start();
-//							jbs.simulation.run();
-
-//							jbs.simulation.run();
-
-							if (!jbs.simulation.descriptionLoaded())// only if loaded ok.
-							{
-								System.out.println("********** Description Didn't loaded correctly *********************");
-							}
-//							jbs = new TBSim(dsc_file, width, height);
-//							jbs.show();
-
-//							while (!jbs.simulation.isDone) {
+////        for(int i=1; i<=9; i++) {
+//			for(int numberOfRobots = 20; numberOfRobots <= 30; numberOfRobots += 10) {
+//				for(double locustsVelocity = (double)robotsVelocity / 4; locustsVelocity <= robotsVelocity;
+//					locustsVelocity += (double)robotsVelocity / 2) {
+//					for(int algorithm = 0; algorithm < algorithms.length; algorithm++) {
+//
+//						String algorithmName = "containment" + algorithms[algorithm];
+//						GenerateDscFile(locustsVelocity, numberOfRobots, null, algorithmName);
+//
+//						Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
+//						PolygonStats polygonStats = new PolygonStats(polygonVertices);
+//
+//						for (int cycles = 0; cycles < 20; cycles++) {
+//
+////							String settingFilename = "setting" + Integer.toString(i + 1);
+//
+////							jbs = new TBSim(dsc_file, width, height);
+////							jbs.show();
+//
+//							jbs.simulation.setNewRun("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
+//
+//							jbs.simulation.pause();
+//							jbs.simulation.load("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
+//							jbs.simulation.reset();
+//							jbs.simulation.start();
+//
+////							jbs.simulation.run_sim_thread.start();
+////							jbs.simulation.run();
+//
+////							jbs.simulation.run();
+//
+//							if (!jbs.simulation.descriptionLoaded())// only if loaded ok.
+//							{
+//								System.out.println("********** Description Didn't loaded correctly *********************");
+//							}
+////							jbs = new TBSim(dsc_file, width, height);
+////							jbs.show();
+//
+////							while (!jbs.simulation.isDone) {
+//////								System.out.println(dumcount);
+//////								dumcount++;
+////							}
+//
+//							while (jbs.simulation.running.get()) {
 ////								System.out.println(dumcount);
 ////								dumcount++;
 //							}
-
-							while (jbs.simulation.running.get()) {
-//								System.out.println(dumcount);
-//								dumcount++;
-							}
-
-//							jbs.simulation.run_sim_thread.join();
-							jbs.simulation.pause();
-
-//							int settingNumber = i + 1;
-							String algorithmTitle = algorithms[algorithm];
-
-							WriteResultsToFile(1, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
-									jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
-									jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats);
-
-							System.out.println("&&&&&&&&&&&&&&&&7");
-
+//
+////							jbs.simulation.run_sim_thread.join();
 //							jbs.simulation.pause();
-//							jbs.simulation.quit();
-							jbs.hide();
-
-//							jbs.simulation = null;
-//							jbs = null;
-
-							runCount++;
-
-//							if(runCount % 10 == 0){
-//								System.gc();
-//								Thread.sleep(15000);
-//							}
-						}
-					}
-				}
-			}
-//        }
+//
+////							int settingNumber = i + 1;
+//							String algorithmTitle = algorithms[algorithm];
+//
+//							WriteResultsToFile(1, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
+//									jbs.simulation.timeReachingMEP, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
+//									jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats);
+//
+//							System.out.println("&&&&&&&&&&&&&&&&7");
+//
+////							jbs.simulation.pause();
+////							jbs.simulation.quit();
+//							jbs.hide();
+//
+////							jbs.simulation = null;
+////							jbs = null;
+//
+//							runCount++;
+//
+////							if(runCount % 10 == 0){
+////								System.gc();
+////								Thread.sleep(15000);
+////							}
+//						}
+//					}
+//				}
+//			}
+////        }
     }
+
+	public static void RunPerfectEnclosure(String [] algorithms, TBSim jbs) {
+//		for(int numberOfRobots = 20; numberOfRobots <= 30; numberOfRobots += 10) {
+//			for(double locustsVelocity = (double)robotsVelocity / 4; locustsVelocity <= robotsVelocity;
+//				locustsVelocity += (double)robotsVelocity / 2) {
+
+		int locustsVelocity = 2;
+		int numberOfRobots = 0;
+		int robotsVelocity = 1;
+
+		for (int algorithm = 0; algorithm < algorithms.length; algorithm++) {
+
+			String algorithmName = "containment" + algorithms[algorithm];
+			GenerateDscFile(locustsVelocity, numberOfRobots, null, algorithmName);
+
+			Vec2[] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
+			PolygonStats polygonStats = new PolygonStats(polygonVertices);
+
+			for (int cycles = 0; cycles < 20; cycles++) {
+
+				//							String settingFilename = "setting" + Integer.toString(i + 1);
+
+				//							jbs = new TBSim(dsc_file, width, height);
+				//							jbs.show();
+
+				jbs.simulation.setNewRun("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
+
+				jbs.simulation.pause();
+				jbs.simulation.load("/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc");
+				jbs.simulation.reset();
+				jbs.simulation.start();
+
+				//							jbs.simulation.run_sim_thread.start();
+				//							jbs.simulation.run();
+
+				//							jbs.simulation.run();
+
+				if (!jbs.simulation.descriptionLoaded())// only if loaded ok.
+				{
+					System.out.println("********** Description Didn't loaded correctly *********************");
+				}
+				//							jbs = new TBSim(dsc_file, width, height);
+				//							jbs.show();
+
+				//							while (!jbs.simulation.isDone) {
+				////								System.out.println(dumcount);
+				////								dumcount++;
+				//							}
+
+				while (jbs.simulation.running.get()) {
+					//								System.out.println(dumcount);
+					//								dumcount++;
+				}
+
+				//							jbs.simulation.run_sim_thread.join();
+				jbs.simulation.pause();
+
+				//							int settingNumber = i + 1;
+				String algorithmTitle = algorithms[algorithm];
+				if (algorithmTitle == "") algorithmTitle = "PerfectEnclosure";
+
+
+				long runningTimeOfClosingPolygon = 60000;
+				long upperBoundTime = 115133;
+				double x = 0.2;
+				WriteResultsToFile(1, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
+						runningTimeOfClosingPolygon, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
+						jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats,
+						jbs.simulation.runningTimeOfDisablingAllLocust, upperBoundTime, x);
+
+				System.out.println("&&&&&&&&&&&&&&&&7");
+
+				//							jbs.simulation.pause();
+				//							jbs.simulation.quit();
+				jbs.hide();
+
+				//							jbs.simulation = null;
+				//							jbs = null;
+
+//						runCount++;
+
+				//							if(runCount % 10 == 0){
+				//								System.gc();
+				//								Thread.sleep(15000);
+				//							}
+			}
+//				}
+//			}
+//		}
+		}
+	}
 
 
     public static void WriteResultsToFile(int settingNumber, int numberOfRobots, int robotsVelocity, double locustsVelocity,
 										  String algorithmTitle, long timeReachingMEP, int deadLocusts, int runAwayLocusts,
-										  int livingLocusts, int inMEPLocusts, PolygonStats polygonStats){
+										  int livingLocusts, int inMEPLocusts, PolygonStats polygonStats,
+										  long locustDisablementTime, long upperBoundTime, double x){
 		try {
-			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Different Worlds/results-all_params_spiral.csv";
+			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Perfect Enclosure/results.csv";
 			File f = new File(filePath);
 
 			PrintWriter out = null;
@@ -505,16 +610,17 @@ public class TBSim extends Frame
 				out.append("Setting number, Number of robots, Robots velocity, Locusts velocity, Algorithm," +
 						" Reaching time to MEP, Living locusts, Dead locusts, Run away locusts, Living locusts in MEP, " +
 						"Polygon Area, Polygon circumference, Long edge length, Short edge length, " +
-						"Ratio between long edge length to short edge length");
+						"Ratio between long edge length to short edge length, locustDisablementTime," +
+						" upperBoundTime, x");
 				out.append("\n");
 			}
 
-			String simulationMetadata = String.format("%d,%d,%d,%.1f,%s,%d,%d,%d,%d,%d,%.5f,%.5f,%.5f,%.5f,%.5f",
+			String simulationMetadata = String.format("%d,%d,%d,%.1f,%s,%d,%d,%d,%d,%d,%.5f,%.5f,%.5f,%.5f,%.5f,%d,%d,%.1f",
 					settingNumber, numberOfRobots,
 					robotsVelocity, locustsVelocity, algorithmTitle, timeReachingMEP, livingLocusts, deadLocusts,
 					runAwayLocusts, inMEPLocusts, polygonStats.area, polygonStats.circumference,
 					polygonStats.longEdgeLength, polygonStats.shortEdgeLength,
-					polygonStats.ratioBetweenLongEdgeToShortEdge);
+					polygonStats.ratioBetweenLongEdgeToShortEdge, locustDisablementTime, upperBoundTime, x);
 
 			out.append(simulationMetadata);
 			out.append("\n");
