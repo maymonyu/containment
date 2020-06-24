@@ -383,8 +383,9 @@ public class TBSim extends Frame
         }
         /*--- make the window ---*/
 
-		GenerateDscFile(2, 0, null, "containmentRedundantCentroid");
+//		GenerateDscFile(2, 0, null, "containment");
 		boolean isStopWhenLocustAreDead = true;
+//		boolean isStopWhenLocustAreDead = false;
 
 		Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
 		PolygonStats polygonStats = new PolygonStats(polygonVertices);
@@ -416,10 +417,10 @@ public class TBSim extends Frame
 		int runCount = 0;
 		int dumcount = 0;
 
-		String [] perfectAlgorithms = new String[2];
+		String [] perfectAlgorithms = new String[1];
 		perfectAlgorithms[0] = "";
-		perfectAlgorithms[1] = "RedundantCentroid";
-//		RunPerfectEnclosure(perfectAlgorithms, jbs);
+//		perfectAlgorithms[1] = "RedundantCentroid";
+		RunPerfectEnclosure(perfectAlgorithms, jbs);
 
 ////        for(int i=1; i<=9; i++) {
 //			for(int numberOfRobots = 20; numberOfRobots <= 30; numberOfRobots += 10) {
@@ -508,7 +509,7 @@ public class TBSim extends Frame
 
 		int locustsVelocity = 2;
 		int numberOfRobots = 0;
-		int robotsVelocity = 2;
+		int robotsVelocity = 1;
 
 		for (int algorithm = 0; algorithm < algorithms.length; algorithm++) {
 
@@ -561,9 +562,14 @@ public class TBSim extends Frame
 				String algorithmTitle = algorithms[algorithm];
 				if (algorithmTitle == "") algorithmTitle = "PerfectEnclosure";
 
+
+				long runningTimeOfClosingPolygon = 60000;
+				long upperBoundTime = 115133;
+				double x = 0.2;
 				WriteResultsToFile(1, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
-						jbs.simulation.runningTime, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
-						jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats);
+						runningTimeOfClosingPolygon, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
+						jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats,
+						jbs.simulation.runningTimeOfDisablingAllLocust, upperBoundTime, x);
 
 				System.out.println("&&&&&&&&&&&&&&&&7");
 
@@ -590,9 +596,10 @@ public class TBSim extends Frame
 
     public static void WriteResultsToFile(int settingNumber, int numberOfRobots, int robotsVelocity, double locustsVelocity,
 										  String algorithmTitle, long timeReachingMEP, int deadLocusts, int runAwayLocusts,
-										  int livingLocusts, int inMEPLocusts, PolygonStats polygonStats){
+										  int livingLocusts, int inMEPLocusts, PolygonStats polygonStats,
+										  long locustDisablementTime, long upperBoundTime, double x){
 		try {
-			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Different Worlds - Redundant Comparison/results.csv";
+			String filePath = "/home/maymonyu/IdeaProjects/tb/src/TBSim/AutomationResults/Perfect Enclosure/results.csv";
 			File f = new File(filePath);
 
 			PrintWriter out = null;
@@ -603,16 +610,17 @@ public class TBSim extends Frame
 				out.append("Setting number, Number of robots, Robots velocity, Locusts velocity, Algorithm," +
 						" Reaching time to MEP, Living locusts, Dead locusts, Run away locusts, Living locusts in MEP, " +
 						"Polygon Area, Polygon circumference, Long edge length, Short edge length, " +
-						"Ratio between long edge length to short edge length");
+						"Ratio between long edge length to short edge length, locustDisablementTime," +
+						" upperBoundTime, x");
 				out.append("\n");
 			}
 
-			String simulationMetadata = String.format("%d,%d,%d,%.1f,%s,%d,%d,%d,%d,%d,%.5f,%.5f,%.5f,%.5f,%.5f",
+			String simulationMetadata = String.format("%d,%d,%d,%.1f,%s,%d,%d,%d,%d,%d,%.5f,%.5f,%.5f,%.5f,%.5f,%d,%d,%.1f",
 					settingNumber, numberOfRobots,
 					robotsVelocity, locustsVelocity, algorithmTitle, timeReachingMEP, livingLocusts, deadLocusts,
 					runAwayLocusts, inMEPLocusts, polygonStats.area, polygonStats.circumference,
 					polygonStats.longEdgeLength, polygonStats.shortEdgeLength,
-					polygonStats.ratioBetweenLongEdgeToShortEdge);
+					polygonStats.ratioBetweenLongEdgeToShortEdge, locustDisablementTime, upperBoundTime, x);
 
 			out.append(simulationMetadata);
 			out.append("\n");

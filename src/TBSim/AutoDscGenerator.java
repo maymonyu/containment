@@ -162,20 +162,20 @@ public class AutoDscGenerator
     }
 
     private static Vec2 QuadraticEquation(double a, double b, double c){
-        System.out.println("a: " + a);
-        System.out.println("b: " + b);
-        System.out.println("c: " + c);
-
-        System.out.println("b^2: " + b*b);
-        System.out.println("4ac: " + 4*a*c);
+//        System.out.println("a: " + a);
+//        System.out.println("b: " + b);
+//        System.out.println("c: " + c);
+//
+//        System.out.println("b^2: " + b*b);
+//        System.out.println("4ac: " + 4*a*c);
 
         double determinant = b * b - 4 * a * c;
-        System.out.println("determinant: " + determinant);
+//        System.out.println("determinant: " + determinant);
 
         double root1 = (-b + Math.sqrt(determinant)) / (2 * a);
         double root2 = (-b - Math.sqrt(determinant)) / (2 * a);
-        System.out.format("root1 = %.2f and root2 = %.2f", root1 , root2);
-        System.out.println();
+//        System.out.format("root1 = %.2f and root2 = %.2f", root1 , root2);
+//        System.out.println();
 
         Vec2 result = new Vec2();
         result.x = root1;
@@ -190,11 +190,11 @@ public class AutoDscGenerator
         double distanceSum = calculateDistance(A, C) + calculateDistance(B, C);
         double distanceSubtract = calculateDistance(A, C) - calculateDistance(B, C);
 
-        System.out.println("firstLength = " + calculateDistance(A, C));
-        System.out.println("secondLength = " + calculateDistance(B, C));
-        System.out.println("adding = " + distanceSum);
-        System.out.println("subtructing = " + distanceSubtract);
-        System.out.println("actual result = " + calculateDistance(A, B));
+//        System.out.println("firstLength = " + calculateDistance(A, C));
+//        System.out.println("secondLength = " + calculateDistance(B, C));
+//        System.out.println("adding = " + distanceSum);
+//        System.out.println("subtructing = " + distanceSubtract);
+//        System.out.println("actual result = " + calculateDistance(A, B));
 
         return (distanceSum + error >= totalDistance && distanceSum - error <= totalDistance) ||
                 (distanceSubtract + error >= totalDistance && distanceSubtract - error <= totalDistance);
@@ -212,13 +212,13 @@ public class AutoDscGenerator
     private static Vec2 GetPointOnLineWithDistanceFromOtherPoint(Vec2 lineStart, Vec2 lineEnd,
                                                                  double distance, Vec2 point){
         double m = calculateIncline(lineStart, lineEnd);
-        System.out.println("lineStart: " + lineStart);
-        System.out.println("lineEnd: " + lineEnd);
-        System.out.println("m: " + m);
-        System.out.println("distance: " + distance);
-        System.out.println("point: " + point);
-
-        System.out.println("distance from last point to vertex: " + calculateDistance(point, lineStart));
+//        System.out.println("lineStart: " + lineStart);
+//        System.out.println("lineEnd: " + lineEnd);
+//        System.out.println("m: " + m);
+//        System.out.println("distance: " + distance);
+//        System.out.println("point: " + point);
+//
+//        System.out.println("distance from last point to vertex: " + calculateDistance(point, lineStart));
 
 
         double x1 = lineStart.x;
@@ -302,11 +302,11 @@ public class AutoDscGenerator
             Vec2 currLocation = currVertex;
             int j = 0;
 
-            System.out.println("Next edgeeeee");
+//            System.out.println("Next edgeeeee");
             boolean isLastOnEdge = false;
 
             while (!isLastOnEdge){
-                System.out.println("lastRobotLocationOnSegment: " + lastRobotLocationOnSegment);
+//                System.out.println("lastRobotLocationOnSegment: " + lastRobotLocationOnSegment);
 
                 double distanceBetweenRobots = 2 * FOV_RADIUS - X;
                 if(i == 0 && j == 0) distanceBetweenRobots = FOV_RADIUS;
@@ -318,11 +318,11 @@ public class AutoDscGenerator
 //                }
 
                 if(i != 0 && j == 0){
-                    System.out.println("First");
+//                    System.out.println("First");
                     robotLocation = GetPointOnLineWithDistanceFromOtherPoint(currVertex, nextVertex, distanceBetweenRobots, lastRobotLocationOnSegment);
                 }
                 else {
-                    System.out.println("Not First");
+//                    System.out.println("Not First");
                     robotLocation = GetPointByDistanceAndRadians(distanceBetweenRobots, radianIncline, currLocation);
                 }
 
@@ -371,7 +371,7 @@ public class AutoDscGenerator
             nextVertex = polygonVertices[(currVertexIndex + 1) % numOfVertices];
 
 //            while (reducedDistance > 0){
-            System.out.println("distance&&&&&&&&&: " + calculateDistance(lastPlacement, nextVertex));
+//            System.out.println("distance&&&&&&&&&: " + calculateDistance(lastPlacement, nextVertex));
             while (reducedDistance > calculateDistance(lastPlacement, nextVertex)){
                 reducedDistance = reducedDistance - calculateDistance(nextVertex, lastPlacement);
                 lastReducedDistance = reducedDistance;
@@ -388,8 +388,8 @@ public class AutoDscGenerator
 //            robotPosition = GetPointOnLineWithDistanceFromOtherPoint(currVertex, nextVertex, lastReducedDistance,
 //                lastPlacement);
 
-            System.out.println("@@@@@@@@@@@@@@@@@@@@ robotPosition: " + robotPosition);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+//            System.out.println("@@@@@@@@@@@@@@@@@@@@ robotPosition: " + robotPosition);
+//            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 
             lastPlacement = new Vec2(robotPosition);
 
@@ -400,8 +400,8 @@ public class AutoDscGenerator
         }
 
 
-        System.out.println("vertex: " + polygonVertices[0]);
-        System.out.println("robot: " + robotsMetadatas.get(0).location);
+//        System.out.println("vertex: " + polygonVertices[0]);
+//        System.out.println("robot: " + robotsMetadatas.get(0).location);
         return robotsMetadatas;
     }
 
@@ -495,14 +495,24 @@ public class AutoDscGenerator
         }
     }
 
-    private static double calculateRuntimeUpperBound(double secRadius){
-        double maxPassingLength = secRadius;
-        double totalNumberOfRobotTypes = 2;
-        double totalLength = maxPassingLength * totalNumberOfRobotTypes;
+    private static double calculateRuntimeUpperBound(double secRadius, double FOV_RADIUS, double X){
+        double messagingTime = 1000;
+        double secDiameter = 2 * secRadius;
 
-        double totalTimeUnitsToPassOneMeter = 2000;
+        double d = FOV_RADIUS;
 
-        return totalLength * totalTimeUnitsToPassOneMeter;
+        double r_x = 2 * Math.sqrt(d*X - (X*X / 4));
+        double robotVelocity = 0.1 / 100;
+
+        return (secDiameter / robotVelocity) + (secDiameter * messagingTime / r_x);
+
+//        double maxPassingLength = secRadius;
+//        double totalNumberOfRobotTypes = 2;
+//        double totalLength = maxPassingLength * totalNumberOfRobotTypes;
+//
+//        double totalTimeUnitsToPassOneMeter = 2000;
+//
+//        return totalLength * totalTimeUnitsToPassOneMeter;
     }
 
     private static int getHighestNumberInStringsArray(String[] stringArray){
@@ -602,14 +612,14 @@ public class AutoDscGenerator
             List<String> lines = Files.readAllLines(Paths.get(filePath));
 
             String line = lines.get(0); // (32.000000 96.000000)(17.000000 72.000000)
-            System.out.println("vertices: " + line);
+//            System.out.println("vertices: " + line);
 
             var lineSplited = line.split("\\)"); // ["(32.000000 96.000000", "(17.000000 72.000000"]
-            System.out.println("vertices: " + lineSplited[0]);
+//            System.out.println("vertices: " + lineSplited[0]);
 
             for (int i = 0; i < lineSplited.length; i++) {
                 String onlyCoordinates = lineSplited[i].substring(1); // "32.000000 96.000000"
-                System.out.println("vertices: " + onlyCoordinates);
+//                System.out.println("vertices: " + onlyCoordinates);
 
                 var coordinatesArray = onlyCoordinates.split(" "); // ["32.000000", "96.000000"]
 
@@ -687,7 +697,7 @@ public class AutoDscGenerator
         }
 
         for(int i = 0; i < locustDefinitions.length; i++) {
-            System.out.println(locustDefinitions[i]);
+//            System.out.println(locustDefinitions[i]);
         }
 
         writeLinesToFile(outputFile, locustDefinitions);
@@ -791,7 +801,7 @@ public class AutoDscGenerator
         HungarianAlgorithm ha = new HungarianAlgorithm(hungarianTasks);
         int[] assignment = ha.execute();
 
-        System.out.println("assignments: " + Arrays.toString(assignment));
+//        System.out.println("assignments: " + Arrays.toString(assignment));
 
         for(int i = 0; i < robots.size(); i++) {
             robots.get(i).destinationPoint = destinationPoints[i];
@@ -838,9 +848,9 @@ public class AutoDscGenerator
 
     public static void CreateAutomaticDsc(double locustVelocity, int numberOfRobots, String settingFilename,
                                           String algorithmName){
-        final double FOV_RADIUS = 0.75;
+        final double FOV_RADIUS = 1.2;
 //        final double FOV_RADIUS = 1;
-        final double X = 0.25;
+        final double X = 0.2;
 //        final double X = 0.5;
 
         String filename = "/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc";
@@ -863,7 +873,7 @@ public class AutoDscGenerator
             Vec2 centroid = calculateCentroid(polygonVertices);
 
             secRadius = SmallestEnclosingCircle.getSmallestEnclosingCircleRadius(polygonVertices);
-            double runtimeUpperBound = calculateRuntimeUpperBound(secRadius);
+            double runtimeUpperBound = calculateRuntimeUpperBound(secRadius, FOV_RADIUS, X);
             System.out.println("UpperBound: " + runtimeUpperBound);
 
 //            List<RobotMetadata> robots = generateRobots(polygonVertices, FOV_RADIUS, X);
@@ -937,7 +947,7 @@ public class AutoDscGenerator
             Vec2 centroid = calculateCentroid(polygonVertices);
 
             secRadius = SmallestEnclosingCircle.getSmallestEnclosingCircleRadius(polygonVertices);
-            double runtimeUpperBound = calculateRuntimeUpperBound(secRadius);
+            double runtimeUpperBound = calculateRuntimeUpperBound(secRadius, FOV_RADIUS, X);
             System.out.println("UpperBound: " + runtimeUpperBound);
 
             List<RobotMetadata> robots = generateRobots(polygonVertices, FOV_RADIUS, X);

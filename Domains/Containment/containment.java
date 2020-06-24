@@ -94,6 +94,9 @@ public class containment extends ControlSystemMFN150 {
     Vec2 lastPosition;
     double r_x;
 
+    double numberOfRounds;
+    Vec2 firstPosition, secondPosition;
+
     public void Configure() {
         isRedundant = false;
         isMyTurn = false;
@@ -120,6 +123,10 @@ public class containment extends ControlSystemMFN150 {
         r_x = abstract_robot.Calculate_r_x();
 
         savedTime = 0;
+        numberOfRounds = 0;
+
+        firstPosition = abstract_robot.getPosition();
+        secondPosition = abstract_robot.getPosition();
     }
 
     private void SetLeftNeighbourId(int leftNeighbourId){
@@ -477,6 +484,12 @@ public class containment extends ControlSystemMFN150 {
         CheckMessages();
         EliminateLocust();
 
+
+        if(id==0){
+            System.out.println(curr_time);
+            System.out.println(numberOfRounds);
+        }
+
         if(IsFirstToRun(curr_time)){
             isMyTurn = true;
             StartMoving(curr_time);
@@ -487,6 +500,9 @@ public class containment extends ControlSystemMFN150 {
         else if(isMoving){
             Vec2 currPosition = abstract_robot.getPosition();
             if(calculateDistance(currPosition, lastPosition) >= r_x){
+                numberOfRounds++;
+                abstract_robot.IncrementRounds();
+
                 StopMoving(curr_time);
                 TellNeighbourstToStartMoving();
 

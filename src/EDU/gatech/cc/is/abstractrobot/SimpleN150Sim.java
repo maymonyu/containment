@@ -58,6 +58,8 @@ public class SimpleN150Sim extends Simple
 		private boolean firstTimeToRun;
 		private List<RobotNode> list;
 		private int countOfRedundant;
+
+		public double rounds;
 	 
 	/**
 	 * Instantiate a <B>SimpleN150Sim</B> object.  Be sure
@@ -84,6 +86,7 @@ public class SimpleN150Sim extends Simple
 		right = 1000;
 
 		firstTimeToRun = true;
+		rounds = 0;
 		}	
 
 
@@ -1170,12 +1173,20 @@ public class SimpleN150Sim extends Simple
 		double d = MultiForageN150.VISION_RANGE ;
 //		double x = d / 3;
 //		double x = 0.5;
-		double x = 0.25;
+		double x = 0.2;
 
 		return 2 * Math.sqrt(d*x - (x*x / 4));
 	}
 
-	public int GetIndexOnEdge(){
+	public void IncrementRounds(){
+		rounds++;
+	}
+
+		public double GetRounds(){
+			return rounds;
+		}
+
+		public int GetIndexOnEdge(){
 		return indexOnEdge;
 	}
 

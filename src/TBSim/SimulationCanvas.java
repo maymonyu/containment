@@ -78,6 +78,7 @@ public class SimulationCanvas extends Canvas implements Runnable
 	private long	frames = 0;
 
 	public long runningTime = 0;
+	public long runningTimeOfDisablingAllLocust = 0;
 	public long timeReachingMEP = 0;
 	public int deadLocusts = 0;
 	public int livingLocusts = 0;
@@ -1214,8 +1215,12 @@ public class SimulationCanvas extends Canvas implements Runnable
                     running.set(false);
 
 					final int LOCUST_NUMBER = 100;
+                    double numberOfMessagingRounds = robot.rounds;
+                    double messagingTime = 1000;
 
 					runningTime = sim_time;
+					runningTimeOfDisablingAllLocust = sim_time + (long)(numberOfMessagingRounds * messagingTime);
+
 					livingLocusts = livingLocustsArray.length;
 					deadLocusts = LOCUST_NUMBER - livingLocusts;
 
