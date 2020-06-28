@@ -850,7 +850,7 @@ public class AutoDscGenerator
                                           String algorithmName){
         final double FOV_RADIUS = 1.2;
 //        final double FOV_RADIUS = 1;
-        final double X = 0.6;
+        final double X = 1.0;
 //        final double X = 0.5;
 
         String filename = "/home/maymonyu/IdeaProjects/tb/Domains/Containment/containment2.dsc";

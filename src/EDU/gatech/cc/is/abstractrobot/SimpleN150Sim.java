@@ -1173,7 +1173,7 @@ public class SimpleN150Sim extends Simple
 		double d = MultiForageN150.VISION_RANGE ;
 //		double x = d / 3;
 //		double x = 0.5;
-		double x = 0.6;
+		double x = 1.0;
 
 		return 2 * Math.sqrt(d*x - (x*x / 4));
 	}

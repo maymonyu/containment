@@ -563,9 +563,9 @@ public class TBSim extends Frame
 				if (algorithmTitle == "") algorithmTitle = "PerfectEnclosure";
 
 
-				long runningTimeOfClosingPolygon = 52000;
-				long upperBoundTime = 91875;
-				double x = 0.6;
+				long runningTimeOfClosingPolygon = 48500;
+				long upperBoundTime = 85282;
+				double x = 1.0;
 				WriteResultsToFile(1, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
 						runningTimeOfClosingPolygon, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
 						jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats,
