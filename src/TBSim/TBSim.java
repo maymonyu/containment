@@ -519,7 +519,7 @@ public class TBSim extends Frame
 			Vec2[] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
 			PolygonStats polygonStats = new PolygonStats(polygonVertices);
 
-			for (int cycles = 0; cycles < 20; cycles++) {
+			for (int cycles = 0; cycles < 30; cycles++) {
 
 				//							String settingFilename = "setting" + Integer.toString(i + 1);
 
@@ -563,9 +563,9 @@ public class TBSim extends Frame
 				if (algorithmTitle == "") algorithmTitle = "PerfectEnclosure";
 
 
-				long runningTimeOfClosingPolygon = 48500;
-				long upperBoundTime = 85282;
-				double x = 1.0;
+				long runningTimeOfClosingPolygon = 50500;
+				long upperBoundTime = 87877;
+				double x = 0.8;
 				WriteResultsToFile(1, numberOfRobots, robotsVelocity, locustsVelocity, algorithmTitle,
 						runningTimeOfClosingPolygon, jbs.simulation.deadLocusts, jbs.simulation.runAwayLocusts,
 						jbs.simulation.livingLocusts, jbs.simulation.inMEPLocusts, polygonStats,
