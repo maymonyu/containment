@@ -383,9 +383,9 @@ public class TBSim extends Frame
         }
         /*--- make the window ---*/
 
-//		GenerateDscFile(2, 0, null, "containment");
-		boolean isStopWhenLocustAreDead = true;
-//		boolean isStopWhenLocustAreDead = false;
+		GenerateDscFile(2, 0, null, "containment");
+//		boolean isStopWhenLocustAreDead = true;
+		boolean isStopWhenLocustAreDead = false;
 
 		Vec2 [] polygonVertices = AutoDscGenerator.readVerticesFromFile("ContainmentDsc/vertices.txt");
 		PolygonStats polygonStats = new PolygonStats(polygonVertices);
@@ -420,7 +420,7 @@ public class TBSim extends Frame
 		String [] perfectAlgorithms = new String[1];
 		perfectAlgorithms[0] = "";
 //		perfectAlgorithms[1] = "RedundantCentroid";
-		RunPerfectEnclosure(perfectAlgorithms, jbs);
+//		RunPerfectEnclosure(perfectAlgorithms, jbs);
 
 ////        for(int i=1; i<=9; i++) {
 //			for(int numberOfRobots = 20; numberOfRobots <= 30; numberOfRobots += 10) {
