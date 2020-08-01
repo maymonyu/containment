@@ -323,8 +323,12 @@ public class SimpleN150Sim extends Simple
 		return destinationPoint;
 	}
 
+		public void SetDestinationPoint(Vec2 newDestinationPoint){
+			destinationPoint = newDestinationPoint;
+		}
 
-	public boolean AreAllRobotsNearDestinationPoint(){
+
+		public boolean AreAllRobotsNearDestinationPoint(){
 		int ROBOTS_VISION_CLASS = 0;
 
 		for(int i = 0; i < all_objects.length; i++)
@@ -334,7 +338,7 @@ public class SimpleN150Sim extends Simple
 			// note: self included
 			{
 				SimpleN150Sim robot = (SimpleN150Sim) all_objects[i];
-				if(calculateDistance(robot.getPosition(), robot.destinationPoint) > 0.4){
+				if(calculateDistance(robot.getPosition(), robot.destinationPoint) > 1){
 					return false;
 				}
 			}

@@ -105,5 +105,6 @@ public interface MultiForageN150 extends SimpleN150,
         public List<Vec2> CollectAllPolygonVertices();
             public List<Double> CollectEdgesDirectionAngles();
             public double GetVisionRange();
-
+        public void SetDestinationPoint(Vec2 newDestinationPoint);
+        public boolean AreAllRobotsNearDestinationPoint();
             }

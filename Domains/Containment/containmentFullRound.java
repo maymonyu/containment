@@ -137,7 +137,6 @@ public class containmentFullRound extends ControlSystemMFN150 {
         isEven = indexOnEdge % 2 == 0;
         isOdd = !isEven;
         isLastOnEdge = abstract_robot.GetIsLastOnEdge();
-        destinationPoint = abstract_robot.GetDestinationPoint();
 
         id = abstract_robot.getID();
         leftNeighbourId = GetInitialLeftNeighbourId();
@@ -164,6 +163,9 @@ public class containmentFullRound extends ControlSystemMFN150 {
         numberOfVertices = polygonVerticesByOrder.size();
 
         centroid = calculateCentroid(polygonVerticesByOrderArray);
+
+        abstract_robot.SetDestinationPoint(centroid);
+        destinationPoint = abstract_robot.GetDestinationPoint();
 
         originalSteerHeading = abstract_robot.getSteerHeading(0);
 
@@ -639,13 +641,13 @@ public class containmentFullRound extends ControlSystemMFN150 {
         Message message;
         long curr_time = abstract_robot.getTime();
 
-        if(id==18) {
+//        if(id==18) {
 //            System.out.println(calculateDistance(lastPosition, roundStartingLocation));
 //            if(calculateDistance(lastPosition, roundStartingLocation) <= 0.7) {
 //                System.out.println("true !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
 //            }
 
-        }
+//        }
         lastPosition = abstract_robot.getPosition();
 
         // TURRET
@@ -655,12 +657,18 @@ public class containmentFullRound extends ControlSystemMFN150 {
         CheckMessages();
         EliminateLocust();
 
-        if(calculateDistance(lastPosition, centroid) < 1){
-            isHeadingToFinalPoint = true;
-            directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
+        if(id==0) {
+            System.out.println(curr_time);
+        }
 
-            abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
-            StartMoving(curr_time);
+        if(calculateDistance(lastPosition, centroid) < 1){
+//            isHeadingToFinalPoint = true;
+//            directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
+//
+//            abstract_robot.setSteerHeading(0L, directionToDestinationPoint);
+//            StartMoving(curr_time);
+            StopMoving(curr_time);
+            return CSSTAT_OK;
         }
 
         if(isHeadingToFinalPoint) {
