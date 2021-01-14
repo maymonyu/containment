@@ -658,10 +658,11 @@ public class containmentFullRound extends ControlSystemMFN150 {
         EliminateLocust();
 
         if(id==0) {
+            System.out.println(calculateDistance(lastPosition, centroid));
             System.out.println(curr_time);
         }
 
-        if(calculateDistance(lastPosition, centroid) < 1){
+        if(calculateDistance(lastPosition, centroid) < 0.1){
 //            isHeadingToFinalPoint = true;
 //            directionToDestinationPoint = getDirectionAngleOf2Points(lastPosition, destinationPoint);
 //
